@@ -152,7 +152,7 @@ func _apply_typography(t: Theme, mode: String) -> void:
 
 	# The two bottom-nav captions (R10): muted inactive, primary active.
 	_item(t, &"NavTabLabel", _ts("caption"), muted)
-	_item(t, &"NavTabLabelActive", _ts("caption"), Tokens.color(mode, "primary"))
+	_item(t, &"NavTabLabelActive", _ts("caption"), Tokens.accent_text(mode, "primary"))
 
 
 ## Minimal helper for a Label-like type: font_size + font_color.
@@ -169,6 +169,9 @@ func _apply_buttons(t: Theme, mode: String) -> void:
 	var primary_hover := primary.lightened(0.08)
 	var secondary := Tokens.color(mode, "secondary")
 	var danger := Tokens.color(mode, "danger")
+	# ...but text drawn ON an accent must use the light-mode text token, which is
+	# what accent_text() resolves (raw accent on white is only 3.03:1).
+	var danger_text := Tokens.accent_text(mode, "danger")
 	var text := Tokens.color(mode, "text")
 	var text_muted := Tokens.color(mode, "text_muted")
 	var text_disabled := Tokens.color(mode, "text_disabled")
@@ -248,11 +251,11 @@ func _apply_buttons(t: Theme, mode: String) -> void:
 		_sb(TRANSPARENT, 2, outline, _radius(r_button), pad_button))
 	_s(t, &"DangerButton", &"focus",
 		_sb(TRANSPARENT, 4, secondary, _radius(r_button), pad_button, false))
-	_c(t, &"DangerButton", &"font_color", danger)
-	_c(t, &"DangerButton", &"font_pressed_color", danger)
+	_c(t, &"DangerButton", &"font_color", danger_text)
+	_c(t, &"DangerButton", &"font_pressed_color", danger_text)
 	_c(t, &"DangerButton", &"font_disabled_color", text_disabled)
-	_c(t, &"DangerButton", &"font_hover_color", danger)
-	_c(t, &"DangerButton", &"font_hover_pressed_color", danger)
+	_c(t, &"DangerButton", &"font_hover_color", danger_text)
+	_c(t, &"DangerButton", &"font_hover_pressed_color", danger_text)
 	_f(t, &"DangerButton", &"font_size", _ts("button"))
 
 	# --- NavTab: chromeless touch target; its Caption Label carries the state colour ---------

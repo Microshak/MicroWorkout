@@ -250,7 +250,8 @@ func _check_tokens(theme: Theme, mode: String) -> void:
 	assert_eq(theme.get_color(&"font_color", &"PrimaryButton"), Tokens.on_accent(mode),
 		"PrimaryButton font_color is on_accent")
 	assert_eq(theme.get_color(&"font_color", &"NavTabLabelActive"),
-		Tokens.color(mode, "primary"), "NavTabLabelActive font_color is primary")
+		Tokens.accent_text(mode, "primary"),
+		"NavTabLabelActive font_color is the accent-as-text colour")
 	assert_eq(theme.get_color(&"font_color", &"NavTabLabel"),
 		Tokens.color(mode, "text_muted"), "NavTabLabel font_color is text_muted")
 
@@ -295,7 +296,7 @@ func _colour_rows() -> Array:
 		["Caption", "font_color", "text_muted"],
 		["MutedLabel", "font_color", "text_muted"],
 		["NavTabLabel", "font_color", "text_muted"],
-		["NavTabLabelActive", "font_color", "primary"],
+		["NavTabLabelActive", "font_color", "accent:primary"],
 		["PrimaryButton", "font_color", "on_accent"],
 		["PrimaryButton", "font_pressed_color", "on_accent"],
 		["PrimaryButton", "font_hover_color", "on_accent"],
@@ -305,8 +306,8 @@ func _colour_rows() -> Array:
 		["SecondaryButton", "font_pressed_color", "text"],
 		["SecondaryButton", "font_disabled_color", "text_disabled"],
 		["GhostButton", "font_color", "text_muted"],
-		["DangerButton", "font_color", "danger"],
-		["DangerButton", "font_pressed_color", "danger"],
+		["DangerButton", "font_color", "accent:danger"],
+		["DangerButton", "font_pressed_color", "accent:danger"],
 		["DangerButton", "font_disabled_color", "text_disabled"],
 		["ChipToggle", "font_color", "text_muted"],
 		["ChipToggle", "font_pressed_color", "on_accent"],
@@ -592,6 +593,10 @@ func _radius4(value: int) -> Array:
 
 ## Resolves a row's colour key: a palette token, or one of the derived colours the spec creates.
 func _colour_of(mode: String, key: String) -> Color:
+	# "accent:<token>" means the colour used when an accent is rendered as TEXT or an icon,
+	# which differs from the raw accent in light mode (see DesignTokens.accent_text).
+	if key.begins_with("accent:"):
+		return Tokens.accent_text(mode, key.substr(7))
 	match key:
 		"transparent":
 			return Color(0, 0, 0, 0)

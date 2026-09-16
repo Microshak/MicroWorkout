@@ -125,6 +125,25 @@ static func on_accent(mode: String) -> Color:
 	return color(mode, "on_accent")
 
 
+## The colour to use when an accent must be rendered as TEXT or an ICON (not as a fill).
+##
+## In dark mode the raw accent is readable on our surfaces. In light mode it is not: a raw
+## accent on white is only 1.83:1-3.03:1, far below the 4.5:1 that body text needs. Light mode
+## therefore resolves through the dedicated `*_text_light` tokens, which sit at 5.18:1-6.5:1.
+## Appendix §4.3 rule 2: fills keep the accents, text never uses a raw accent in light mode.
+static func accent_text(mode: String, accent: String) -> Color:
+	if mode != MODE_LIGHT:
+		return color(mode, accent)
+	var light_key := "%s_text_light" % accent
+	if not palette(mode).has(light_key):
+		# Every accent ships a light-mode counterpart (asserted by test_design_tokens), so
+		# this is unreachable defensive code. It falls back to the raw accent deliberately
+		# and warns, rather than returning magenta.
+		push_warning("[tokens] no light-mode text colour for accent '%s'" % accent)
+		return color(mode, accent)
+	return color(mode, light_key)
+
+
 static func accent_tokens() -> PackedStringArray:
 	return PackedStringArray(["primary", "secondary", "success", "warning", "danger"])
 
