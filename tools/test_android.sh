@@ -1,0 +1,130 @@
+#!/usr/bin/env bash
+# MicroWorkout — Android end-to-end smoke test (PRD-00 §10 layer 4, the acceptance gate).
+#
+#   tools/test_android.sh [debug|release]
+#
+# Builds, installs, launches, screenshots, and checks the built APK's manifest.
+# Evidence lands in build/screenshots/ so a human (or the agent's vision) can look
+# at what actually rendered. Fails loudly — a PRD may not be signed off on
+# desktop evidence alone.
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+SDK="${ANDROID_SDK_ROOT:-$HOME/Android/Sdk}"
+ADB="$SDK/platform-tools/adb"
+BUILD_DIR="$ROOT/build"
+SHOTS="$BUILD_DIR/screenshots"
+MODE="${1:-debug}"
+
+mkdir -p "$SHOTS"
+
+case "$MODE" in
+  debug)   PKG="com.microshak.microworkout.debug"; APK="$BUILD_DIR/MicroWorkout-debug.apk" ;;
+  release) PKG="com.microshak.microworkout";       APK="$BUILD_DIR/MicroWorkout.apk" ;;
+  *) echo "usage: $0 [debug|release]" >&2; exit 2 ;;
+esac
+
+FAILURES=0
+pass() { echo "  ✔ $1"; }
+fail() { echo "  ✘ $1"; FAILURES=$((FAILURES + 1)); }
+
+echo "══════════════════════════════════════════════════════════════"
+echo "  MicroWorkout — Android E2E ($MODE)"
+echo "══════════════════════════════════════════════════════════════"
+
+# ---------------------------------------------------------------- 1. build
+echo "[1/6] build"
+"$ROOT/tools/build_android.sh" "$MODE" | tail -3
+[[ -f "$APK" ]] && pass "APK exists: $(basename "$APK")" || { fail "APK missing"; exit 1; }
+
+# ------------------------------------------------- 2. manifest permissions
+echo "[2/6] manifest permissions"
+AAPT2="$(ls -d "$SDK"/build-tools/*/ 2>/dev/null | sort -V | tail -1)aapt2"
+PERMS=""
+if [[ -x "$AAPT2" ]]; then
+  PERMS="$("$AAPT2" dump permissions "$APK" 2>/dev/null || true)"
+fi
+if [[ -z "$PERMS" ]]; then
+  # Fallback: the binary manifest still contains the permission string.
+  PERMS="$(unzip -p "$APK" AndroidManifest.xml 2>/dev/null | strings | tr -d '\0' || true)"
+fi
+if grep -q "android.permission.INTERNET" <<<"$PERMS"; then
+  pass "android.permission.INTERNET declared (required for LLM calls, PRD-07)"
+else
+  fail "android.permission.INTERNET NOT declared — LLM calls will fail on device"
+fi
+
+# --------------------------------------------------------------- 3. device
+echo "[3/6] emulator"
+"$ROOT/tools/emu.sh" start | tail -2
+
+# ---------------------------------------------------------------- 4. install
+echo "[4/6] install"
+adb() { "$ADB" "$@"; }
+adb logcat -c >/dev/null 2>&1 || true
+if adb install -r -t "$APK" 2>&1 | tail -2 | grep -q "Success"; then
+  pass "installed $PKG"
+else
+  fail "install failed"
+fi
+
+# ----------------------------------------------------------------- 5. launch
+echo "[5/6] launch"
+LAUNCH_OK=0
+for attempt in 1 2 3; do
+  if adb shell monkey -p "$PKG" -c android.intent.category.LAUNCHER 1 >/dev/null 2>&1; then
+    LAUNCH_OK=1; break
+  fi
+  sleep 3
+done
+[[ "$LAUNCH_OK" == "1" ]] && pass "launched via launcher intent" || fail "could not launch"
+
+# wait for the process to actually come up
+for _ in $(seq 1 20); do
+  if adb shell pidof "$PKG" >/dev/null 2>&1; then break; fi
+  sleep 1
+done
+PID="$(adb shell pidof "$PKG" 2>/dev/null | tr -d '\r' || true)"
+[[ -n "$PID" ]] && pass "process alive (pid $PID)" || fail "process is not running"
+
+sleep 6  # let the splash finish and the first screen render
+
+# ------------------------------------------------------------- 6. evidence
+echo "[6/6] evidence"
+STAMP="$(date +%Y%m%d-%H%M%S)"
+SHOT="$SHOTS/${MODE}-${STAMP}.png"
+adb exec-out screencap -p > "$SHOT" 2>/dev/null || true
+if [[ -s "$SHOT" ]]; then
+  pass "screenshot: ${SHOT#$ROOT/} ($(stat -c%s "$SHOT") bytes)"
+else
+  fail "screenshot capture failed"
+fi
+
+LOGFILE="$BUILD_DIR/logcat-${MODE}-${STAMP}.txt"
+adb logcat -d > "$LOGFILE" 2>&1 || true
+grep -E "\[(boot|App|Store|Library|LLM|Nav|Feedback|home)\]" "$LOGFILE" | tail -20 || true
+if grep -q "\[boot\] MicroWorkout" "$LOGFILE"; then
+  pass "app boot log found in logcat"
+  grep -m1 "\[boot\] MicroWorkout" "$LOGFILE" | sed 's/^/      /'
+else
+  fail "no [boot] log line in logcat — did the app actually reach main scene?"
+fi
+
+# Godot engine errors are fatal for sign-off
+if grep -E "^(ERROR|SCRIPT ERROR)" "$LOGFILE" | grep -viE "editor_settings|Cannot save file" | head -5 | grep -q .; then
+  fail "engine errors present in logcat:"
+  grep -E "^(ERROR|SCRIPT ERROR)" "$LOGFILE" | grep -viE "editor_settings|Cannot save file" | head -5 | sed 's/^/      /'
+else
+  pass "no engine errors in logcat"
+fi
+
+echo "──────────────────────────────────────────────────────────────"
+if (( FAILURES == 0 )); then
+  echo "  RESULT: PASS — evidence in ${SHOTS#$ROOT/} and ${LOGFILE#$ROOT/}"
+  echo "══════════════════════════════════════════════════════════════"
+  exit 0
+else
+  echo "  RESULT: FAIL — $FAILURES check(s) failed"
+  echo "══════════════════════════════════════════════════════════════"
+  exit 1
+fi

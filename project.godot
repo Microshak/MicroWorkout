@@ -1,0 +1,41 @@
+; Engine configuration file.
+; MicroWorkout — see docs/PRD-00-MASTER-PLAN.md §4.4 for the rationale behind these values.
+
+config_version=5
+
+[application]
+
+config/name="MicroWorkout"
+config/description="Personal workout app: AI-generated plans, illustrated sessions, and progress tracking."
+run/main_scene="res://scenes/ui/boot_screen.tscn"
+config/features=PackedStringArray("4.7", "GL Compatibility")
+config/icon="res://icon.svg"
+boot_splash/bg_color=Color(0.058824, 0.066667, 0.086275, 1)
+boot_splash/show_image=false
+
+[autoload]
+
+App="*res://scripts/autoload/app.gd"
+Store="*res://scripts/autoload/store.gd"
+Library="*res://scripts/autoload/library.gd"
+LLM="*res://scripts/autoload/llm.gd"
+Nav="*res://scripts/autoload/nav.gd"
+Feedback="*res://scripts/autoload/feedback.gd"
+
+[display]
+
+window/size/viewport_width=1080
+window/size/viewport_height=1920
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/handheld/orientation=1
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true

@@ -1,0 +1,28 @@
+# Godot
+.godot/
+*.translation
+
+# Build artifacts
+build/
+*.apk
+*.aab
+*.pck
+*.zip
+
+# Signing / credentials — never commit
+export_credentials.cfg
+build/keystore.properties
+*.keystore
+*.jks
+
+# Python tooling
+__pycache__/
+*.pyc
+.venv/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+assets_src/
+.test_tmp/
