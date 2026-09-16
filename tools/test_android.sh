@@ -110,12 +110,27 @@ else
   fail "no [boot] log line in logcat — did the app actually reach main scene?"
 fi
 
-# Godot engine errors are fatal for sign-off
-if grep -E "^(ERROR|SCRIPT ERROR)" "$LOGFILE" | grep -viE "editor_settings|Cannot save file" | head -5 | grep -q .; then
+# Godot engine errors are fatal for sign-off.
+# NOTE: logcat lines are timestamp-prefixed ("09-15 19:04:48.778  4178  4211 E godot : ..."),
+# so an anchored ^ERROR grep never matches and silently yields a FALSE PASS. Match the
+# godot tag/level columns and "ERROR:" appearing anywhere in the message instead.
+GODOT_ERRORS="$(grep -E "E godot *:|ERROR:|SCRIPT ERROR:" "$LOGFILE" \
+  | grep -viE "editor_settings|Cannot save file|app_userdata|user://logs" || true)"
+if [[ -n "$GODOT_ERRORS" ]]; then
   fail "engine errors present in logcat:"
-  grep -E "^(ERROR|SCRIPT ERROR)" "$LOGFILE" | grep -viE "editor_settings|Cannot save file" | head -5 | sed 's/^/      /'
+  head -8 <<<"$GODOT_ERRORS" | sed 's/^/      /'
 else
   pass "no engine errors in logcat"
+fi
+
+# Shader compilation/linking failures produce a blank window while the process still
+# reports healthy, so they get their own explicit check (see ADR-06/ADR-07).
+SHADER_ERRORS="$(grep -E "Program linking failed|exceed GL_MAX|Shader compilation failed|Cannot compile" "$LOGFILE" || true)"
+if [[ -n "$SHADER_ERRORS" ]]; then
+  fail "SHADER failure — the window will be blank even though the process is alive:"
+  head -4 <<<"$SHADER_ERRORS" | sed 's/^/      /'
+else
+  pass "no shader compilation/linking failures"
 fi
 
 echo "──────────────────────────────────────────────────────────────"

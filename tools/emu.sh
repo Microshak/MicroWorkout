@@ -40,6 +40,11 @@ LOG_DIR="$ROOT/build"
 LOG="$LOG_DIR/emulator.log"
 BOOT_TIMEOUT_SEC="${MW_BOOT_TIMEOUT:-420}"
 WINDOW_FLAG="${MW_WINDOW:--no-window}"
+# GPU mode matters: Godot's gl_compatibility renderer needs a GLES3 driver whose
+# GL_MAX_FRAGMENT_UNIFORM_VECTORS is high enough for its scene shader. The emulator's
+# plain "swiftshader_indirect" reports only 261, which fails to link the scene shader
+# and renders a blank window (ADR-07). Override with MW_GPU if needed.
+GPU_MODE="${MW_GPU:-swangle_indirect}"
 
 mkdir -p "$LOG_DIR" "$ANDROID_AVD_HOME" "$ANDROID_USER_HOME"
 
@@ -110,11 +115,11 @@ cmd_start() {
     cmd_wait
     return
   fi
-  echo "[emu] starting $AVD_NAME ($WINDOW_FLAG, swiftshader) — log: ${LOG#$ROOT/}"
+  echo "[emu] starting $AVD_NAME ($WINDOW_FLAG, gpu=$GPU_MODE) — log: ${LOG#$ROOT/}"
   nohup "$EMU" -avd "$AVD_NAME" \
     $WINDOW_FLAG -no-audio -no-boot-anim \
     -no-snapshot-load -no-snapshot-save \
-    -gpu swiftshader_indirect \
+    -gpu "$GPU_MODE" \
     -netdelay none -netspeed full \
     -no-metrics \
     >"$LOG" 2>&1 &

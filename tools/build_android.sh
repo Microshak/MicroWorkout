@@ -84,7 +84,9 @@ for line in lines:
 with open(path, "w") as fh:
     fh.writelines(out)
 PY
-  trap 'mv -f "$BUILD_DIR/export_presets.cfg.orig" "$PRESETS"' EXIT
+  # The trap is the single owner of the restore. Doing the restore here as well caused a
+  # double-move that made an otherwise successful build exit non-zero.
+  trap 'if [[ -f "$BUILD_DIR/export_presets.cfg.orig" ]]; then mv -f "$BUILD_DIR/export_presets.cfg.orig" "$PRESETS"; fi' EXIT
 }
 
 if [[ "$MODE" == "release" ]]; then
@@ -99,10 +101,6 @@ set +e
 "$GODOT" --headless --path "$ROOT" $FLAG "$PRESET" "$OUT" 2>&1 | tee "$BUILD_DIR/export.log" | grep -viE "^\s*$" | tail -30
 STATUS="${PIPESTATUS[0]}"
 set -e
-
-if [[ -f "$BUILD_DIR/export_presets.cfg.orig" ]]; then
-  mv -f "$BUILD_DIR/export_presets.cfg.orig" "$PRESETS"
-fi
 
 if [[ ! -f "$OUT" ]]; then
   echo "[build] FAILED — no APK produced (exit $STATUS). See $BUILD_DIR/export.log" >&2
