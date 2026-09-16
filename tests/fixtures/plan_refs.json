@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "note": "PRD-04 R18 item 6 — the PRD-00 §5.3 example session, shipped so the library suite can prove that every exercise id a plan fixture references actually resolves. PRD-05 widens the scan to every tests/fixtures/golden_plan_*.json.",
+  "plan_id": "plan-1758000000",
+  "session_id": "s1",
+  "session_title": "Upper A — Push Focus",
+  "warmup": [
+    { "exercise_id": "arm-circles", "duration_sec": 60 }
+  ],
+  "blocks": [
+    { "exercise_id": "bench-press", "sets": 4, "reps": "8-10", "rest_seconds": 90 }
+  ],
+  "cooldown": [
+    { "exercise_id": "childs-pose", "duration_sec": 60 }
+  ],
+  "exercise_ids": [
+    "arm-circles",
+    "bench-press",
+    "childs-pose"
+  ]
+}

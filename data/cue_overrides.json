@@ -1,0 +1,306 @@
+{
+  "schema_version": 1,
+  "note": "Hand-written form tips. Ids listed here are never pruned by tools/build_library.py. Exactly three strings per id, each at most 90 characters, no placeholders.",
+  "overrides": {
+    "bench-press": [
+      "Retract your shoulder blades and keep them pinned to the bench.",
+      "Lower the bar to mid-chest with your elbows at about 45 degrees.",
+      "Drive your feet into the floor and press the bar over your shoulders."
+    ],
+    "incline-bench-press": [
+      "Set the bench near 30 degrees so your front delts do not take over.",
+      "Lower the bar to your upper chest and keep your wrists stacked.",
+      "Press up and slightly back; do not let your shoulders roll forward."
+    ],
+    "dumbbell-bench-press": [
+      "Set your shoulder blades first, then kick the dumbbells into place.",
+      "Lower until your upper arms are level with your torso, no deeper.",
+      "Press up and slightly in; stop before the dumbbells clang together."
+    ],
+    "machine-chest-press": [
+      "Set the handles level with your mid-chest before the first rep.",
+      "Keep your back and head against the pad through the whole press.",
+      "Press smoothly and stop just short of locking out your elbows."
+    ],
+    "push-up": [
+      "Hands just outside shoulder width, body in one straight line.",
+      "Lower until your chest is a fist off the floor, elbows at 45 degrees.",
+      "Push the floor away and squeeze your glutes so your hips do not sag."
+    ],
+    "dip": [
+      "Start at the top with your shoulders pulled down, not shrugged.",
+      "Lower until your upper arms reach parallel; lean forward for chest.",
+      "Stop the set if you feel pinching at the front of the shoulder."
+    ],
+    "cable-fly": [
+      "Set the pulleys at chest height and take a small step forward.",
+      "Keep a soft, fixed bend in your elbows and hug your arms together.",
+      "Let your arms travel back only until you feel a stretch across the chest."
+    ],
+    "overhead-press": [
+      "Start with the bar at collarbone height, ribs down, glutes tight.",
+      "Press straight up and move your head slightly back and through.",
+      "Finish with your biceps by your ears; do not arch your lower back."
+    ],
+    "seated-dumbbell-press": [
+      "Sit tall against the pad with the dumbbells at ear height.",
+      "Press up until your arms are straight, keeping your ribs down.",
+      "Lower under control back to ear height; do not bounce out of the bottom."
+    ],
+    "lateral-raise": [
+      "Stand tall with a slight bend in your elbows and your thumbs level.",
+      "Raise out to the sides only until your hands reach shoulder height.",
+      "Lead with your elbows and lower over two seconds; no swinging."
+    ],
+    "rear-delt-fly": [
+      "Hinge forward with a flat back and let your arms hang straight down.",
+      "Pull your arms out to the sides, leading with your little fingers.",
+      "Squeeze your shoulder blades together without shrugging your traps."
+    ],
+    "face-pull": [
+      "Set the rope at eye level and step back until your arms are straight.",
+      "Pull the rope toward your forehead and spread your hands apart.",
+      "Finish with your elbows high and your shoulder blades pulled back."
+    ],
+    "pull-up": [
+      "Start from a dead hang with your shoulders active, not slack.",
+      "Drive your elbows down to your ribs and lead with your chest.",
+      "Lower all the way to a straight-arm hang; no kipping or swinging."
+    ],
+    "chin-up": [
+      "Grip the bar palms facing you, hands about shoulder width apart.",
+      "Pull until your chin clears the bar, keeping your elbows in front.",
+      "Lower slowly to a full hang; stop the set once you start swinging."
+    ],
+    "lat-pulldown": [
+      "Grip slightly wider than your shoulders and pin your thighs down.",
+      "Pull the bar to your upper chest by driving your elbows down.",
+      "Let the bar rise until your arms are straight; do not lean back to pull."
+    ],
+    "barbell-row": [
+      "Hinge to about 45 degrees with a flat back and the bar hanging.",
+      "Pull the bar to your lower ribs by driving your elbows back.",
+      "Lower under control and keep your torso still, with no jerking upright."
+    ],
+    "one-arm-dumbbell-row": [
+      "Support one hand and knee on the bench with a flat, square back.",
+      "Pull the dumbbell to your hip, keeping your elbow close to your side.",
+      "Lower until your arm is straight and your shoulder blade reaches forward."
+    ],
+    "seated-row": [
+      "Sit tall with a slight knee bend and your chest lifted.",
+      "Pull the handle to your belly button, elbows passing your ribs.",
+      "Let your shoulder blades travel forward on the return; do not round."
+    ],
+    "chest-supported-row": [
+      "Rest your chest on the pad and let your arms hang straight down.",
+      "Row with your elbows until the handles touch the pad by your ribs.",
+      "Lower fully until your shoulder blades reach forward; do not shrug."
+    ],
+    "t-bar-row": [
+      "Straddle the bar with a flat back and your chest lifted.",
+      "Pull the handles to your chest with your elbows tracking back.",
+      "Squeeze at the top, then lower slowly without dropping your chest."
+    ],
+    "deadlift": [
+      "Set the bar over mid-foot with your shins almost touching it.",
+      "Brace hard, then push the floor away with a flat back and straight arms.",
+      "Stand tall by squeezing your glutes; do not lean back at the top."
+    ],
+    "romanian-deadlift": [
+      "Start standing with soft knees and the bar against your thighs.",
+      "Push your hips back and let the bar slide down your legs.",
+      "Stop at a hamstring stretch, then drive your hips forward to stand."
+    ],
+    "sumo-deadlift": [
+      "Take a wide stance, toes turned out, with your shins vertical.",
+      "Grip inside your knees, brace, and push the floor apart.",
+      "Keep the bar close and finish with your glutes, not by leaning back."
+    ],
+    "hip-thrust": [
+      "Rest your upper back on the bench, feet flat and shoulder width.",
+      "Drive through your heels until your hips are level with your knees.",
+      "Squeeze your glutes at the top; do not overarch your lower back."
+    ],
+    "barbell-glute-bridge": [
+      "Lie on the floor with the bar over your hips and feet planted.",
+      "Tuck your pelvis slightly, then lift your hips with your glutes.",
+      "Stop when your body is a straight line from knees to shoulders."
+    ],
+    "back-extension": [
+      "Set the pad just below your hip bones and cross your arms.",
+      "Lower until you feel a stretch, then rise until your body is straight.",
+      "Stop at a straight line and squeeze your glutes; do not hyperextend."
+    ],
+    "good-morning": [
+      "Rest the bar on your upper back with a small bend in your knees.",
+      "Push your hips back and lower your torso until it is near parallel.",
+      "Keep your back flat and rise by driving your hips forward."
+    ],
+    "squat": [
+      "Brace your core and set the bar on your upper back before stepping out.",
+      "Sit down and back until your hip crease drops below your knee.",
+      "Drive through mid-foot and keep your knees tracking over your toes."
+    ],
+    "front-squat": [
+      "Rest the bar on your front delts with your elbows held high.",
+      "Stay upright and sit straight down, keeping your elbows up.",
+      "Drive up through your whole foot without letting your chest drop."
+    ],
+    "goblet-squat": [
+      "Hold one dumbbell at your chest with your elbows tucked in.",
+      "Sit down between your feet, chest tall and heels flat on the floor.",
+      "Drive up through your heels and finish with your glutes squeezed."
+    ],
+    "leg-press": [
+      "Set your feet shoulder width on the platform, toes slightly out.",
+      "Lower until your knees reach 90 degrees; keep your back on the pad.",
+      "Press through your whole foot without locking your knees at the top."
+    ],
+    "hack-squat": [
+      "Set your shoulders under the pads with your back flat on the sled.",
+      "Lower until your thighs are at least parallel, knees over your toes.",
+      "Drive through mid-foot and stop just short of locking out."
+    ],
+    "smith-machine-squat": [
+      "Place your feet slightly forward of the bar with your back flat.",
+      "Lower under control until your thighs reach parallel.",
+      "Push through your heels and keep the bar path straight."
+    ],
+    "bulgarian-split-squat": [
+      "Rest the top of your back foot on a bench, front foot a step ahead.",
+      "Lower straight down until your back knee is just above the floor.",
+      "Keep your torso upright and push through your front heel to stand."
+    ],
+    "walking-lunge": [
+      "Step forward far enough that your front shin stays near vertical.",
+      "Lower until your back knee is just above the floor.",
+      "Push off the front heel and step straight into the next lunge."
+    ],
+    "reverse-lunge": [
+      "Step back and keep most of your weight on the front leg.",
+      "Lower until your back knee is just above the floor, torso upright.",
+      "Drive through your front heel to return to standing."
+    ],
+    "leg-extension": [
+      "Line your knee up with the machine pivot and hold the handles.",
+      "Straighten your legs fully and pause for a second at the top.",
+      "Lower slowly; do not let the stack drop or swing the weight."
+    ],
+    "seated-leg-curl": [
+      "Set the pad just above your heels and keep your back on the seat.",
+      "Curl your heels down and under, squeezing your hamstrings.",
+      "Return slowly until your legs are almost straight; keep your hips down."
+    ],
+    "standing-calf-raise": [
+      "Stand with the balls of your feet on the platform, knees straight.",
+      "Rise as high as you can and pause for a second at the top.",
+      "Lower until you feel a stretch in your calf, then repeat."
+    ],
+    "seated-calf-raise": [
+      "Sit with the pad on your thighs and the balls of your feet supported.",
+      "Push up as high as you can, then pause and squeeze your calves.",
+      "Lower slowly until you feel a deep stretch in your calf."
+    ],
+    "ez-bar-curl": [
+      "Stand tall with your elbows pinned to your sides.",
+      "Curl the bar up without swinging your torso or shoulders.",
+      "Lower over two seconds until your arms are straight."
+    ],
+    "hammer-curl": [
+      "Hold the dumbbells with your palms facing each other.",
+      "Curl straight up, keeping your elbows tight to your ribs.",
+      "Lower slowly and end the set once you start to swing."
+    ],
+    "skull-crusher": [
+      "Lie down with the bar over your forehead and elbows pointing up.",
+      "Bend only at the elbows and lower the bar toward your hairline.",
+      "Press back up without letting your elbows drift toward your feet."
+    ],
+    "tricep-pushdown": [
+      "Stand close to the cable with your elbows pinned to your sides.",
+      "Push the handle down until your arms are straight, then squeeze.",
+      "Let the handle rise only until your forearms reach horizontal."
+    ],
+    "farmer-carry": [
+      "Stand tall between the dumbbells with your shoulders pulled back.",
+      "Grip hard, brace your core, and walk with short, even steps.",
+      "Keep your ribs down and do not let your torso lean to one side."
+    ],
+    "plank": [
+      "Set your elbows under your shoulders and your feet hip width.",
+      "Brace as if you were about to be punched in the stomach.",
+      "Keep a straight line from shoulders to heels; do not let your hips sag."
+    ],
+    "hanging-leg-raise": [
+      "Hang with your shoulders active and your legs held together.",
+      "Raise your legs without swinging and curl your pelvis up at the top.",
+      "Lower slowly to a full hang and stop before you start to swing."
+    ],
+    "cat-cow-stretch": [
+      "Start on all fours with your hands under your shoulders.",
+      "Round your spine as you breathe out, then let it sag as you breathe in.",
+      "Move slowly through the whole range; never force the end position."
+    ],
+    "arm-circles": [
+      "Stand tall with your arms out to the sides at shoulder height.",
+      "Draw small circles first, then gradually make them larger.",
+      "Reverse the direction halfway through the set."
+    ],
+    "worlds-greatest-stretch": [
+      "Step into a deep lunge and place both hands inside your front foot.",
+      "Drop your back knee, then rotate your chest toward your front leg.",
+      "Reach the top arm to the ceiling and breathe out as you settle."
+    ],
+    "leg-swings-stretch": [
+      "Hold a wall for balance and keep your torso upright.",
+      "Swing one leg forward and back in a smooth, controlled arc.",
+      "Keep the range pain-free and switch legs halfway through."
+    ],
+    "torso-twist-stretch": [
+      "Stand with your feet hip width and your knees soft.",
+      "Rotate your ribcage to one side, letting your arms swing freely.",
+      "Keep your hips fairly still and do not force the end of the range."
+    ],
+    "childs-pose": [
+      "Kneel with your big toes together and your knees apart.",
+      "Sit back onto your heels and walk your hands forward.",
+      "Let your chest sink toward the floor and breathe into your back."
+    ],
+    "kneeling-hip-flexor-stretch": [
+      "Kneel on one knee with the other foot planted in front.",
+      "Tuck your pelvis under and squeeze the glute of the back leg.",
+      "Push your hips gently forward until the front of the hip opens."
+    ],
+    "hamstring-stretch": [
+      "Sit with one leg straight and the other foot tucked in.",
+      "Hinge from your hips with a flat back toward the straight leg.",
+      "Stop at a gentle stretch; do not round your back to reach further."
+    ],
+    "standing-quad-stretch": [
+      "Stand tall and hold a wall with one hand for balance.",
+      "Pull your heel toward your glute and keep your knees together.",
+      "Tuck your pelvis under so the stretch stays in the front of the thigh."
+    ],
+    "seated-forward-fold-stretch": [
+      "Sit with both legs straight and your feet flexed.",
+      "Hinge forward from your hips, keeping your back as flat as you can.",
+      "Hold where you feel a gentle hamstring stretch, not pain."
+    ],
+    "cross-body-shoulder-stretch": [
+      "Bring one arm across your chest at shoulder height.",
+      "Hook your other arm above the elbow and pull gently inward.",
+      "Keep your shoulder down; do not let it roll forward."
+    ],
+    "wall-calf-stretch": [
+      "Place your hands on a wall with one leg back and heel down.",
+      "Keep the back knee straight and lean your hips forward.",
+      "Hold the stretch and breathe; switch legs halfway through."
+    ],
+    "butterfly-stretch": [
+      "Sit with the soles of your feet together and your knees out.",
+      "Hold your feet and sit tall with a long spine.",
+      "Let your knees drop with gravity; do not press them down."
+    ]
+  }
+}

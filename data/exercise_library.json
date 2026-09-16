@@ -1,0 +1,6484 @@
+{
+  "schema_version": 1,
+  "source": {
+    "repo": "bryllim/workout-guide",
+    "license": "CC BY-SA 4.0",
+    "creator": "Bryl Lim"
+  },
+  "exercises": [
+    {
+      "id": "ab-wheel",
+      "name": "Ab Wheel Rollout",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Core",
+      "secondary_muscles": [
+        "Shoulders"
+      ],
+      "areas": [
+        "core",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "advanced",
+      "frames": [
+        "res://assets/exercises/ab-wheel/frame-1.png",
+        "res://assets/exercises/ab-wheel/frame-2.png",
+        "res://assets/exercises/ab-wheel/frame-3.png"
+      ],
+      "cues": [
+        "Brace as if you were about to be punched in the stomach.",
+        "Keep a straight line from shoulders to hips; do not let your hips sag.",
+        "Breathe normally and hold the position without shifting."
+      ],
+      "default_sets": 3,
+      "rep_min": 8,
+      "rep_max": 12,
+      "rest_seconds": 75
+    },
+    {
+      "id": "arm-circles",
+      "name": "Arm Circles",
+      "exercise_type": "duration",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Shoulders",
+      "secondary_muscles": [
+        "Chest",
+        "Upper Back",
+        "Mobility"
+      ],
+      "areas": [
+        "shoulders",
+        "chest",
+        "back",
+        "mobility"
+      ],
+      "is_stretch": true,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/arm-circles/frame-1.png",
+        "res://assets/exercises/arm-circles/frame-2.png",
+        "res://assets/exercises/arm-circles/frame-3.png"
+      ],
+      "cues": [
+        "Stand tall with your arms out to the sides at shoulder height.",
+        "Draw small circles first, then gradually make them larger.",
+        "Reverse the direction halfway through the set."
+      ],
+      "default_sets": 1,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 0
+    },
+    {
+      "id": "arnold-press",
+      "name": "Arnold Press",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Shoulders",
+      "secondary_muscles": [
+        "Triceps"
+      ],
+      "areas": [
+        "shoulders",
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/arnold-press/frame-1.png",
+        "res://assets/exercises/arnold-press/frame-2.png",
+        "res://assets/exercises/arnold-press/frame-3.png"
+      ],
+      "cues": [
+        "Start with the weight at collarbone height and your ribs down.",
+        "Press straight overhead, moving your head slightly back and through.",
+        "Lock out with your biceps next to your ears; do not arch your lower back."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "assisted-chin-up",
+      "name": "Assisted Chin-up",
+      "exercise_type": "assisted_bodyweight",
+      "equipment": "Machine",
+      "primary_muscle": "Biceps",
+      "secondary_muscles": [
+        "Lats"
+      ],
+      "areas": [
+        "arms",
+        "back"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/assisted-chin-up/frame-1.png",
+        "res://assets/exercises/assisted-chin-up/frame-2.png",
+        "res://assets/exercises/assisted-chin-up/frame-3.png"
+      ],
+      "cues": [
+        "Start from a dead hang with your shoulders active, not slack.",
+        "Drive your elbows down toward your ribs and lead with your chest.",
+        "Lower all the way under control; no swinging or kipping."
+      ],
+      "default_sets": 3,
+      "rep_min": 8,
+      "rep_max": 12,
+      "rest_seconds": 75
+    },
+    {
+      "id": "assisted-dip",
+      "name": "Assisted Dip",
+      "exercise_type": "assisted_bodyweight",
+      "equipment": "Machine",
+      "primary_muscle": "Triceps",
+      "secondary_muscles": [
+        "Chest"
+      ],
+      "areas": [
+        "arms",
+        "chest"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/assisted-dip/frame-1.png",
+        "res://assets/exercises/assisted-dip/frame-2.png",
+        "res://assets/exercises/assisted-dip/frame-3.png"
+      ],
+      "cues": [
+        "Set your shoulder blades back and down, then keep them pinned.",
+        "Lower under control until your hands are level with your mid-chest.",
+        "Press away without letting your shoulders roll forward."
+      ],
+      "default_sets": 3,
+      "rep_min": 8,
+      "rep_max": 12,
+      "rest_seconds": 75
+    },
+    {
+      "id": "assisted-pull-up",
+      "name": "Assisted Pull-up",
+      "exercise_type": "assisted_bodyweight",
+      "equipment": "Machine",
+      "primary_muscle": "Lats",
+      "secondary_muscles": [
+        "Biceps"
+      ],
+      "areas": [
+        "back",
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/assisted-pull-up/frame-1.png",
+        "res://assets/exercises/assisted-pull-up/frame-2.png",
+        "res://assets/exercises/assisted-pull-up/frame-3.png"
+      ],
+      "cues": [
+        "Start from a dead hang with your shoulders active, not slack.",
+        "Drive your elbows down toward your ribs and lead with your chest.",
+        "Lower all the way under control; no swinging or kipping."
+      ],
+      "default_sets": 3,
+      "rep_min": 8,
+      "rep_max": 12,
+      "rest_seconds": 75
+    },
+    {
+      "id": "back-extension",
+      "name": "Back Extension",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Lower Back",
+      "secondary_muscles": [
+        "Glutes",
+        "Hamstrings"
+      ],
+      "areas": [
+        "back",
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/back-extension/frame-1.png",
+        "res://assets/exercises/back-extension/frame-2.png",
+        "res://assets/exercises/back-extension/frame-3.png"
+      ],
+      "cues": [
+        "Set the pad just below your hip bones and cross your arms.",
+        "Lower until you feel a stretch, then rise until your body is straight.",
+        "Stop at a straight line and squeeze your glutes; do not hyperextend."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "barbell-glute-bridge",
+      "name": "Barbell Glute Bridge",
+      "exercise_type": "weight_reps",
+      "equipment": "Barbell",
+      "primary_muscle": "Glutes",
+      "secondary_muscles": [
+        "Hamstrings",
+        "Core"
+      ],
+      "areas": [
+        "legs",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/barbell-glute-bridge/frame-1.png",
+        "res://assets/exercises/barbell-glute-bridge/frame-2.png",
+        "res://assets/exercises/barbell-glute-bridge/frame-3.png"
+      ],
+      "cues": [
+        "Lie on the floor with the bar over your hips and feet planted.",
+        "Tuck your pelvis slightly, then lift your hips with your glutes.",
+        "Stop when your body is a straight line from knees to shoulders."
+      ],
+      "default_sets": 3,
+      "rep_min": 8,
+      "rep_max": 12,
+      "rest_seconds": 75
+    },
+    {
+      "id": "barbell-row",
+      "name": "Barbell Row",
+      "exercise_type": "weight_reps",
+      "equipment": "Barbell",
+      "primary_muscle": "Back",
+      "secondary_muscles": [
+        "Biceps",
+        "Rear Delts"
+      ],
+      "areas": [
+        "back",
+        "arms",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/barbell-row/frame-1.png",
+        "res://assets/exercises/barbell-row/frame-2.png",
+        "res://assets/exercises/barbell-row/frame-3.png"
+      ],
+      "cues": [
+        "Hinge to about 45 degrees with a flat back and the bar hanging.",
+        "Pull the bar to your lower ribs by driving your elbows back.",
+        "Lower under control and keep your torso still, with no jerking upright."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "battle-ropes",
+      "name": "Battle Ropes",
+      "exercise_type": "duration",
+      "equipment": "Cardio",
+      "primary_muscle": "Shoulders",
+      "secondary_muscles": [
+        "Core",
+        "Cardio"
+      ],
+      "areas": [
+        "shoulders",
+        "core",
+        "cardio"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/battle-ropes/frame-1.png",
+        "res://assets/exercises/battle-ropes/frame-2.png",
+        "res://assets/exercises/battle-ropes/frame-3.png"
+      ],
+      "cues": [
+        "Start at a pace you could hold a short conversation at.",
+        "Keep your breathing rhythmic and your core braced.",
+        "Slow down rather than stopping abruptly when the interval ends."
+      ],
+      "default_sets": 3,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 45
+    },
+    {
+      "id": "bear-crawl",
+      "name": "Bear Crawl",
+      "exercise_type": "duration",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Core",
+      "secondary_muscles": [
+        "Shoulders",
+        "Quads",
+        "Cardio"
+      ],
+      "areas": [
+        "core",
+        "shoulders",
+        "legs",
+        "cardio"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/bear-crawl/frame-1.png",
+        "res://assets/exercises/bear-crawl/frame-2.png",
+        "res://assets/exercises/bear-crawl/frame-3.png"
+      ],
+      "cues": [
+        "Brace as if you were about to be punched in the stomach.",
+        "Keep a straight line from shoulders to hips; do not let your hips sag.",
+        "Breathe normally and hold the position without shifting."
+      ],
+      "default_sets": 3,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 30
+    },
+    {
+      "id": "bear-plank",
+      "name": "Bear Plank",
+      "exercise_type": "duration",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Core",
+      "secondary_muscles": [
+        "Quads",
+        "Shoulders"
+      ],
+      "areas": [
+        "core",
+        "legs",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/bear-plank/frame-1.png",
+        "res://assets/exercises/bear-plank/frame-2.png",
+        "res://assets/exercises/bear-plank/frame-3.png"
+      ],
+      "cues": [
+        "Brace as if you were about to be punched in the stomach.",
+        "Keep a straight line from shoulders to hips; do not let your hips sag.",
+        "Breathe normally and hold the position without shifting."
+      ],
+      "default_sets": 3,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 30
+    },
+    {
+      "id": "belt-squat",
+      "name": "Belt Squat",
+      "exercise_type": "weight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Quads",
+      "secondary_muscles": [
+        "Glutes"
+      ],
+      "areas": [
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/belt-squat/frame-1.png",
+        "res://assets/exercises/belt-squat/frame-2.png",
+        "res://assets/exercises/belt-squat/frame-3.png"
+      ],
+      "cues": [
+        "Brace your core and keep your chest tall before you descend.",
+        "Sit down and back until your thighs reach at least parallel.",
+        "Drive through mid-foot and keep your knees tracking over your toes."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "bench-press",
+      "name": "Bench Press",
+      "exercise_type": "weight_reps",
+      "equipment": "Barbell",
+      "primary_muscle": "Chest",
+      "secondary_muscles": [
+        "Triceps",
+        "Shoulders"
+      ],
+      "areas": [
+        "chest",
+        "arms",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/bench-press/frame-1.png",
+        "res://assets/exercises/bench-press/frame-2.png",
+        "res://assets/exercises/bench-press/frame-3.png"
+      ],
+      "cues": [
+        "Retract your shoulder blades and keep them pinned to the bench.",
+        "Lower the bar to mid-chest with your elbows at about 45 degrees.",
+        "Drive your feet into the floor and press the bar over your shoulders."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "bent-over-rear-delt-raise",
+      "name": "Bent-Over Rear Delt Raise",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Rear Delts",
+      "secondary_muscles": [
+        "Upper Back"
+      ],
+      "areas": [
+        "shoulders",
+        "back"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/bent-over-rear-delt-raise/frame-1.png",
+        "res://assets/exercises/bent-over-rear-delt-raise/frame-2.png",
+        "res://assets/exercises/bent-over-rear-delt-raise/frame-3.png"
+      ],
+      "cues": [
+        "Lead with your elbows and keep a slight bend in them.",
+        "Raise only to shoulder height; stop before your traps take over.",
+        "Lower slowly — the lowering half is where the work happens."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "bicep-curl",
+      "name": "Bicep Curl",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Biceps",
+      "secondary_muscles": [
+        "Forearms"
+      ],
+      "areas": [
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/bicep-curl/frame-1.png",
+        "res://assets/exercises/bicep-curl/frame-2.png",
+        "res://assets/exercises/bicep-curl/frame-3.png"
+      ],
+      "cues": [
+        "Keep your elbows tucked and pinned to your sides.",
+        "Move only at the elbow — no swinging from your shoulders or hips.",
+        "Squeeze at the top, then lower over two seconds."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "bicycle-crunch",
+      "name": "Bicycle Crunch",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Core",
+      "secondary_muscles": [
+        "Legs"
+      ],
+      "areas": [
+        "core",
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/bicycle-crunch/frame-1.png",
+        "res://assets/exercises/bicycle-crunch/frame-2.png",
+        "res://assets/exercises/bicycle-crunch/frame-3.png"
+      ],
+      "cues": [
+        "Exhale and draw your ribs toward your hips.",
+        "Move slowly — no momentum from your arms or hips.",
+        "Stop when your lower back starts to arch away from the floor."
+      ],
+      "default_sets": 2,
+      "rep_min": 12,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "bird-dog",
+      "name": "Bird Dog",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Core",
+      "secondary_muscles": [
+        "Glutes",
+        "Shoulders"
+      ],
+      "areas": [
+        "core",
+        "legs",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/bird-dog/frame-1.png",
+        "res://assets/exercises/bird-dog/frame-2.png",
+        "res://assets/exercises/bird-dog/frame-3.png"
+      ],
+      "cues": [
+        "Brace as if you were about to be punched in the stomach.",
+        "Keep a straight line from shoulders to hips; do not let your hips sag.",
+        "Breathe normally and hold the position without shifting."
+      ],
+      "default_sets": 2,
+      "rep_min": 12,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "bulgarian-split-squat",
+      "name": "Bulgarian Split Squat",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Quads",
+      "secondary_muscles": [
+        "Glutes",
+        "Core"
+      ],
+      "areas": [
+        "legs",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/bulgarian-split-squat/frame-1.png",
+        "res://assets/exercises/bulgarian-split-squat/frame-2.png",
+        "res://assets/exercises/bulgarian-split-squat/frame-3.png"
+      ],
+      "cues": [
+        "Rest the top of your back foot on a bench, front foot a step ahead.",
+        "Lower straight down until your back knee is just above the floor.",
+        "Keep your torso upright and push through your front heel to stand."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "burpee",
+      "name": "Burpee",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Legs",
+      "secondary_muscles": [
+        "Chest",
+        "Shoulders",
+        "Core",
+        "Cardio"
+      ],
+      "areas": [
+        "legs",
+        "chest",
+        "shoulders",
+        "core",
+        "cardio"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/burpee/frame-1.png",
+        "res://assets/exercises/burpee/frame-2.png",
+        "res://assets/exercises/burpee/frame-3.png"
+      ],
+      "cues": [
+        "Start at a pace you could hold a short conversation at.",
+        "Keep your breathing rhythmic and your core braced.",
+        "Slow down rather than stopping abruptly when the interval ends."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "butterfly-stretch",
+      "name": "Butterfly Stretch",
+      "exercise_type": "duration",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Hips",
+      "secondary_muscles": [
+        "Groin",
+        "Mobility"
+      ],
+      "areas": [
+        "legs",
+        "mobility"
+      ],
+      "is_stretch": true,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/butterfly-stretch/frame-1.png",
+        "res://assets/exercises/butterfly-stretch/frame-2.png",
+        "res://assets/exercises/butterfly-stretch/frame-3.png"
+      ],
+      "cues": [
+        "Sit with the soles of your feet together and your knees out.",
+        "Hold your feet and sit tall with a long spine.",
+        "Let your knees drop with gravity; do not press them down."
+      ],
+      "default_sets": 1,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 0
+    },
+    {
+      "id": "cable-crunch",
+      "name": "Cable Crunch",
+      "exercise_type": "weight_reps",
+      "equipment": "Cable",
+      "primary_muscle": "Core",
+      "secondary_muscles": [],
+      "areas": [
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/cable-crunch/frame-1.png",
+        "res://assets/exercises/cable-crunch/frame-2.png",
+        "res://assets/exercises/cable-crunch/frame-3.png"
+      ],
+      "cues": [
+        "Exhale and draw your ribs toward your hips.",
+        "Move slowly — no momentum from your arms or hips.",
+        "Stop when your lower back starts to arch away from the floor."
+      ],
+      "default_sets": 2,
+      "rep_min": 12,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "cable-curl",
+      "name": "Cable Curl",
+      "exercise_type": "weight_reps",
+      "equipment": "Cable",
+      "primary_muscle": "Biceps",
+      "secondary_muscles": [
+        "Forearms"
+      ],
+      "areas": [
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/cable-curl/frame-1.png",
+        "res://assets/exercises/cable-curl/frame-2.png",
+        "res://assets/exercises/cable-curl/frame-3.png"
+      ],
+      "cues": [
+        "Keep your elbows tucked and pinned to your sides.",
+        "Move only at the elbow — no swinging from your shoulders or hips.",
+        "Squeeze at the top, then lower over two seconds."
+      ],
+      "default_sets": 2,
+      "rep_min": 12,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "cable-fly",
+      "name": "Cable Fly",
+      "exercise_type": "weight_reps",
+      "equipment": "Cable",
+      "primary_muscle": "Chest",
+      "secondary_muscles": [
+        "Shoulders"
+      ],
+      "areas": [
+        "chest",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/cable-fly/frame-1.png",
+        "res://assets/exercises/cable-fly/frame-2.png",
+        "res://assets/exercises/cable-fly/frame-3.png"
+      ],
+      "cues": [
+        "Set the pulleys at chest height and take a small step forward.",
+        "Keep a soft, fixed bend in your elbows and hug your arms together.",
+        "Let your arms travel back only until you feel a stretch across the chest."
+      ],
+      "default_sets": 3,
+      "rep_min": 8,
+      "rep_max": 12,
+      "rest_seconds": 75
+    },
+    {
+      "id": "cable-front-raise",
+      "name": "Cable Front Raise",
+      "exercise_type": "weight_reps",
+      "equipment": "Cable",
+      "primary_muscle": "Shoulders",
+      "secondary_muscles": [
+        "Chest"
+      ],
+      "areas": [
+        "shoulders",
+        "chest"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/cable-front-raise/frame-1.png",
+        "res://assets/exercises/cable-front-raise/frame-2.png",
+        "res://assets/exercises/cable-front-raise/frame-3.png"
+      ],
+      "cues": [
+        "Lead with your elbows and keep a slight bend in them.",
+        "Raise only to shoulder height; stop before your traps take over.",
+        "Lower slowly — the lowering half is where the work happens."
+      ],
+      "default_sets": 2,
+      "rep_min": 12,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "cable-kickback",
+      "name": "Cable Kickback",
+      "exercise_type": "weight_reps",
+      "equipment": "Cable",
+      "primary_muscle": "Glutes",
+      "secondary_muscles": [
+        "Hamstrings"
+      ],
+      "areas": [
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/cable-kickback/frame-1.png",
+        "res://assets/exercises/cable-kickback/frame-2.png",
+        "res://assets/exercises/cable-kickback/frame-3.png"
+      ],
+      "cues": [
+        "Set your shoulders down and pull the weight into your body.",
+        "Push your hips back with a flat back — do not round your lower back.",
+        "Finish by squeezing your glutes; stop before your back arches."
+      ],
+      "default_sets": 3,
+      "rep_min": 8,
+      "rep_max": 12,
+      "rest_seconds": 75
+    },
+    {
+      "id": "cable-lateral-raise",
+      "name": "Cable Lateral Raise",
+      "exercise_type": "weight_reps",
+      "equipment": "Cable",
+      "primary_muscle": "Shoulders",
+      "secondary_muscles": [
+        "Upper Back"
+      ],
+      "areas": [
+        "shoulders",
+        "back"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/cable-lateral-raise/frame-1.png",
+        "res://assets/exercises/cable-lateral-raise/frame-2.png",
+        "res://assets/exercises/cable-lateral-raise/frame-3.png"
+      ],
+      "cues": [
+        "Lead with your elbows and keep a slight bend in them.",
+        "Raise only to shoulder height; stop before your traps take over.",
+        "Lower slowly — the lowering half is where the work happens."
+      ],
+      "default_sets": 2,
+      "rep_min": 12,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "cable-pallof-hold",
+      "name": "Cable Pallof Hold",
+      "exercise_type": "duration",
+      "equipment": "Cable",
+      "primary_muscle": "Core",
+      "secondary_muscles": [
+        "Glutes",
+        "Shoulders"
+      ],
+      "areas": [
+        "core",
+        "legs",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/cable-pallof-hold/frame-1.png",
+        "res://assets/exercises/cable-pallof-hold/frame-2.png",
+        "res://assets/exercises/cable-pallof-hold/frame-3.png"
+      ],
+      "cues": [
+        "Rotate from your ribcage, not from your arms.",
+        "Keep your hips square and your core braced throughout.",
+        "Move slowly and stop the rotation rather than letting it swing."
+      ],
+      "default_sets": 3,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 30
+    },
+    {
+      "id": "cable-pull-through",
+      "name": "Cable Pull-Through",
+      "exercise_type": "weight_reps",
+      "equipment": "Cable",
+      "primary_muscle": "Glutes",
+      "secondary_muscles": [
+        "Hamstrings",
+        "Lower Back"
+      ],
+      "areas": [
+        "legs",
+        "back"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/cable-pull-through/frame-1.png",
+        "res://assets/exercises/cable-pull-through/frame-2.png",
+        "res://assets/exercises/cable-pull-through/frame-3.png"
+      ],
+      "cues": [
+        "Set your shoulders down and pull the weight into your body.",
+        "Push your hips back with a flat back — do not round your lower back.",
+        "Finish by squeezing your glutes; stop before your back arches."
+      ],
+      "default_sets": 3,
+      "rep_min": 8,
+      "rep_max": 12,
+      "rest_seconds": 75
+    },
+    {
+      "id": "cable-rear-delt-fly",
+      "name": "Cable Rear Delt Fly",
+      "exercise_type": "weight_reps",
+      "equipment": "Cable",
+      "primary_muscle": "Rear Delts",
+      "secondary_muscles": [
+        "Upper Back"
+      ],
+      "areas": [
+        "shoulders",
+        "back"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/cable-rear-delt-fly/frame-1.png",
+        "res://assets/exercises/cable-rear-delt-fly/frame-2.png",
+        "res://assets/exercises/cable-rear-delt-fly/frame-3.png"
+      ],
+      "cues": [
+        "Set your shoulder blades back and down, then keep them pinned.",
+        "Lower under control until your hands are level with your mid-chest.",
+        "Press away without letting your shoulders roll forward."
+      ],
+      "default_sets": 3,
+      "rep_min": 8,
+      "rep_max": 12,
+      "rest_seconds": 75
+    },
+    {
+      "id": "cable-standing-hip-abduction",
+      "name": "Cable Standing Hip Abduction",
+      "exercise_type": "weight_reps",
+      "equipment": "Cable",
+      "primary_muscle": "Glutes",
+      "secondary_muscles": [
+        "Core"
+      ],
+      "areas": [
+        "legs",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/cable-standing-hip-abduction/frame-1.png",
+        "res://assets/exercises/cable-standing-hip-abduction/frame-2.png",
+        "res://assets/exercises/cable-standing-hip-abduction/frame-3.png"
+      ],
+      "cues": [
+        "Use a load you can control for every rep.",
+        "Keep your core braced and your spine neutral.",
+        "Stop the set when your form starts to break down."
+      ],
+      "default_sets": 2,
+      "rep_min": 12,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "cable-standing-hip-adduction",
+      "name": "Cable Standing Hip Adduction",
+      "exercise_type": "weight_reps",
+      "equipment": "Cable",
+      "primary_muscle": "Adductors",
+      "secondary_muscles": [
+        "Core",
+        "Glutes"
+      ],
+      "areas": [
+        "legs",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/cable-standing-hip-adduction/frame-1.png",
+        "res://assets/exercises/cable-standing-hip-adduction/frame-2.png",
+        "res://assets/exercises/cable-standing-hip-adduction/frame-3.png"
+      ],
+      "cues": [
+        "Use a load you can control for every rep.",
+        "Keep your core braced and your spine neutral.",
+        "Stop the set when your form starts to break down."
+      ],
+      "default_sets": 2,
+      "rep_min": 12,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "cable-woodchop",
+      "name": "Cable Woodchop",
+      "exercise_type": "weight_reps",
+      "equipment": "Cable",
+      "primary_muscle": "Core",
+      "secondary_muscles": [
+        "Shoulders"
+      ],
+      "areas": [
+        "core",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/cable-woodchop/frame-1.png",
+        "res://assets/exercises/cable-woodchop/frame-2.png",
+        "res://assets/exercises/cable-woodchop/frame-3.png"
+      ],
+      "cues": [
+        "Rotate from your ribcage, not from your arms.",
+        "Keep your hips square and your core braced throughout.",
+        "Move slowly and stop the rotation rather than letting it swing."
+      ],
+      "default_sets": 2,
+      "rep_min": 12,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "calf-raise",
+      "name": "Calf Raise",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Calves",
+      "secondary_muscles": [],
+      "areas": [
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/calf-raise/frame-1.png",
+        "res://assets/exercises/calf-raise/frame-2.png",
+        "res://assets/exercises/calf-raise/frame-3.png"
+      ],
+      "cues": [
+        "Stand tall with your knees straight but not locked.",
+        "Rise as high as you can onto the balls of your feet.",
+        "Lower until you feel a stretch in your calf; pause, then repeat."
+      ],
+      "default_sets": 2,
+      "rep_min": 12,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "captains-chair-knee-raise",
+      "name": "Captain's Chair Knee Raise",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Core",
+      "secondary_muscles": [
+        "Shoulders"
+      ],
+      "areas": [
+        "core",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/captains-chair-knee-raise/frame-1.png",
+        "res://assets/exercises/captains-chair-knee-raise/frame-2.png",
+        "res://assets/exercises/captains-chair-knee-raise/frame-3.png"
+      ],
+      "cues": [
+        "Exhale and draw your ribs toward your hips.",
+        "Move slowly — no momentum from your arms or hips.",
+        "Stop when your lower back starts to arch away from the floor."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "cat-cow-stretch",
+      "name": "Cat-Cow Stretch",
+      "exercise_type": "duration",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Mobility",
+      "secondary_muscles": [
+        "Back",
+        "Core"
+      ],
+      "areas": [
+        "mobility",
+        "back",
+        "core"
+      ],
+      "is_stretch": true,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/cat-cow-stretch/frame-1.png",
+        "res://assets/exercises/cat-cow-stretch/frame-2.png",
+        "res://assets/exercises/cat-cow-stretch/frame-3.png"
+      ],
+      "cues": [
+        "Start on all fours with your hands under your shoulders.",
+        "Round your spine as you breathe out, then let it sag as you breathe in.",
+        "Move slowly through the whole range; never force the end position."
+      ],
+      "default_sets": 1,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 0
+    },
+    {
+      "id": "chest-supported-row",
+      "name": "Chest Supported Row",
+      "exercise_type": "weight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Back",
+      "secondary_muscles": [
+        "Biceps",
+        "Rear Delts"
+      ],
+      "areas": [
+        "back",
+        "arms",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/chest-supported-row/frame-1.png",
+        "res://assets/exercises/chest-supported-row/frame-2.png",
+        "res://assets/exercises/chest-supported-row/frame-3.png"
+      ],
+      "cues": [
+        "Rest your chest on the pad and let your arms hang straight down.",
+        "Row with your elbows until the handles touch the pad by your ribs.",
+        "Lower fully until your shoulder blades reach forward; do not shrug."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "childs-pose",
+      "name": "Child's Pose",
+      "exercise_type": "duration",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Back",
+      "secondary_muscles": [
+        "Shoulders",
+        "Hips",
+        "Mobility"
+      ],
+      "areas": [
+        "back",
+        "shoulders",
+        "legs",
+        "mobility"
+      ],
+      "is_stretch": true,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/childs-pose/frame-1.png",
+        "res://assets/exercises/childs-pose/frame-2.png",
+        "res://assets/exercises/childs-pose/frame-3.png"
+      ],
+      "cues": [
+        "Kneel with your big toes together and your knees apart.",
+        "Sit back onto your heels and walk your hands forward.",
+        "Let your chest sink toward the floor and breathe into your back."
+      ],
+      "default_sets": 1,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 0
+    },
+    {
+      "id": "chin-up",
+      "name": "Chin-up",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Biceps",
+      "secondary_muscles": [
+        "Lats"
+      ],
+      "areas": [
+        "arms",
+        "back"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/chin-up/frame-1.png",
+        "res://assets/exercises/chin-up/frame-2.png",
+        "res://assets/exercises/chin-up/frame-3.png"
+      ],
+      "cues": [
+        "Grip the bar palms facing you, hands about shoulder width apart.",
+        "Pull until your chin clears the bar, keeping your elbows in front.",
+        "Lower slowly to a full hang; stop the set once you start swinging."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "clamshell",
+      "name": "Clamshell",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Glutes",
+      "secondary_muscles": [
+        "Core"
+      ],
+      "areas": [
+        "legs",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/clamshell/frame-1.png",
+        "res://assets/exercises/clamshell/frame-2.png",
+        "res://assets/exercises/clamshell/frame-3.png"
+      ],
+      "cues": [
+        "Use a load you can control for every rep.",
+        "Keep your core braced and your spine neutral.",
+        "Stop the set when your form starts to break down."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "close-grip-bench-press",
+      "name": "Close-Grip Bench Press",
+      "exercise_type": "weight_reps",
+      "equipment": "Barbell",
+      "primary_muscle": "Triceps",
+      "secondary_muscles": [
+        "Chest",
+        "Shoulders"
+      ],
+      "areas": [
+        "arms",
+        "chest",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/close-grip-bench-press/frame-1.png",
+        "res://assets/exercises/close-grip-bench-press/frame-2.png",
+        "res://assets/exercises/close-grip-bench-press/frame-3.png"
+      ],
+      "cues": [
+        "Set your shoulder blades back and down, then keep them pinned.",
+        "Lower under control until your hands are level with your mid-chest.",
+        "Press away without letting your shoulders roll forward."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "close-grip-lat-pulldown",
+      "name": "Close-Grip Lat Pulldown",
+      "exercise_type": "weight_reps",
+      "equipment": "Cable",
+      "primary_muscle": "Lats",
+      "secondary_muscles": [
+        "Biceps"
+      ],
+      "areas": [
+        "back",
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/close-grip-lat-pulldown/frame-1.png",
+        "res://assets/exercises/close-grip-lat-pulldown/frame-2.png",
+        "res://assets/exercises/close-grip-lat-pulldown/frame-3.png"
+      ],
+      "cues": [
+        "Start from a dead hang with your shoulders active, not slack.",
+        "Drive your elbows down toward your ribs and lead with your chest.",
+        "Lower all the way under control; no swinging or kipping."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "commando-pull-up",
+      "name": "Commando Pull-up",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Pull-up Bar",
+      "primary_muscle": "Lats",
+      "secondary_muscles": [
+        "Biceps",
+        "Upper Back",
+        "Core"
+      ],
+      "areas": [
+        "back",
+        "arms",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "advanced",
+      "frames": [
+        "res://assets/exercises/commando-pull-up/frame-1.png",
+        "res://assets/exercises/commando-pull-up/frame-2.png",
+        "res://assets/exercises/commando-pull-up/frame-3.png"
+      ],
+      "cues": [
+        "Start from a dead hang with your shoulders active, not slack.",
+        "Drive your elbows down toward your ribs and lead with your chest.",
+        "Lower all the way under control; no swinging or kipping."
+      ],
+      "default_sets": 4,
+      "rep_min": 4,
+      "rep_max": 8,
+      "rest_seconds": 120
+    },
+    {
+      "id": "cross-body-shoulder-stretch",
+      "name": "Cross-Body Shoulder Stretch",
+      "exercise_type": "duration",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Shoulders",
+      "secondary_muscles": [
+        "Upper Back",
+        "Mobility"
+      ],
+      "areas": [
+        "shoulders",
+        "back",
+        "mobility"
+      ],
+      "is_stretch": true,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/cross-body-shoulder-stretch/frame-1.png",
+        "res://assets/exercises/cross-body-shoulder-stretch/frame-2.png",
+        "res://assets/exercises/cross-body-shoulder-stretch/frame-3.png"
+      ],
+      "cues": [
+        "Bring one arm across your chest at shoulder height.",
+        "Hook your other arm above the elbow and pull gently inward.",
+        "Keep your shoulder down; do not let it roll forward."
+      ],
+      "default_sets": 1,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 0
+    },
+    {
+      "id": "crunch",
+      "name": "Crunch",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Core",
+      "secondary_muscles": [],
+      "areas": [
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/crunch/frame-1.png",
+        "res://assets/exercises/crunch/frame-2.png",
+        "res://assets/exercises/crunch/frame-3.png"
+      ],
+      "cues": [
+        "Exhale and draw your ribs toward your hips.",
+        "Move slowly — no momentum from your arms or hips.",
+        "Stop when your lower back starts to arch away from the floor."
+      ],
+      "default_sets": 2,
+      "rep_min": 12,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "dead-bug",
+      "name": "Dead Bug",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Core",
+      "secondary_muscles": [
+        "Legs"
+      ],
+      "areas": [
+        "core",
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/dead-bug/frame-1.png",
+        "res://assets/exercises/dead-bug/frame-2.png",
+        "res://assets/exercises/dead-bug/frame-3.png"
+      ],
+      "cues": [
+        "Brace as if you were about to be punched in the stomach.",
+        "Keep a straight line from shoulders to hips; do not let your hips sag.",
+        "Breathe normally and hold the position without shifting."
+      ],
+      "default_sets": 2,
+      "rep_min": 12,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "deadlift",
+      "name": "Deadlift",
+      "exercise_type": "weight_reps",
+      "equipment": "Barbell",
+      "primary_muscle": "Posterior Chain",
+      "secondary_muscles": [
+        "Back",
+        "Grip"
+      ],
+      "areas": [
+        "back",
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/deadlift/frame-1.png",
+        "res://assets/exercises/deadlift/frame-2.png",
+        "res://assets/exercises/deadlift/frame-3.png"
+      ],
+      "cues": [
+        "Set the bar over mid-foot with your shins almost touching it.",
+        "Brace hard, then push the floor away with a flat back and straight arms.",
+        "Stand tall by squeezing your glutes; do not lean back at the top."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "decline-bench-press",
+      "name": "Decline Bench Press",
+      "exercise_type": "weight_reps",
+      "equipment": "Barbell",
+      "primary_muscle": "Chest",
+      "secondary_muscles": [
+        "Triceps",
+        "Shoulders"
+      ],
+      "areas": [
+        "chest",
+        "arms",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/decline-bench-press/frame-1.png",
+        "res://assets/exercises/decline-bench-press/frame-2.png",
+        "res://assets/exercises/decline-bench-press/frame-3.png"
+      ],
+      "cues": [
+        "Set your shoulder blades back and down, then keep them pinned.",
+        "Lower under control until your hands are level with your mid-chest.",
+        "Press away without letting your shoulders roll forward."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "decline-dumbbell-press",
+      "name": "Decline Dumbbell Press",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Chest",
+      "secondary_muscles": [
+        "Triceps",
+        "Shoulders"
+      ],
+      "areas": [
+        "chest",
+        "arms",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/decline-dumbbell-press/frame-1.png",
+        "res://assets/exercises/decline-dumbbell-press/frame-2.png",
+        "res://assets/exercises/decline-dumbbell-press/frame-3.png"
+      ],
+      "cues": [
+        "Start with the weight at collarbone height and your ribs down.",
+        "Press straight overhead, moving your head slightly back and through.",
+        "Lock out with your biceps next to your ears; do not arch your lower back."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "decline-sit-up",
+      "name": "Decline Sit-Up",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bench",
+      "primary_muscle": "Core",
+      "secondary_muscles": [
+        "Quads"
+      ],
+      "areas": [
+        "core",
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/decline-sit-up/frame-1.png",
+        "res://assets/exercises/decline-sit-up/frame-2.png",
+        "res://assets/exercises/decline-sit-up/frame-3.png"
+      ],
+      "cues": [
+        "Exhale and draw your ribs toward your hips.",
+        "Move slowly — no momentum from your arms or hips.",
+        "Stop when your lower back starts to arch away from the floor."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "deficit-reverse-lunge",
+      "name": "Deficit Reverse Lunge",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Glutes",
+      "secondary_muscles": [
+        "Quads",
+        "Hamstrings",
+        "Core"
+      ],
+      "areas": [
+        "legs",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "advanced",
+      "frames": [
+        "res://assets/exercises/deficit-reverse-lunge/frame-1.png",
+        "res://assets/exercises/deficit-reverse-lunge/frame-2.png",
+        "res://assets/exercises/deficit-reverse-lunge/frame-3.png"
+      ],
+      "cues": [
+        "Take a long enough step that your front shin stays near vertical.",
+        "Lower until the back knee is just above the floor.",
+        "Push through the front heel to stand; keep your torso upright."
+      ],
+      "default_sets": 4,
+      "rep_min": 4,
+      "rep_max": 8,
+      "rest_seconds": 120
+    },
+    {
+      "id": "dip",
+      "name": "Dip",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Triceps",
+      "secondary_muscles": [
+        "Chest",
+        "Shoulders"
+      ],
+      "areas": [
+        "arms",
+        "chest",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/dip/frame-1.png",
+        "res://assets/exercises/dip/frame-2.png",
+        "res://assets/exercises/dip/frame-3.png"
+      ],
+      "cues": [
+        "Start at the top with your shoulders pulled down, not shrugged.",
+        "Lower until your upper arms reach parallel; lean forward for chest.",
+        "Stop the set if you feel pinching at the front of the shoulder."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "donkey-calf-raise",
+      "name": "Donkey Calf Raise",
+      "exercise_type": "weight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Calves",
+      "secondary_muscles": [],
+      "areas": [
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/donkey-calf-raise/frame-1.png",
+        "res://assets/exercises/donkey-calf-raise/frame-2.png",
+        "res://assets/exercises/donkey-calf-raise/frame-3.png"
+      ],
+      "cues": [
+        "Stand tall with your knees straight but not locked.",
+        "Rise as high as you can onto the balls of your feet.",
+        "Lower until you feel a stretch in your calf; pause, then repeat."
+      ],
+      "default_sets": 2,
+      "rep_min": 12,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "donkey-kick",
+      "name": "Donkey Kick",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Glutes",
+      "secondary_muscles": [
+        "Hamstrings",
+        "Core"
+      ],
+      "areas": [
+        "legs",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/donkey-kick/frame-1.png",
+        "res://assets/exercises/donkey-kick/frame-2.png",
+        "res://assets/exercises/donkey-kick/frame-3.png"
+      ],
+      "cues": [
+        "Use a load you can control for every rep.",
+        "Keep your core braced and your spine neutral.",
+        "Stop the set when your form starts to break down."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "drag-curl",
+      "name": "Drag Curl",
+      "exercise_type": "weight_reps",
+      "equipment": "Barbell",
+      "primary_muscle": "Biceps",
+      "secondary_muscles": [
+        "Forearms"
+      ],
+      "areas": [
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/drag-curl/frame-1.png",
+        "res://assets/exercises/drag-curl/frame-2.png",
+        "res://assets/exercises/drag-curl/frame-3.png"
+      ],
+      "cues": [
+        "Keep your elbows tucked and pinned to your sides.",
+        "Move only at the elbow — no swinging from your shoulders or hips.",
+        "Squeeze at the top, then lower over two seconds."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "dumbbell-bench-press",
+      "name": "Dumbbell Bench Press",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Chest",
+      "secondary_muscles": [
+        "Triceps",
+        "Shoulders"
+      ],
+      "areas": [
+        "chest",
+        "arms",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/dumbbell-bench-press/frame-1.png",
+        "res://assets/exercises/dumbbell-bench-press/frame-2.png",
+        "res://assets/exercises/dumbbell-bench-press/frame-3.png"
+      ],
+      "cues": [
+        "Set your shoulder blades first, then kick the dumbbells into place.",
+        "Lower until your upper arms are level with your torso, no deeper.",
+        "Press up and slightly in; stop before the dumbbells clang together."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "dumbbell-bent-over-row",
+      "name": "Dumbbell Bent Over Row",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Back",
+      "secondary_muscles": [
+        "Biceps",
+        "Rear Delts"
+      ],
+      "areas": [
+        "back",
+        "arms",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/dumbbell-bent-over-row/frame-1.png",
+        "res://assets/exercises/dumbbell-bent-over-row/frame-2.png",
+        "res://assets/exercises/dumbbell-bent-over-row/frame-3.png"
+      ],
+      "cues": [
+        "Hinge to about 45 degrees with a flat back and let the weight hang.",
+        "Pull with your elbows, not your hands, and touch your lower ribs.",
+        "Lower slowly and let your shoulder blades travel; do not shrug."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "dumbbell-curtsy-lunge",
+      "name": "Dumbbell Curtsy Lunge",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Glutes",
+      "secondary_muscles": [
+        "Quads",
+        "Hamstrings",
+        "Core"
+      ],
+      "areas": [
+        "legs",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/dumbbell-curtsy-lunge/frame-1.png",
+        "res://assets/exercises/dumbbell-curtsy-lunge/frame-2.png",
+        "res://assets/exercises/dumbbell-curtsy-lunge/frame-3.png"
+      ],
+      "cues": [
+        "Take a long enough step that your front shin stays near vertical.",
+        "Lower until the back knee is just above the floor.",
+        "Push through the front heel to stand; keep your torso upright."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "dumbbell-fly",
+      "name": "Dumbbell Fly",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Chest",
+      "secondary_muscles": [
+        "Shoulders"
+      ],
+      "areas": [
+        "chest",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/dumbbell-fly/frame-1.png",
+        "res://assets/exercises/dumbbell-fly/frame-2.png",
+        "res://assets/exercises/dumbbell-fly/frame-3.png"
+      ],
+      "cues": [
+        "Set your shoulder blades back and down, then keep them pinned.",
+        "Lower under control until your hands are level with your mid-chest.",
+        "Press away without letting your shoulders roll forward."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "dumbbell-lateral-lunge",
+      "name": "Dumbbell Lateral Lunge",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Quads",
+      "secondary_muscles": [
+        "Glutes",
+        "Adductors",
+        "Hamstrings"
+      ],
+      "areas": [
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/dumbbell-lateral-lunge/frame-1.png",
+        "res://assets/exercises/dumbbell-lateral-lunge/frame-2.png",
+        "res://assets/exercises/dumbbell-lateral-lunge/frame-3.png"
+      ],
+      "cues": [
+        "Take a long enough step that your front shin stays near vertical.",
+        "Lower until the back knee is just above the floor.",
+        "Push through the front heel to stand; keep your torso upright."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "dumbbell-shrug",
+      "name": "Dumbbell Shrug",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Upper Back",
+      "secondary_muscles": [
+        "Forearms"
+      ],
+      "areas": [
+        "back",
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/dumbbell-shrug/frame-1.png",
+        "res://assets/exercises/dumbbell-shrug/frame-2.png",
+        "res://assets/exercises/dumbbell-shrug/frame-3.png"
+      ],
+      "cues": [
+        "Lead with your elbows and keep a slight bend in them.",
+        "Raise only to shoulder height; stop before your traps take over.",
+        "Lower slowly — the lowering half is where the work happens."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "dumbbell-side-bend",
+      "name": "Dumbbell Side Bend",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Core",
+      "secondary_muscles": [
+        "Grip"
+      ],
+      "areas": [
+        "core",
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/dumbbell-side-bend/frame-1.png",
+        "res://assets/exercises/dumbbell-side-bend/frame-2.png",
+        "res://assets/exercises/dumbbell-side-bend/frame-3.png"
+      ],
+      "cues": [
+        "Rotate from your ribcage, not from your arms.",
+        "Keep your hips square and your core braced throughout.",
+        "Move slowly and stop the rotation rather than letting it swing."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "dumbbell-sumo-squat",
+      "name": "Dumbbell Sumo Squat",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Glutes",
+      "secondary_muscles": [
+        "Quads",
+        "Adductors",
+        "Hamstrings"
+      ],
+      "areas": [
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/dumbbell-sumo-squat/frame-1.png",
+        "res://assets/exercises/dumbbell-sumo-squat/frame-2.png",
+        "res://assets/exercises/dumbbell-sumo-squat/frame-3.png"
+      ],
+      "cues": [
+        "Brace your core and keep your chest tall before you descend.",
+        "Sit down and back until your thighs reach at least parallel.",
+        "Drive through mid-foot and keep your knees tracking over your toes."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "elliptical",
+      "name": "Elliptical",
+      "exercise_type": "duration",
+      "equipment": "Cardio",
+      "primary_muscle": "Legs",
+      "secondary_muscles": [
+        "Cardio"
+      ],
+      "areas": [
+        "legs",
+        "cardio"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/elliptical/frame-1.png",
+        "res://assets/exercises/elliptical/frame-2.png",
+        "res://assets/exercises/elliptical/frame-3.png"
+      ],
+      "cues": [
+        "Use a load you can control for every rep.",
+        "Keep your core braced and your spine neutral.",
+        "Stop the set when your form starts to break down."
+      ],
+      "default_sets": 3,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 30
+    },
+    {
+      "id": "ez-bar-curl",
+      "name": "EZ-Bar Curl",
+      "exercise_type": "weight_reps",
+      "equipment": "Barbell",
+      "primary_muscle": "Biceps",
+      "secondary_muscles": [
+        "Forearms"
+      ],
+      "areas": [
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/ez-bar-curl/frame-1.png",
+        "res://assets/exercises/ez-bar-curl/frame-2.png",
+        "res://assets/exercises/ez-bar-curl/frame-3.png"
+      ],
+      "cues": [
+        "Stand tall with your elbows pinned to your sides.",
+        "Curl the bar up without swinging your torso or shoulders.",
+        "Lower over two seconds until your arms are straight."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "face-pull",
+      "name": "Face Pull",
+      "exercise_type": "weight_reps",
+      "equipment": "Cable",
+      "primary_muscle": "Upper Back",
+      "secondary_muscles": [
+        "Rear Delts",
+        "Shoulders"
+      ],
+      "areas": [
+        "back",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/face-pull/frame-1.png",
+        "res://assets/exercises/face-pull/frame-2.png",
+        "res://assets/exercises/face-pull/frame-3.png"
+      ],
+      "cues": [
+        "Set the rope at eye level and step back until your arms are straight.",
+        "Pull the rope toward your forehead and spread your hands apart.",
+        "Finish with your elbows high and your shoulder blades pulled back."
+      ],
+      "default_sets": 2,
+      "rep_min": 12,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "fast-feet",
+      "name": "Fast Feet",
+      "exercise_type": "duration",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Calves",
+      "secondary_muscles": [
+        "Legs",
+        "Cardio"
+      ],
+      "areas": [
+        "legs",
+        "cardio"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/fast-feet/frame-1.png",
+        "res://assets/exercises/fast-feet/frame-2.png",
+        "res://assets/exercises/fast-feet/frame-3.png"
+      ],
+      "cues": [
+        "Start at a pace you could hold a short conversation at.",
+        "Keep your breathing rhythmic and your core braced.",
+        "Slow down rather than stopping abruptly when the interval ends."
+      ],
+      "default_sets": 3,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 45
+    },
+    {
+      "id": "feet-elevated-pike-push-up",
+      "name": "Feet-Elevated Pike Push-up",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Shoulders",
+      "secondary_muscles": [
+        "Triceps",
+        "Chest",
+        "Core"
+      ],
+      "areas": [
+        "shoulders",
+        "arms",
+        "chest",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "advanced",
+      "frames": [
+        "res://assets/exercises/feet-elevated-pike-push-up/frame-1.png",
+        "res://assets/exercises/feet-elevated-pike-push-up/frame-2.png",
+        "res://assets/exercises/feet-elevated-pike-push-up/frame-3.png"
+      ],
+      "cues": [
+        "Start with the weight at collarbone height and your ribs down.",
+        "Press straight overhead, moving your head slightly back and through.",
+        "Lock out with your biceps next to your ears; do not arch your lower back."
+      ],
+      "default_sets": 4,
+      "rep_min": 4,
+      "rep_max": 8,
+      "rest_seconds": 120
+    },
+    {
+      "id": "fire-hydrant",
+      "name": "Fire Hydrant",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Glutes",
+      "secondary_muscles": [
+        "Core"
+      ],
+      "areas": [
+        "legs",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/fire-hydrant/frame-1.png",
+        "res://assets/exercises/fire-hydrant/frame-2.png",
+        "res://assets/exercises/fire-hydrant/frame-3.png"
+      ],
+      "cues": [
+        "Use a load you can control for every rep.",
+        "Keep your core braced and your spine neutral.",
+        "Stop the set when your form starts to break down."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "flutter-kick",
+      "name": "Flutter Kick",
+      "exercise_type": "duration",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Core",
+      "secondary_muscles": [
+        "Quads"
+      ],
+      "areas": [
+        "core",
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/flutter-kick/frame-1.png",
+        "res://assets/exercises/flutter-kick/frame-2.png",
+        "res://assets/exercises/flutter-kick/frame-3.png"
+      ],
+      "cues": [
+        "Exhale and draw your ribs toward your hips.",
+        "Move slowly — no momentum from your arms or hips.",
+        "Stop when your lower back starts to arch away from the floor."
+      ],
+      "default_sets": 3,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 30
+    },
+    {
+      "id": "frog-pump",
+      "name": "Frog Pump",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Glutes",
+      "secondary_muscles": [
+        "Hamstrings"
+      ],
+      "areas": [
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/frog-pump/frame-1.png",
+        "res://assets/exercises/frog-pump/frame-2.png",
+        "res://assets/exercises/frog-pump/frame-3.png"
+      ],
+      "cues": [
+        "Use a load you can control for every rep.",
+        "Keep your core braced and your spine neutral.",
+        "Stop the set when your form starts to break down."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "front-foot-elevated-split-squat",
+      "name": "Front-Foot Elevated Split Squat",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Quads",
+      "secondary_muscles": [
+        "Glutes",
+        "Core"
+      ],
+      "areas": [
+        "legs",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/front-foot-elevated-split-squat/frame-1.png",
+        "res://assets/exercises/front-foot-elevated-split-squat/frame-2.png",
+        "res://assets/exercises/front-foot-elevated-split-squat/frame-3.png"
+      ],
+      "cues": [
+        "Take a long enough step that your front shin stays near vertical.",
+        "Lower until the back knee is just above the floor.",
+        "Push through the front heel to stand; keep your torso upright."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "front-raise",
+      "name": "Front Raise",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Shoulders",
+      "secondary_muscles": [
+        "Chest"
+      ],
+      "areas": [
+        "shoulders",
+        "chest"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/front-raise/frame-1.png",
+        "res://assets/exercises/front-raise/frame-2.png",
+        "res://assets/exercises/front-raise/frame-3.png"
+      ],
+      "cues": [
+        "Lead with your elbows and keep a slight bend in them.",
+        "Raise only to shoulder height; stop before your traps take over.",
+        "Lower slowly — the lowering half is where the work happens."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "front-squat",
+      "name": "Front Squat",
+      "exercise_type": "weight_reps",
+      "equipment": "Barbell",
+      "primary_muscle": "Quads",
+      "secondary_muscles": [
+        "Core",
+        "Glutes"
+      ],
+      "areas": [
+        "legs",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/front-squat/frame-1.png",
+        "res://assets/exercises/front-squat/frame-2.png",
+        "res://assets/exercises/front-squat/frame-3.png"
+      ],
+      "cues": [
+        "Rest the bar on your front delts with your elbows held high.",
+        "Stay upright and sit straight down, keeping your elbows up.",
+        "Drive up through your whole foot without letting your chest drop."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "goblet-squat",
+      "name": "Goblet Squat",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Quads",
+      "secondary_muscles": [
+        "Glutes",
+        "Core"
+      ],
+      "areas": [
+        "legs",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/goblet-squat/frame-1.png",
+        "res://assets/exercises/goblet-squat/frame-2.png",
+        "res://assets/exercises/goblet-squat/frame-3.png"
+      ],
+      "cues": [
+        "Hold one dumbbell at your chest with your elbows tucked in.",
+        "Sit down between your feet, chest tall and heels flat on the floor.",
+        "Drive up through your heels and finish with your glutes squeezed."
+      ],
+      "default_sets": 3,
+      "rep_min": 8,
+      "rep_max": 12,
+      "rest_seconds": 75
+    },
+    {
+      "id": "good-morning",
+      "name": "Good Morning",
+      "exercise_type": "weight_reps",
+      "equipment": "Barbell",
+      "primary_muscle": "Hamstrings",
+      "secondary_muscles": [
+        "Glutes",
+        "Lower Back"
+      ],
+      "areas": [
+        "legs",
+        "back"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/good-morning/frame-1.png",
+        "res://assets/exercises/good-morning/frame-2.png",
+        "res://assets/exercises/good-morning/frame-3.png"
+      ],
+      "cues": [
+        "Rest the bar on your upper back with a small bend in your knees.",
+        "Push your hips back and lower your torso until it is near parallel.",
+        "Keep your back flat and rise by driving your hips forward."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "hack-squat",
+      "name": "Hack Squat",
+      "exercise_type": "weight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Quads",
+      "secondary_muscles": [
+        "Glutes"
+      ],
+      "areas": [
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/hack-squat/frame-1.png",
+        "res://assets/exercises/hack-squat/frame-2.png",
+        "res://assets/exercises/hack-squat/frame-3.png"
+      ],
+      "cues": [
+        "Set your shoulders under the pads with your back flat on the sled.",
+        "Lower until your thighs are at least parallel, knees over your toes.",
+        "Drive through mid-foot and stop just short of locking out."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "half-burpee",
+      "name": "Half Burpee",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Core",
+      "secondary_muscles": [
+        "Legs",
+        "Shoulders",
+        "Cardio"
+      ],
+      "areas": [
+        "core",
+        "legs",
+        "shoulders",
+        "cardio"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/half-burpee/frame-1.png",
+        "res://assets/exercises/half-burpee/frame-2.png",
+        "res://assets/exercises/half-burpee/frame-3.png"
+      ],
+      "cues": [
+        "Start at a pace you could hold a short conversation at.",
+        "Keep your breathing rhythmic and your core braced.",
+        "Slow down rather than stopping abruptly when the interval ends."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "half-kneeling-pallof-press",
+      "name": "Half-Kneeling Pallof Press",
+      "exercise_type": "weight_reps",
+      "equipment": "Cable",
+      "primary_muscle": "Core",
+      "secondary_muscles": [
+        "Glutes",
+        "Shoulders"
+      ],
+      "areas": [
+        "core",
+        "legs",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/half-kneeling-pallof-press/frame-1.png",
+        "res://assets/exercises/half-kneeling-pallof-press/frame-2.png",
+        "res://assets/exercises/half-kneeling-pallof-press/frame-3.png"
+      ],
+      "cues": [
+        "Rotate from your ribcage, not from your arms.",
+        "Keep your hips square and your core braced throughout.",
+        "Move slowly and stop the rotation rather than letting it swing."
+      ],
+      "default_sets": 2,
+      "rep_min": 12,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "hammer-curl",
+      "name": "Hammer Curl",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Biceps",
+      "secondary_muscles": [
+        "Forearms"
+      ],
+      "areas": [
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/hammer-curl/frame-1.png",
+        "res://assets/exercises/hammer-curl/frame-2.png",
+        "res://assets/exercises/hammer-curl/frame-3.png"
+      ],
+      "cues": [
+        "Hold the dumbbells with your palms facing each other.",
+        "Curl straight up, keeping your elbows tight to your ribs.",
+        "Lower slowly and end the set once you start to swing."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "hamstring-stretch",
+      "name": "Hamstring Stretch",
+      "exercise_type": "duration",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Hamstrings",
+      "secondary_muscles": [
+        "Calves",
+        "Mobility"
+      ],
+      "areas": [
+        "legs",
+        "mobility"
+      ],
+      "is_stretch": true,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/hamstring-stretch/frame-1.png",
+        "res://assets/exercises/hamstring-stretch/frame-2.png",
+        "res://assets/exercises/hamstring-stretch/frame-3.png"
+      ],
+      "cues": [
+        "Sit with one leg straight and the other foot tucked in.",
+        "Hinge from your hips with a flat back toward the straight leg.",
+        "Stop at a gentle stretch; do not round your back to reach further."
+      ],
+      "default_sets": 1,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 0
+    },
+    {
+      "id": "handstand-push-up",
+      "name": "Handstand Push-up",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Shoulders",
+      "secondary_muscles": [
+        "Triceps",
+        "Core",
+        "Chest"
+      ],
+      "areas": [
+        "shoulders",
+        "arms",
+        "core",
+        "chest"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "advanced",
+      "frames": [
+        "res://assets/exercises/handstand-push-up/frame-1.png",
+        "res://assets/exercises/handstand-push-up/frame-2.png",
+        "res://assets/exercises/handstand-push-up/frame-3.png"
+      ],
+      "cues": [
+        "Start with the weight at collarbone height and your ribs down.",
+        "Press straight overhead, moving your head slightly back and through.",
+        "Lock out with your biceps next to your ears; do not arch your lower back."
+      ],
+      "default_sets": 4,
+      "rep_min": 4,
+      "rep_max": 8,
+      "rest_seconds": 120
+    },
+    {
+      "id": "hanging-leg-raise",
+      "name": "Hanging Leg Raise",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Core",
+      "secondary_muscles": [
+        "Grip"
+      ],
+      "areas": [
+        "core",
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/hanging-leg-raise/frame-1.png",
+        "res://assets/exercises/hanging-leg-raise/frame-2.png",
+        "res://assets/exercises/hanging-leg-raise/frame-3.png"
+      ],
+      "cues": [
+        "Hang with your shoulders active and your legs held together.",
+        "Raise your legs without swinging and curl your pelvis up at the top.",
+        "Lower slowly to a full hang and stop before you start to swing."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "heel-elevated-goblet-squat",
+      "name": "Heel-Elevated Goblet Squat",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Quads",
+      "secondary_muscles": [
+        "Glutes",
+        "Core"
+      ],
+      "areas": [
+        "legs",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/heel-elevated-goblet-squat/frame-1.png",
+        "res://assets/exercises/heel-elevated-goblet-squat/frame-2.png",
+        "res://assets/exercises/heel-elevated-goblet-squat/frame-3.png"
+      ],
+      "cues": [
+        "Brace your core and keep your chest tall before you descend.",
+        "Sit down and back until your thighs reach at least parallel.",
+        "Drive through mid-foot and keep your knees tracking over your toes."
+      ],
+      "default_sets": 3,
+      "rep_min": 8,
+      "rep_max": 12,
+      "rest_seconds": 75
+    },
+    {
+      "id": "high-knees",
+      "name": "High Knees",
+      "exercise_type": "duration",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Legs",
+      "secondary_muscles": [
+        "Core",
+        "Cardio"
+      ],
+      "areas": [
+        "legs",
+        "core",
+        "cardio"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/high-knees/frame-1.png",
+        "res://assets/exercises/high-knees/frame-2.png",
+        "res://assets/exercises/high-knees/frame-3.png"
+      ],
+      "cues": [
+        "Start at a pace you could hold a short conversation at.",
+        "Keep your breathing rhythmic and your core braced.",
+        "Slow down rather than stopping abruptly when the interval ends."
+      ],
+      "default_sets": 3,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 45
+    },
+    {
+      "id": "hip-abduction-machine",
+      "name": "Hip Abduction Machine",
+      "exercise_type": "weight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Glutes",
+      "secondary_muscles": [
+        "Core"
+      ],
+      "areas": [
+        "legs",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/hip-abduction-machine/frame-1.png",
+        "res://assets/exercises/hip-abduction-machine/frame-2.png",
+        "res://assets/exercises/hip-abduction-machine/frame-3.png"
+      ],
+      "cues": [
+        "Use a load you can control for every rep.",
+        "Keep your core braced and your spine neutral.",
+        "Stop the set when your form starts to break down."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "hip-adduction-machine",
+      "name": "Hip Adduction Machine",
+      "exercise_type": "weight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Adductors",
+      "secondary_muscles": [
+        "Core"
+      ],
+      "areas": [
+        "legs",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/hip-adduction-machine/frame-1.png",
+        "res://assets/exercises/hip-adduction-machine/frame-2.png",
+        "res://assets/exercises/hip-adduction-machine/frame-3.png"
+      ],
+      "cues": [
+        "Use a load you can control for every rep.",
+        "Keep your core braced and your spine neutral.",
+        "Stop the set when your form starts to break down."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "hip-airplane",
+      "name": "Hip Airplane",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Glutes",
+      "secondary_muscles": [
+        "Hamstrings",
+        "Core"
+      ],
+      "areas": [
+        "legs",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "advanced",
+      "frames": [
+        "res://assets/exercises/hip-airplane/frame-1.png",
+        "res://assets/exercises/hip-airplane/frame-2.png",
+        "res://assets/exercises/hip-airplane/frame-3.png"
+      ],
+      "cues": [
+        "Use a load you can control for every rep.",
+        "Keep your core braced and your spine neutral.",
+        "Stop the set when your form starts to break down."
+      ],
+      "default_sets": 3,
+      "rep_min": 8,
+      "rep_max": 12,
+      "rest_seconds": 75
+    },
+    {
+      "id": "hip-thrust",
+      "name": "Hip Thrust",
+      "exercise_type": "weight_reps",
+      "equipment": "Barbell",
+      "primary_muscle": "Glutes",
+      "secondary_muscles": [
+        "Hamstrings"
+      ],
+      "areas": [
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/hip-thrust/frame-1.png",
+        "res://assets/exercises/hip-thrust/frame-2.png",
+        "res://assets/exercises/hip-thrust/frame-3.png"
+      ],
+      "cues": [
+        "Rest your upper back on the bench, feet flat and shoulder width.",
+        "Drive through your heels until your hips are level with your knees.",
+        "Squeeze your glutes at the top; do not overarch your lower back."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "hollow-body-hold",
+      "name": "Hollow Body Hold",
+      "exercise_type": "duration",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Core",
+      "secondary_muscles": [
+        "Quads"
+      ],
+      "areas": [
+        "core",
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/hollow-body-hold/frame-1.png",
+        "res://assets/exercises/hollow-body-hold/frame-2.png",
+        "res://assets/exercises/hollow-body-hold/frame-3.png"
+      ],
+      "cues": [
+        "Brace as if you were about to be punched in the stomach.",
+        "Keep a straight line from shoulders to hips; do not let your hips sag.",
+        "Breathe normally and hold the position without shifting."
+      ],
+      "default_sets": 3,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 30
+    },
+    {
+      "id": "hollow-rock",
+      "name": "Hollow Rock",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Core",
+      "secondary_muscles": [
+        "Quads"
+      ],
+      "areas": [
+        "core",
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/hollow-rock/frame-1.png",
+        "res://assets/exercises/hollow-rock/frame-2.png",
+        "res://assets/exercises/hollow-rock/frame-3.png"
+      ],
+      "cues": [
+        "Brace as if you were about to be punched in the stomach.",
+        "Keep a straight line from shoulders to hips; do not let your hips sag.",
+        "Breathe normally and hold the position without shifting."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "inchworm",
+      "name": "Inchworm",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Core",
+      "secondary_muscles": [
+        "Shoulders",
+        "Hamstrings",
+        "Chest"
+      ],
+      "areas": [
+        "core",
+        "shoulders",
+        "legs",
+        "chest"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/inchworm/frame-1.png",
+        "res://assets/exercises/inchworm/frame-2.png",
+        "res://assets/exercises/inchworm/frame-3.png"
+      ],
+      "cues": [
+        "Brace as if you were about to be punched in the stomach.",
+        "Keep a straight line from shoulders to hips; do not let your hips sag.",
+        "Breathe normally and hold the position without shifting."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "incline-bench-press",
+      "name": "Incline Bench Press",
+      "exercise_type": "weight_reps",
+      "equipment": "Barbell",
+      "primary_muscle": "Chest",
+      "secondary_muscles": [
+        "Shoulders",
+        "Triceps"
+      ],
+      "areas": [
+        "chest",
+        "shoulders",
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/incline-bench-press/frame-1.png",
+        "res://assets/exercises/incline-bench-press/frame-2.png",
+        "res://assets/exercises/incline-bench-press/frame-3.png"
+      ],
+      "cues": [
+        "Set the bench near 30 degrees so your front delts do not take over.",
+        "Lower the bar to your upper chest and keep your wrists stacked.",
+        "Press up and slightly back; do not let your shoulders roll forward."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "incline-cable-fly",
+      "name": "Incline Cable Fly",
+      "exercise_type": "weight_reps",
+      "equipment": "Cable",
+      "primary_muscle": "Chest",
+      "secondary_muscles": [
+        "Shoulders"
+      ],
+      "areas": [
+        "chest",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/incline-cable-fly/frame-1.png",
+        "res://assets/exercises/incline-cable-fly/frame-2.png",
+        "res://assets/exercises/incline-cable-fly/frame-3.png"
+      ],
+      "cues": [
+        "Set your shoulder blades back and down, then keep them pinned.",
+        "Lower under control until your hands are level with your mid-chest.",
+        "Press away without letting your shoulders roll forward."
+      ],
+      "default_sets": 3,
+      "rep_min": 8,
+      "rep_max": 12,
+      "rest_seconds": 75
+    },
+    {
+      "id": "incline-dumbbell-curl",
+      "name": "Incline Dumbbell Curl",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Biceps",
+      "secondary_muscles": [
+        "Forearms"
+      ],
+      "areas": [
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/incline-dumbbell-curl/frame-1.png",
+        "res://assets/exercises/incline-dumbbell-curl/frame-2.png",
+        "res://assets/exercises/incline-dumbbell-curl/frame-3.png"
+      ],
+      "cues": [
+        "Keep your elbows tucked and pinned to your sides.",
+        "Move only at the elbow — no swinging from your shoulders or hips.",
+        "Squeeze at the top, then lower over two seconds."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "incline-dumbbell-press",
+      "name": "Incline Dumbbell Press",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Chest",
+      "secondary_muscles": [
+        "Shoulders",
+        "Triceps"
+      ],
+      "areas": [
+        "chest",
+        "shoulders",
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/incline-dumbbell-press/frame-1.png",
+        "res://assets/exercises/incline-dumbbell-press/frame-2.png",
+        "res://assets/exercises/incline-dumbbell-press/frame-3.png"
+      ],
+      "cues": [
+        "Start with the weight at collarbone height and your ribs down.",
+        "Press straight overhead, moving your head slightly back and through.",
+        "Lock out with your biceps next to your ears; do not arch your lower back."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "inverted-row",
+      "name": "Inverted Row",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Back",
+      "secondary_muscles": [
+        "Biceps",
+        "Core"
+      ],
+      "areas": [
+        "back",
+        "arms",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/inverted-row/frame-1.png",
+        "res://assets/exercises/inverted-row/frame-2.png",
+        "res://assets/exercises/inverted-row/frame-3.png"
+      ],
+      "cues": [
+        "Hinge to about 45 degrees with a flat back and let the weight hang.",
+        "Pull with your elbows, not your hands, and touch your lower ribs.",
+        "Lower slowly and let your shoulder blades travel; do not shrug."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "jump-rope",
+      "name": "Jump Rope",
+      "exercise_type": "duration",
+      "equipment": "Cardio",
+      "primary_muscle": "Calves",
+      "secondary_muscles": [
+        "Cardio",
+        "Shoulders"
+      ],
+      "areas": [
+        "legs",
+        "cardio",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/jump-rope/frame-1.png",
+        "res://assets/exercises/jump-rope/frame-2.png",
+        "res://assets/exercises/jump-rope/frame-3.png"
+      ],
+      "cues": [
+        "Start at a pace you could hold a short conversation at.",
+        "Keep your breathing rhythmic and your core braced.",
+        "Slow down rather than stopping abruptly when the interval ends."
+      ],
+      "default_sets": 3,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 45
+    },
+    {
+      "id": "jumping-jack",
+      "name": "Jumping Jack",
+      "exercise_type": "duration",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Legs",
+      "secondary_muscles": [
+        "Shoulders",
+        "Calves",
+        "Cardio"
+      ],
+      "areas": [
+        "legs",
+        "shoulders",
+        "cardio"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/jumping-jack/frame-1.png",
+        "res://assets/exercises/jumping-jack/frame-2.png",
+        "res://assets/exercises/jumping-jack/frame-3.png"
+      ],
+      "cues": [
+        "Start at a pace you could hold a short conversation at.",
+        "Keep your breathing rhythmic and your core braced.",
+        "Slow down rather than stopping abruptly when the interval ends."
+      ],
+      "default_sets": 3,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 45
+    },
+    {
+      "id": "kneeling-hip-flexor-stretch",
+      "name": "Kneeling Hip Flexor Stretch",
+      "exercise_type": "duration",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Hips",
+      "secondary_muscles": [
+        "Quads",
+        "Mobility"
+      ],
+      "areas": [
+        "legs",
+        "mobility"
+      ],
+      "is_stretch": true,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/kneeling-hip-flexor-stretch/frame-1.png",
+        "res://assets/exercises/kneeling-hip-flexor-stretch/frame-2.png",
+        "res://assets/exercises/kneeling-hip-flexor-stretch/frame-3.png"
+      ],
+      "cues": [
+        "Kneel on one knee with the other foot planted in front.",
+        "Tuck your pelvis under and squeeze the glute of the back leg.",
+        "Push your hips gently forward until the front of the hip opens."
+      ],
+      "default_sets": 1,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 0
+    },
+    {
+      "id": "l-sit-hold",
+      "name": "L-Sit Hold",
+      "exercise_type": "duration",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Core",
+      "secondary_muscles": [
+        "Triceps",
+        "Quads",
+        "Shoulders"
+      ],
+      "areas": [
+        "core",
+        "arms",
+        "legs",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "advanced",
+      "frames": [
+        "res://assets/exercises/l-sit-hold/frame-1.png",
+        "res://assets/exercises/l-sit-hold/frame-2.png",
+        "res://assets/exercises/l-sit-hold/frame-3.png"
+      ],
+      "cues": [
+        "Brace as if you were about to be punched in the stomach.",
+        "Keep a straight line from shoulders to hips; do not let your hips sag.",
+        "Breathe normally and hold the position without shifting."
+      ],
+      "default_sets": 3,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 30
+    },
+    {
+      "id": "l-sit-pull-up",
+      "name": "L-Sit Pull-up",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Pull-up Bar",
+      "primary_muscle": "Lats",
+      "secondary_muscles": [
+        "Biceps",
+        "Core",
+        "Forearms"
+      ],
+      "areas": [
+        "back",
+        "arms",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "advanced",
+      "frames": [
+        "res://assets/exercises/l-sit-pull-up/frame-1.png",
+        "res://assets/exercises/l-sit-pull-up/frame-2.png",
+        "res://assets/exercises/l-sit-pull-up/frame-3.png"
+      ],
+      "cues": [
+        "Start from a dead hang with your shoulders active, not slack.",
+        "Drive your elbows down toward your ribs and lead with your chest.",
+        "Lower all the way under control; no swinging or kipping."
+      ],
+      "default_sets": 4,
+      "rep_min": 4,
+      "rep_max": 8,
+      "rest_seconds": 120
+    },
+    {
+      "id": "landmine-press",
+      "name": "Landmine Press",
+      "exercise_type": "weight_reps",
+      "equipment": "Barbell",
+      "primary_muscle": "Shoulders",
+      "secondary_muscles": [
+        "Chest",
+        "Triceps"
+      ],
+      "areas": [
+        "shoulders",
+        "chest",
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/landmine-press/frame-1.png",
+        "res://assets/exercises/landmine-press/frame-2.png",
+        "res://assets/exercises/landmine-press/frame-3.png"
+      ],
+      "cues": [
+        "Start with the weight at collarbone height and your ribs down.",
+        "Press straight overhead, moving your head slightly back and through.",
+        "Lock out with your biceps next to your ears; do not arch your lower back."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "landmine-romanian-deadlift",
+      "name": "Landmine Romanian Deadlift",
+      "exercise_type": "weight_reps",
+      "equipment": "Barbell",
+      "primary_muscle": "Hamstrings",
+      "secondary_muscles": [
+        "Glutes",
+        "Lower Back"
+      ],
+      "areas": [
+        "legs",
+        "back"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/landmine-romanian-deadlift/frame-1.png",
+        "res://assets/exercises/landmine-romanian-deadlift/frame-2.png",
+        "res://assets/exercises/landmine-romanian-deadlift/frame-3.png"
+      ],
+      "cues": [
+        "Set your shoulders down and pull the weight into your body.",
+        "Push your hips back with a flat back — do not round your lower back.",
+        "Finish by squeezing your glutes; stop before your back arches."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "landmine-squat",
+      "name": "Landmine Squat",
+      "exercise_type": "weight_reps",
+      "equipment": "Barbell",
+      "primary_muscle": "Quads",
+      "secondary_muscles": [
+        "Glutes",
+        "Core"
+      ],
+      "areas": [
+        "legs",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/landmine-squat/frame-1.png",
+        "res://assets/exercises/landmine-squat/frame-2.png",
+        "res://assets/exercises/landmine-squat/frame-3.png"
+      ],
+      "cues": [
+        "Brace your core and keep your chest tall before you descend.",
+        "Sit down and back until your thighs reach at least parallel.",
+        "Drive through mid-foot and keep your knees tracking over your toes."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "lat-pulldown",
+      "name": "Lat Pulldown",
+      "exercise_type": "weight_reps",
+      "equipment": "Cable",
+      "primary_muscle": "Lats",
+      "secondary_muscles": [
+        "Biceps"
+      ],
+      "areas": [
+        "back",
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/lat-pulldown/frame-1.png",
+        "res://assets/exercises/lat-pulldown/frame-2.png",
+        "res://assets/exercises/lat-pulldown/frame-3.png"
+      ],
+      "cues": [
+        "Grip slightly wider than your shoulders and pin your thighs down.",
+        "Pull the bar to your upper chest by driving your elbows down.",
+        "Let the bar rise until your arms are straight; do not lean back to pull."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "lateral-raise",
+      "name": "Lateral Raise",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Shoulders",
+      "secondary_muscles": [
+        "Upper Back"
+      ],
+      "areas": [
+        "shoulders",
+        "back"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/lateral-raise/frame-1.png",
+        "res://assets/exercises/lateral-raise/frame-2.png",
+        "res://assets/exercises/lateral-raise/frame-3.png"
+      ],
+      "cues": [
+        "Stand tall with a slight bend in your elbows and your thumbs level.",
+        "Raise out to the sides only until your hands reach shoulder height.",
+        "Lead with your elbows and lower over two seconds; no swinging."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "lateral-shuffle",
+      "name": "Lateral Shuffle",
+      "exercise_type": "duration",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Legs",
+      "secondary_muscles": [
+        "Glutes",
+        "Calves",
+        "Cardio"
+      ],
+      "areas": [
+        "legs",
+        "cardio"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/lateral-shuffle/frame-1.png",
+        "res://assets/exercises/lateral-shuffle/frame-2.png",
+        "res://assets/exercises/lateral-shuffle/frame-3.png"
+      ],
+      "cues": [
+        "Start at a pace you could hold a short conversation at.",
+        "Keep your breathing rhythmic and your core braced.",
+        "Slow down rather than stopping abruptly when the interval ends."
+      ],
+      "default_sets": 3,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 45
+    },
+    {
+      "id": "leg-curl",
+      "name": "Leg Curl",
+      "exercise_type": "weight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Hamstrings",
+      "secondary_muscles": [
+        "Calves"
+      ],
+      "areas": [
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/leg-curl/frame-1.png",
+        "res://assets/exercises/leg-curl/frame-2.png",
+        "res://assets/exercises/leg-curl/frame-3.png"
+      ],
+      "cues": [
+        "Set your shoulders down and pull the weight into your body.",
+        "Push your hips back with a flat back — do not round your lower back.",
+        "Finish by squeezing your glutes; stop before your back arches."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "leg-extension",
+      "name": "Leg Extension",
+      "exercise_type": "weight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Quads",
+      "secondary_muscles": [],
+      "areas": [
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/leg-extension/frame-1.png",
+        "res://assets/exercises/leg-extension/frame-2.png",
+        "res://assets/exercises/leg-extension/frame-3.png"
+      ],
+      "cues": [
+        "Line your knee up with the machine pivot and hold the handles.",
+        "Straighten your legs fully and pause for a second at the top.",
+        "Lower slowly; do not let the stack drop or swing the weight."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "leg-press",
+      "name": "Leg Press",
+      "exercise_type": "weight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Quads",
+      "secondary_muscles": [
+        "Glutes",
+        "Hamstrings"
+      ],
+      "areas": [
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/leg-press/frame-1.png",
+        "res://assets/exercises/leg-press/frame-2.png",
+        "res://assets/exercises/leg-press/frame-3.png"
+      ],
+      "cues": [
+        "Set your feet shoulder width on the platform, toes slightly out.",
+        "Lower until your knees reach 90 degrees; keep your back on the pad.",
+        "Press through your whole foot without locking your knees at the top."
+      ],
+      "default_sets": 3,
+      "rep_min": 8,
+      "rep_max": 12,
+      "rest_seconds": 75
+    },
+    {
+      "id": "leg-press-calf-raise",
+      "name": "Leg Press Calf Raise",
+      "exercise_type": "weight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Calves",
+      "secondary_muscles": [],
+      "areas": [
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/leg-press-calf-raise/frame-1.png",
+        "res://assets/exercises/leg-press-calf-raise/frame-2.png",
+        "res://assets/exercises/leg-press-calf-raise/frame-3.png"
+      ],
+      "cues": [
+        "Brace your core and keep your chest tall before you descend.",
+        "Sit down and back until your thighs reach at least parallel.",
+        "Drive through mid-foot and keep your knees tracking over your toes."
+      ],
+      "default_sets": 3,
+      "rep_min": 8,
+      "rep_max": 12,
+      "rest_seconds": 75
+    },
+    {
+      "id": "leg-swings-stretch",
+      "name": "Leg Swings",
+      "exercise_type": "duration",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Mobility",
+      "secondary_muscles": [
+        "Hips",
+        "Hamstrings",
+        "Quads"
+      ],
+      "areas": [
+        "mobility",
+        "legs"
+      ],
+      "is_stretch": true,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/leg-swings-stretch/frame-1.png",
+        "res://assets/exercises/leg-swings-stretch/frame-2.png",
+        "res://assets/exercises/leg-swings-stretch/frame-3.png"
+      ],
+      "cues": [
+        "Hold a wall for balance and keep your torso upright.",
+        "Swing one leg forward and back in a smooth, controlled arc.",
+        "Keep the range pain-free and switch legs halfway through."
+      ],
+      "default_sets": 1,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 0
+    },
+    {
+      "id": "lying-leg-curl",
+      "name": "Lying Leg Curl",
+      "exercise_type": "weight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Hamstrings",
+      "secondary_muscles": [
+        "Calves"
+      ],
+      "areas": [
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/lying-leg-curl/frame-1.png",
+        "res://assets/exercises/lying-leg-curl/frame-2.png",
+        "res://assets/exercises/lying-leg-curl/frame-3.png"
+      ],
+      "cues": [
+        "Set your shoulders down and pull the weight into your body.",
+        "Push your hips back with a flat back — do not round your lower back.",
+        "Finish by squeezing your glutes; stop before your back arches."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "lying-leg-raise",
+      "name": "Lying Leg Raise",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Core",
+      "secondary_muscles": [
+        "Quads"
+      ],
+      "areas": [
+        "core",
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/lying-leg-raise/frame-1.png",
+        "res://assets/exercises/lying-leg-raise/frame-2.png",
+        "res://assets/exercises/lying-leg-raise/frame-3.png"
+      ],
+      "cues": [
+        "Exhale and draw your ribs toward your hips.",
+        "Move slowly — no momentum from your arms or hips.",
+        "Stop when your lower back starts to arch away from the floor."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "machine-chest-press",
+      "name": "Machine Chest Press",
+      "exercise_type": "weight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Chest",
+      "secondary_muscles": [
+        "Triceps",
+        "Shoulders"
+      ],
+      "areas": [
+        "chest",
+        "arms",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/machine-chest-press/frame-1.png",
+        "res://assets/exercises/machine-chest-press/frame-2.png",
+        "res://assets/exercises/machine-chest-press/frame-3.png"
+      ],
+      "cues": [
+        "Set the handles level with your mid-chest before the first rep.",
+        "Keep your back and head against the pad through the whole press.",
+        "Press smoothly and stop just short of locking out your elbows."
+      ],
+      "default_sets": 3,
+      "rep_min": 8,
+      "rep_max": 12,
+      "rest_seconds": 75
+    },
+    {
+      "id": "machine-glute-kickback",
+      "name": "Machine Glute Kickback",
+      "exercise_type": "weight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Glutes",
+      "secondary_muscles": [
+        "Hamstrings"
+      ],
+      "areas": [
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/machine-glute-kickback/frame-1.png",
+        "res://assets/exercises/machine-glute-kickback/frame-2.png",
+        "res://assets/exercises/machine-glute-kickback/frame-3.png"
+      ],
+      "cues": [
+        "Set your shoulders down and pull the weight into your body.",
+        "Push your hips back with a flat back — do not round your lower back.",
+        "Finish by squeezing your glutes; stop before your back arches."
+      ],
+      "default_sets": 3,
+      "rep_min": 8,
+      "rep_max": 12,
+      "rest_seconds": 75
+    },
+    {
+      "id": "machine-lateral-raise",
+      "name": "Machine Lateral Raise",
+      "exercise_type": "weight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Shoulders",
+      "secondary_muscles": [
+        "Upper Back"
+      ],
+      "areas": [
+        "shoulders",
+        "back"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/machine-lateral-raise/frame-1.png",
+        "res://assets/exercises/machine-lateral-raise/frame-2.png",
+        "res://assets/exercises/machine-lateral-raise/frame-3.png"
+      ],
+      "cues": [
+        "Lead with your elbows and keep a slight bend in them.",
+        "Raise only to shoulder height; stop before your traps take over.",
+        "Lower slowly — the lowering half is where the work happens."
+      ],
+      "default_sets": 2,
+      "rep_min": 12,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "machine-row",
+      "name": "Machine Row",
+      "exercise_type": "weight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Back",
+      "secondary_muscles": [
+        "Biceps"
+      ],
+      "areas": [
+        "back",
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/machine-row/frame-1.png",
+        "res://assets/exercises/machine-row/frame-2.png",
+        "res://assets/exercises/machine-row/frame-3.png"
+      ],
+      "cues": [
+        "Hinge to about 45 degrees with a flat back and let the weight hang.",
+        "Pull with your elbows, not your hands, and touch your lower ribs.",
+        "Lower slowly and let your shoulder blades travel; do not shrug."
+      ],
+      "default_sets": 3,
+      "rep_min": 8,
+      "rep_max": 12,
+      "rest_seconds": 75
+    },
+    {
+      "id": "machine-shoulder-press",
+      "name": "Machine Shoulder Press",
+      "exercise_type": "weight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Shoulders",
+      "secondary_muscles": [
+        "Triceps"
+      ],
+      "areas": [
+        "shoulders",
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/machine-shoulder-press/frame-1.png",
+        "res://assets/exercises/machine-shoulder-press/frame-2.png",
+        "res://assets/exercises/machine-shoulder-press/frame-3.png"
+      ],
+      "cues": [
+        "Start with the weight at collarbone height and your ribs down.",
+        "Press straight overhead, moving your head slightly back and through.",
+        "Lock out with your biceps next to your ears; do not arch your lower back."
+      ],
+      "default_sets": 3,
+      "rep_min": 8,
+      "rep_max": 12,
+      "rest_seconds": 75
+    },
+    {
+      "id": "meadows-row",
+      "name": "Meadows Row",
+      "exercise_type": "weight_reps",
+      "equipment": "Barbell",
+      "primary_muscle": "Back",
+      "secondary_muscles": [
+        "Biceps",
+        "Rear Delts"
+      ],
+      "areas": [
+        "back",
+        "arms",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/meadows-row/frame-1.png",
+        "res://assets/exercises/meadows-row/frame-2.png",
+        "res://assets/exercises/meadows-row/frame-3.png"
+      ],
+      "cues": [
+        "Hinge to about 45 degrees with a flat back and let the weight hang.",
+        "Pull with your elbows, not your hands, and touch your lower ribs.",
+        "Lower slowly and let your shoulder blades travel; do not shrug."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "mountain-climber",
+      "name": "Mountain Climber",
+      "exercise_type": "duration",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Core",
+      "secondary_muscles": [
+        "Shoulders",
+        "Legs"
+      ],
+      "areas": [
+        "core",
+        "shoulders",
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/mountain-climber/frame-1.png",
+        "res://assets/exercises/mountain-climber/frame-2.png",
+        "res://assets/exercises/mountain-climber/frame-3.png"
+      ],
+      "cues": [
+        "Start at a pace you could hold a short conversation at.",
+        "Keep your breathing rhythmic and your core braced.",
+        "Slow down rather than stopping abruptly when the interval ends."
+      ],
+      "default_sets": 3,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 45
+    },
+    {
+      "id": "negative-pull-up",
+      "name": "Negative Pull-up",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Pull-up Bar",
+      "primary_muscle": "Lats",
+      "secondary_muscles": [
+        "Biceps",
+        "Upper Back",
+        "Forearms"
+      ],
+      "areas": [
+        "back",
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/negative-pull-up/frame-1.png",
+        "res://assets/exercises/negative-pull-up/frame-2.png",
+        "res://assets/exercises/negative-pull-up/frame-3.png"
+      ],
+      "cues": [
+        "Start from a dead hang with your shoulders active, not slack.",
+        "Drive your elbows down toward your ribs and lead with your chest.",
+        "Lower all the way under control; no swinging or kipping."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "neutral-grip-pull-up",
+      "name": "Neutral-Grip Pull-up",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Lats",
+      "secondary_muscles": [
+        "Biceps",
+        "Core"
+      ],
+      "areas": [
+        "back",
+        "arms",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/neutral-grip-pull-up/frame-1.png",
+        "res://assets/exercises/neutral-grip-pull-up/frame-2.png",
+        "res://assets/exercises/neutral-grip-pull-up/frame-3.png"
+      ],
+      "cues": [
+        "Start from a dead hang with your shoulders active, not slack.",
+        "Drive your elbows down toward your ribs and lead with your chest.",
+        "Lower all the way under control; no swinging or kipping."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "one-arm-dumbbell-row",
+      "name": "One-Arm Dumbbell Row",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Back",
+      "secondary_muscles": [
+        "Biceps"
+      ],
+      "areas": [
+        "back",
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "advanced",
+      "frames": [
+        "res://assets/exercises/one-arm-dumbbell-row/frame-1.png",
+        "res://assets/exercises/one-arm-dumbbell-row/frame-2.png",
+        "res://assets/exercises/one-arm-dumbbell-row/frame-3.png"
+      ],
+      "cues": [
+        "Support one hand and knee on the bench with a flat, square back.",
+        "Pull the dumbbell to your hip, keeping your elbow close to your side.",
+        "Lower until your arm is straight and your shoulder blade reaches forward."
+      ],
+      "default_sets": 4,
+      "rep_min": 4,
+      "rep_max": 8,
+      "rest_seconds": 120
+    },
+    {
+      "id": "overhead-press",
+      "name": "Overhead Press",
+      "exercise_type": "weight_reps",
+      "equipment": "Barbell",
+      "primary_muscle": "Shoulders",
+      "secondary_muscles": [
+        "Triceps"
+      ],
+      "areas": [
+        "shoulders",
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/overhead-press/frame-1.png",
+        "res://assets/exercises/overhead-press/frame-2.png",
+        "res://assets/exercises/overhead-press/frame-3.png"
+      ],
+      "cues": [
+        "Start with the bar at collarbone height, ribs down, glutes tight.",
+        "Press straight up and move your head slightly back and through.",
+        "Finish with your biceps by your ears; do not arch your lower back."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "overhead-tricep-extension",
+      "name": "Overhead Tricep Extension",
+      "exercise_type": "weight_reps",
+      "equipment": "Cable",
+      "primary_muscle": "Triceps",
+      "secondary_muscles": [
+        "Shoulders"
+      ],
+      "areas": [
+        "arms",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/overhead-tricep-extension/frame-1.png",
+        "res://assets/exercises/overhead-tricep-extension/frame-2.png",
+        "res://assets/exercises/overhead-tricep-extension/frame-3.png"
+      ],
+      "cues": [
+        "Keep your elbows tucked and pinned to your sides.",
+        "Move only at the elbow — no swinging from your shoulders or hips.",
+        "Squeeze at the top, then lower over two seconds."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "pallof-press",
+      "name": "Pallof Press",
+      "exercise_type": "weight_reps",
+      "equipment": "Cable",
+      "primary_muscle": "Core",
+      "secondary_muscles": [
+        "Shoulders"
+      ],
+      "areas": [
+        "core",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/pallof-press/frame-1.png",
+        "res://assets/exercises/pallof-press/frame-2.png",
+        "res://assets/exercises/pallof-press/frame-3.png"
+      ],
+      "cues": [
+        "Rotate from your ribcage, not from your arms.",
+        "Keep your hips square and your core braced throughout.",
+        "Move slowly and stop the rotation rather than letting it swing."
+      ],
+      "default_sets": 2,
+      "rep_min": 12,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "pec-deck",
+      "name": "Pec Deck",
+      "exercise_type": "weight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Chest",
+      "secondary_muscles": [
+        "Shoulders"
+      ],
+      "areas": [
+        "chest",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/pec-deck/frame-1.png",
+        "res://assets/exercises/pec-deck/frame-2.png",
+        "res://assets/exercises/pec-deck/frame-3.png"
+      ],
+      "cues": [
+        "Set your shoulder blades back and down, then keep them pinned.",
+        "Lower under control until your hands are level with your mid-chest.",
+        "Press away without letting your shoulders roll forward."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "pendlay-row",
+      "name": "Pendlay Row",
+      "exercise_type": "weight_reps",
+      "equipment": "Barbell",
+      "primary_muscle": "Back",
+      "secondary_muscles": [
+        "Biceps",
+        "Rear Delts"
+      ],
+      "areas": [
+        "back",
+        "arms",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/pendlay-row/frame-1.png",
+        "res://assets/exercises/pendlay-row/frame-2.png",
+        "res://assets/exercises/pendlay-row/frame-3.png"
+      ],
+      "cues": [
+        "Hinge to about 45 degrees with a flat back and let the weight hang.",
+        "Pull with your elbows, not your hands, and touch your lower ribs.",
+        "Lower slowly and let your shoulder blades travel; do not shrug."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "pike-push-up",
+      "name": "Pike Push-up",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Shoulders",
+      "secondary_muscles": [
+        "Triceps",
+        "Chest",
+        "Core"
+      ],
+      "areas": [
+        "shoulders",
+        "arms",
+        "chest",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/pike-push-up/frame-1.png",
+        "res://assets/exercises/pike-push-up/frame-2.png",
+        "res://assets/exercises/pike-push-up/frame-3.png"
+      ],
+      "cues": [
+        "Start with the weight at collarbone height and your ribs down.",
+        "Press straight overhead, moving your head slightly back and through.",
+        "Lock out with your biceps next to your ears; do not arch your lower back."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "plank",
+      "name": "Plank",
+      "exercise_type": "duration",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Core",
+      "secondary_muscles": [
+        "Shoulders"
+      ],
+      "areas": [
+        "core",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/plank/frame-1.png",
+        "res://assets/exercises/plank/frame-2.png",
+        "res://assets/exercises/plank/frame-3.png"
+      ],
+      "cues": [
+        "Set your elbows under your shoulders and your feet hip width.",
+        "Brace as if you were about to be punched in the stomach.",
+        "Keep a straight line from shoulders to heels; do not let your hips sag."
+      ],
+      "default_sets": 3,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 30
+    },
+    {
+      "id": "plank-jack",
+      "name": "Plank Jack",
+      "exercise_type": "duration",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Core",
+      "secondary_muscles": [
+        "Shoulders",
+        "Cardio"
+      ],
+      "areas": [
+        "core",
+        "shoulders",
+        "cardio"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/plank-jack/frame-1.png",
+        "res://assets/exercises/plank-jack/frame-2.png",
+        "res://assets/exercises/plank-jack/frame-3.png"
+      ],
+      "cues": [
+        "Brace as if you were about to be punched in the stomach.",
+        "Keep a straight line from shoulders to hips; do not let your hips sag.",
+        "Breathe normally and hold the position without shifting."
+      ],
+      "default_sets": 3,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 30
+    },
+    {
+      "id": "plank-shoulder-tap",
+      "name": "Plank Shoulder Tap",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Core",
+      "secondary_muscles": [
+        "Shoulders",
+        "Chest"
+      ],
+      "areas": [
+        "core",
+        "shoulders",
+        "chest"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/plank-shoulder-tap/frame-1.png",
+        "res://assets/exercises/plank-shoulder-tap/frame-2.png",
+        "res://assets/exercises/plank-shoulder-tap/frame-3.png"
+      ],
+      "cues": [
+        "Brace as if you were about to be punched in the stomach.",
+        "Keep a straight line from shoulders to hips; do not let your hips sag.",
+        "Breathe normally and hold the position without shifting."
+      ],
+      "default_sets": 2,
+      "rep_min": 12,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "plate-front-raise",
+      "name": "Plate Front Raise",
+      "exercise_type": "weight_reps",
+      "equipment": "Plate",
+      "primary_muscle": "Shoulders",
+      "secondary_muscles": [
+        "Chest"
+      ],
+      "areas": [
+        "shoulders",
+        "chest"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/plate-front-raise/frame-1.png",
+        "res://assets/exercises/plate-front-raise/frame-2.png",
+        "res://assets/exercises/plate-front-raise/frame-3.png"
+      ],
+      "cues": [
+        "Lead with your elbows and keep a slight bend in them.",
+        "Raise only to shoulder height; stop before your traps take over.",
+        "Lower slowly — the lowering half is where the work happens."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "preacher-curl",
+      "name": "Preacher Curl",
+      "exercise_type": "weight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Biceps",
+      "secondary_muscles": [
+        "Forearms"
+      ],
+      "areas": [
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/preacher-curl/frame-1.png",
+        "res://assets/exercises/preacher-curl/frame-2.png",
+        "res://assets/exercises/preacher-curl/frame-3.png"
+      ],
+      "cues": [
+        "Keep your elbows tucked and pinned to your sides.",
+        "Move only at the elbow — no swinging from your shoulders or hips.",
+        "Squeeze at the top, then lower over two seconds."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "prone-t-raise",
+      "name": "Prone T Raise",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Upper Back",
+      "secondary_muscles": [
+        "Rear Delts",
+        "Shoulders"
+      ],
+      "areas": [
+        "back",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/prone-t-raise/frame-1.png",
+        "res://assets/exercises/prone-t-raise/frame-2.png",
+        "res://assets/exercises/prone-t-raise/frame-3.png"
+      ],
+      "cues": [
+        "Lead with your elbows and keep a slight bend in them.",
+        "Raise only to shoulder height; stop before your traps take over.",
+        "Lower slowly — the lowering half is where the work happens."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "prone-y-raise",
+      "name": "Prone Y Raise",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Upper Back",
+      "secondary_muscles": [
+        "Rear Delts",
+        "Shoulders"
+      ],
+      "areas": [
+        "back",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/prone-y-raise/frame-1.png",
+        "res://assets/exercises/prone-y-raise/frame-2.png",
+        "res://assets/exercises/prone-y-raise/frame-3.png"
+      ],
+      "cues": [
+        "Lead with your elbows and keep a slight bend in them.",
+        "Raise only to shoulder height; stop before your traps take over.",
+        "Lower slowly — the lowering half is where the work happens."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "pull-up",
+      "name": "Pull-up",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Lats",
+      "secondary_muscles": [
+        "Biceps",
+        "Core"
+      ],
+      "areas": [
+        "back",
+        "arms",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/pull-up/frame-1.png",
+        "res://assets/exercises/pull-up/frame-2.png",
+        "res://assets/exercises/pull-up/frame-3.png"
+      ],
+      "cues": [
+        "Start from a dead hang with your shoulders active, not slack.",
+        "Drive your elbows down to your ribs and lead with your chest.",
+        "Lower all the way to a straight-arm hang; no kipping or swinging."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "push-press",
+      "name": "Push Press",
+      "exercise_type": "weight_reps",
+      "equipment": "Barbell",
+      "primary_muscle": "Shoulders",
+      "secondary_muscles": [
+        "Triceps",
+        "Quads"
+      ],
+      "areas": [
+        "shoulders",
+        "arms",
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/push-press/frame-1.png",
+        "res://assets/exercises/push-press/frame-2.png",
+        "res://assets/exercises/push-press/frame-3.png"
+      ],
+      "cues": [
+        "Start with the weight at collarbone height and your ribs down.",
+        "Press straight overhead, moving your head slightly back and through.",
+        "Lock out with your biceps next to your ears; do not arch your lower back."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "push-up",
+      "name": "Push-up",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Chest",
+      "secondary_muscles": [
+        "Triceps",
+        "Core"
+      ],
+      "areas": [
+        "chest",
+        "arms",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/push-up/frame-1.png",
+        "res://assets/exercises/push-up/frame-2.png",
+        "res://assets/exercises/push-up/frame-3.png"
+      ],
+      "cues": [
+        "Hands just outside shoulder width, body in one straight line.",
+        "Lower until your chest is a fist off the floor, elbows at 45 degrees.",
+        "Push the floor away and squeeze your glutes so your hips do not sag."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "rack-pull",
+      "name": "Rack Pull",
+      "exercise_type": "weight_reps",
+      "equipment": "Barbell",
+      "primary_muscle": "Back",
+      "secondary_muscles": [
+        "Glutes",
+        "Hamstrings"
+      ],
+      "areas": [
+        "back",
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/rack-pull/frame-1.png",
+        "res://assets/exercises/rack-pull/frame-2.png",
+        "res://assets/exercises/rack-pull/frame-3.png"
+      ],
+      "cues": [
+        "Use a load you can control for every rep.",
+        "Keep your core braced and your spine neutral.",
+        "Stop the set when your form starts to break down."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "rear-delt-fly",
+      "name": "Rear Delt Fly",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Rear Delts",
+      "secondary_muscles": [
+        "Upper Back"
+      ],
+      "areas": [
+        "shoulders",
+        "back"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/rear-delt-fly/frame-1.png",
+        "res://assets/exercises/rear-delt-fly/frame-2.png",
+        "res://assets/exercises/rear-delt-fly/frame-3.png"
+      ],
+      "cues": [
+        "Hinge forward with a flat back and let your arms hang straight down.",
+        "Pull your arms out to the sides, leading with your little fingers.",
+        "Squeeze your shoulder blades together without shrugging your traps."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "reverse-crunch",
+      "name": "Reverse Crunch",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Core",
+      "secondary_muscles": [],
+      "areas": [
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/reverse-crunch/frame-1.png",
+        "res://assets/exercises/reverse-crunch/frame-2.png",
+        "res://assets/exercises/reverse-crunch/frame-3.png"
+      ],
+      "cues": [
+        "Exhale and draw your ribs toward your hips.",
+        "Move slowly — no momentum from your arms or hips.",
+        "Stop when your lower back starts to arch away from the floor."
+      ],
+      "default_sets": 2,
+      "rep_min": 12,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "reverse-curl",
+      "name": "Reverse Curl",
+      "exercise_type": "weight_reps",
+      "equipment": "Barbell",
+      "primary_muscle": "Forearms",
+      "secondary_muscles": [
+        "Biceps"
+      ],
+      "areas": [
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/reverse-curl/frame-1.png",
+        "res://assets/exercises/reverse-curl/frame-2.png",
+        "res://assets/exercises/reverse-curl/frame-3.png"
+      ],
+      "cues": [
+        "Keep your elbows tucked and pinned to your sides.",
+        "Move only at the elbow — no swinging from your shoulders or hips.",
+        "Squeeze at the top, then lower over two seconds."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "reverse-hyperextension",
+      "name": "Reverse Hyperextension",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Glutes",
+      "secondary_muscles": [
+        "Hamstrings",
+        "Lower Back"
+      ],
+      "areas": [
+        "legs",
+        "back"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "advanced",
+      "frames": [
+        "res://assets/exercises/reverse-hyperextension/frame-1.png",
+        "res://assets/exercises/reverse-hyperextension/frame-2.png",
+        "res://assets/exercises/reverse-hyperextension/frame-3.png"
+      ],
+      "cues": [
+        "Set your shoulders down and pull the weight into your body.",
+        "Push your hips back with a flat back — do not round your lower back.",
+        "Finish by squeezing your glutes; stop before your back arches."
+      ],
+      "default_sets": 4,
+      "rep_min": 4,
+      "rep_max": 8,
+      "rest_seconds": 120
+    },
+    {
+      "id": "reverse-lunge",
+      "name": "Reverse Lunge",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Quads",
+      "secondary_muscles": [
+        "Glutes",
+        "Hamstrings"
+      ],
+      "areas": [
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/reverse-lunge/frame-1.png",
+        "res://assets/exercises/reverse-lunge/frame-2.png",
+        "res://assets/exercises/reverse-lunge/frame-3.png"
+      ],
+      "cues": [
+        "Step back and keep most of your weight on the front leg.",
+        "Lower until your back knee is just above the floor, torso upright.",
+        "Drive through your front heel to return to standing."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "reverse-pec-deck",
+      "name": "Reverse Pec Deck",
+      "exercise_type": "weight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Rear Delts",
+      "secondary_muscles": [
+        "Upper Back"
+      ],
+      "areas": [
+        "shoulders",
+        "back"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/reverse-pec-deck/frame-1.png",
+        "res://assets/exercises/reverse-pec-deck/frame-2.png",
+        "res://assets/exercises/reverse-pec-deck/frame-3.png"
+      ],
+      "cues": [
+        "Set your shoulder blades back and down, then keep them pinned.",
+        "Lower under control until your hands are level with your mid-chest.",
+        "Press away without letting your shoulders roll forward."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "romanian-deadlift",
+      "name": "Romanian Deadlift",
+      "exercise_type": "weight_reps",
+      "equipment": "Barbell",
+      "primary_muscle": "Hamstrings",
+      "secondary_muscles": [
+        "Glutes",
+        "Lower Back"
+      ],
+      "areas": [
+        "legs",
+        "back"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/romanian-deadlift/frame-1.png",
+        "res://assets/exercises/romanian-deadlift/frame-2.png",
+        "res://assets/exercises/romanian-deadlift/frame-3.png"
+      ],
+      "cues": [
+        "Start standing with soft knees and the bar against your thighs.",
+        "Push your hips back and let the bar slide down your legs.",
+        "Stop at a hamstring stretch, then drive your hips forward to stand."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "rope-hammer-curl",
+      "name": "Rope Hammer Curl",
+      "exercise_type": "weight_reps",
+      "equipment": "Cable",
+      "primary_muscle": "Biceps",
+      "secondary_muscles": [
+        "Forearms"
+      ],
+      "areas": [
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/rope-hammer-curl/frame-1.png",
+        "res://assets/exercises/rope-hammer-curl/frame-2.png",
+        "res://assets/exercises/rope-hammer-curl/frame-3.png"
+      ],
+      "cues": [
+        "Keep your elbows tucked and pinned to your sides.",
+        "Move only at the elbow — no swinging from your shoulders or hips.",
+        "Squeeze at the top, then lower over two seconds."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "rope-tricep-pushdown",
+      "name": "Rope Tricep Pushdown",
+      "exercise_type": "weight_reps",
+      "equipment": "Cable",
+      "primary_muscle": "Triceps",
+      "secondary_muscles": [
+        "Shoulders"
+      ],
+      "areas": [
+        "arms",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/rope-tricep-pushdown/frame-1.png",
+        "res://assets/exercises/rope-tricep-pushdown/frame-2.png",
+        "res://assets/exercises/rope-tricep-pushdown/frame-3.png"
+      ],
+      "cues": [
+        "Keep your elbows tucked and pinned to your sides.",
+        "Move only at the elbow — no swinging from your shoulders or hips.",
+        "Squeeze at the top, then lower over two seconds."
+      ],
+      "default_sets": 2,
+      "rep_min": 12,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "russian-twist",
+      "name": "Russian Twist",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Core",
+      "secondary_muscles": [
+        "Shoulders"
+      ],
+      "areas": [
+        "core",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/russian-twist/frame-1.png",
+        "res://assets/exercises/russian-twist/frame-2.png",
+        "res://assets/exercises/russian-twist/frame-3.png"
+      ],
+      "cues": [
+        "Rotate from your ribcage, not from your arms.",
+        "Keep your hips square and your core braced throughout.",
+        "Move slowly and stop the rotation rather than letting it swing."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "scapular-pull-up",
+      "name": "Scapular Pull-up",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Pull-up Bar",
+      "primary_muscle": "Lats",
+      "secondary_muscles": [
+        "Upper Back",
+        "Forearms",
+        "Core"
+      ],
+      "areas": [
+        "back",
+        "arms",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/scapular-pull-up/frame-1.png",
+        "res://assets/exercises/scapular-pull-up/frame-2.png",
+        "res://assets/exercises/scapular-pull-up/frame-3.png"
+      ],
+      "cues": [
+        "Start from a dead hang with your shoulders active, not slack.",
+        "Drive your elbows down toward your ribs and lead with your chest.",
+        "Lower all the way under control; no swinging or kipping."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "seal-jack",
+      "name": "Seal Jack",
+      "exercise_type": "duration",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Chest",
+      "secondary_muscles": [
+        "Shoulders",
+        "Legs",
+        "Cardio"
+      ],
+      "areas": [
+        "chest",
+        "shoulders",
+        "legs",
+        "cardio"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/seal-jack/frame-1.png",
+        "res://assets/exercises/seal-jack/frame-2.png",
+        "res://assets/exercises/seal-jack/frame-3.png"
+      ],
+      "cues": [
+        "Start at a pace you could hold a short conversation at.",
+        "Keep your breathing rhythmic and your core braced.",
+        "Slow down rather than stopping abruptly when the interval ends."
+      ],
+      "default_sets": 3,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 45
+    },
+    {
+      "id": "seated-calf-raise",
+      "name": "Seated Calf Raise",
+      "exercise_type": "weight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Calves",
+      "secondary_muscles": [],
+      "areas": [
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/seated-calf-raise/frame-1.png",
+        "res://assets/exercises/seated-calf-raise/frame-2.png",
+        "res://assets/exercises/seated-calf-raise/frame-3.png"
+      ],
+      "cues": [
+        "Sit with the pad on your thighs and the balls of your feet supported.",
+        "Push up as high as you can, then pause and squeeze your calves.",
+        "Lower slowly until you feel a deep stretch in your calf."
+      ],
+      "default_sets": 2,
+      "rep_min": 12,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "seated-dumbbell-press",
+      "name": "Dumbbell Seated Shoulder Press",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Shoulders",
+      "secondary_muscles": [
+        "Triceps"
+      ],
+      "areas": [
+        "shoulders",
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/seated-dumbbell-press/frame-1.png",
+        "res://assets/exercises/seated-dumbbell-press/frame-2.png",
+        "res://assets/exercises/seated-dumbbell-press/frame-3.png"
+      ],
+      "cues": [
+        "Sit tall against the pad with the dumbbells at ear height.",
+        "Press up until your arms are straight, keeping your ribs down.",
+        "Lower under control back to ear height; do not bounce out of the bottom."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "seated-forward-fold-stretch",
+      "name": "Seated Forward Fold",
+      "exercise_type": "duration",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Hamstrings",
+      "secondary_muscles": [
+        "Back",
+        "Calves",
+        "Mobility"
+      ],
+      "areas": [
+        "legs",
+        "back",
+        "mobility"
+      ],
+      "is_stretch": true,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/seated-forward-fold-stretch/frame-1.png",
+        "res://assets/exercises/seated-forward-fold-stretch/frame-2.png",
+        "res://assets/exercises/seated-forward-fold-stretch/frame-3.png"
+      ],
+      "cues": [
+        "Sit with both legs straight and your feet flexed.",
+        "Hinge forward from your hips, keeping your back as flat as you can.",
+        "Hold where you feel a gentle hamstring stretch, not pain."
+      ],
+      "default_sets": 1,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 0
+    },
+    {
+      "id": "seated-leg-curl",
+      "name": "Seated Leg Curl",
+      "exercise_type": "weight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Hamstrings",
+      "secondary_muscles": [
+        "Calves"
+      ],
+      "areas": [
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/seated-leg-curl/frame-1.png",
+        "res://assets/exercises/seated-leg-curl/frame-2.png",
+        "res://assets/exercises/seated-leg-curl/frame-3.png"
+      ],
+      "cues": [
+        "Set the pad just above your heels and keep your back on the seat.",
+        "Curl your heels down and under, squeezing your hamstrings.",
+        "Return slowly until your legs are almost straight; keep your hips down."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "seated-row",
+      "name": "Seated Cable Row",
+      "exercise_type": "weight_reps",
+      "equipment": "Cable",
+      "primary_muscle": "Back",
+      "secondary_muscles": [
+        "Biceps",
+        "Rear Delts"
+      ],
+      "areas": [
+        "back",
+        "arms",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/seated-row/frame-1.png",
+        "res://assets/exercises/seated-row/frame-2.png",
+        "res://assets/exercises/seated-row/frame-3.png"
+      ],
+      "cues": [
+        "Sit tall with a slight knee bend and your chest lifted.",
+        "Pull the handle to your belly button, elbows passing your ribs.",
+        "Let your shoulder blades travel forward on the return; do not round."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "shrug",
+      "name": "Barbell Shrug",
+      "exercise_type": "weight_reps",
+      "equipment": "Barbell",
+      "primary_muscle": "Upper Back",
+      "secondary_muscles": [
+        "Forearms"
+      ],
+      "areas": [
+        "back",
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/shrug/frame-1.png",
+        "res://assets/exercises/shrug/frame-2.png",
+        "res://assets/exercises/shrug/frame-3.png"
+      ],
+      "cues": [
+        "Lead with your elbows and keep a slight bend in them.",
+        "Raise only to shoulder height; stop before your traps take over.",
+        "Lower slowly — the lowering half is where the work happens."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "side-lying-hip-abduction",
+      "name": "Side-Lying Hip Abduction",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Glutes",
+      "secondary_muscles": [
+        "Core"
+      ],
+      "areas": [
+        "legs",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/side-lying-hip-abduction/frame-1.png",
+        "res://assets/exercises/side-lying-hip-abduction/frame-2.png",
+        "res://assets/exercises/side-lying-hip-abduction/frame-3.png"
+      ],
+      "cues": [
+        "Use a load you can control for every rep.",
+        "Keep your core braced and your spine neutral.",
+        "Stop the set when your form starts to break down."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "side-lying-leg-raise",
+      "name": "Side-Lying Leg Raise",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Glutes",
+      "secondary_muscles": [
+        "Core"
+      ],
+      "areas": [
+        "legs",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/side-lying-leg-raise/frame-1.png",
+        "res://assets/exercises/side-lying-leg-raise/frame-2.png",
+        "res://assets/exercises/side-lying-leg-raise/frame-3.png"
+      ],
+      "cues": [
+        "Exhale and draw your ribs toward your hips.",
+        "Move slowly — no momentum from your arms or hips.",
+        "Stop when your lower back starts to arch away from the floor."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "side-plank",
+      "name": "Side Plank",
+      "exercise_type": "duration",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Core",
+      "secondary_muscles": [
+        "Shoulders"
+      ],
+      "areas": [
+        "core",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/side-plank/frame-1.png",
+        "res://assets/exercises/side-plank/frame-2.png",
+        "res://assets/exercises/side-plank/frame-3.png"
+      ],
+      "cues": [
+        "Brace as if you were about to be punched in the stomach.",
+        "Keep a straight line from shoulders to hips; do not let your hips sag.",
+        "Breathe normally and hold the position without shifting."
+      ],
+      "default_sets": 3,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 30
+    },
+    {
+      "id": "single-arm-cable-row",
+      "name": "Single-Arm Cable Row",
+      "exercise_type": "weight_reps",
+      "equipment": "Cable",
+      "primary_muscle": "Back",
+      "secondary_muscles": [
+        "Biceps",
+        "Rear Delts"
+      ],
+      "areas": [
+        "back",
+        "arms",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/single-arm-cable-row/frame-1.png",
+        "res://assets/exercises/single-arm-cable-row/frame-2.png",
+        "res://assets/exercises/single-arm-cable-row/frame-3.png"
+      ],
+      "cues": [
+        "Hinge to about 45 degrees with a flat back and let the weight hang.",
+        "Pull with your elbows, not your hands, and touch your lower ribs.",
+        "Lower slowly and let your shoulder blades travel; do not shrug."
+      ],
+      "default_sets": 3,
+      "rep_min": 8,
+      "rep_max": 12,
+      "rest_seconds": 75
+    },
+    {
+      "id": "single-leg-box-squat",
+      "name": "Single-Leg Box Squat",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Box",
+      "primary_muscle": "Quads",
+      "secondary_muscles": [
+        "Glutes",
+        "Hamstrings",
+        "Core"
+      ],
+      "areas": [
+        "legs",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/single-leg-box-squat/frame-1.png",
+        "res://assets/exercises/single-leg-box-squat/frame-2.png",
+        "res://assets/exercises/single-leg-box-squat/frame-3.png"
+      ],
+      "cues": [
+        "Brace your core and keep your chest tall before you descend.",
+        "Sit down and back until your thighs reach at least parallel.",
+        "Drive through mid-foot and keep your knees tracking over your toes."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "single-leg-calf-raise",
+      "name": "Single-Leg Calf Raise",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Calves",
+      "secondary_muscles": [
+        "Core"
+      ],
+      "areas": [
+        "legs",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/single-leg-calf-raise/frame-1.png",
+        "res://assets/exercises/single-leg-calf-raise/frame-2.png",
+        "res://assets/exercises/single-leg-calf-raise/frame-3.png"
+      ],
+      "cues": [
+        "Stand tall with your knees straight but not locked.",
+        "Rise as high as you can onto the balls of your feet.",
+        "Lower until you feel a stretch in your calf; pause, then repeat."
+      ],
+      "default_sets": 2,
+      "rep_min": 12,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "single-leg-romanian-deadlift",
+      "name": "Single-Leg Romanian Deadlift",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Hamstrings",
+      "secondary_muscles": [
+        "Glutes",
+        "Core"
+      ],
+      "areas": [
+        "legs",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/single-leg-romanian-deadlift/frame-1.png",
+        "res://assets/exercises/single-leg-romanian-deadlift/frame-2.png",
+        "res://assets/exercises/single-leg-romanian-deadlift/frame-3.png"
+      ],
+      "cues": [
+        "Set your shoulders down and pull the weight into your body.",
+        "Push your hips back with a flat back — do not round your lower back.",
+        "Finish by squeezing your glutes; stop before your back arches."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "skull-crusher",
+      "name": "Skull Crusher",
+      "exercise_type": "weight_reps",
+      "equipment": "Barbell",
+      "primary_muscle": "Triceps",
+      "secondary_muscles": [
+        "Shoulders"
+      ],
+      "areas": [
+        "arms",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/skull-crusher/frame-1.png",
+        "res://assets/exercises/skull-crusher/frame-2.png",
+        "res://assets/exercises/skull-crusher/frame-3.png"
+      ],
+      "cues": [
+        "Lie down with the bar over your forehead and elbows pointing up.",
+        "Bend only at the elbows and lower the bar toward your hairline.",
+        "Press back up without letting your elbows drift toward your feet."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "smith-machine-bench-press",
+      "name": "Smith Machine Bench Press",
+      "exercise_type": "weight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Chest",
+      "secondary_muscles": [
+        "Triceps",
+        "Shoulders"
+      ],
+      "areas": [
+        "chest",
+        "arms",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/smith-machine-bench-press/frame-1.png",
+        "res://assets/exercises/smith-machine-bench-press/frame-2.png",
+        "res://assets/exercises/smith-machine-bench-press/frame-3.png"
+      ],
+      "cues": [
+        "Set your shoulder blades back and down, then keep them pinned.",
+        "Lower under control until your hands are level with your mid-chest.",
+        "Press away without letting your shoulders roll forward."
+      ],
+      "default_sets": 3,
+      "rep_min": 8,
+      "rep_max": 12,
+      "rest_seconds": 75
+    },
+    {
+      "id": "smith-machine-bulgarian-split-squat",
+      "name": "Smith Machine Bulgarian Split Squat",
+      "exercise_type": "weight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Quads",
+      "secondary_muscles": [
+        "Glutes",
+        "Core"
+      ],
+      "areas": [
+        "legs",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/smith-machine-bulgarian-split-squat/frame-1.png",
+        "res://assets/exercises/smith-machine-bulgarian-split-squat/frame-2.png",
+        "res://assets/exercises/smith-machine-bulgarian-split-squat/frame-3.png"
+      ],
+      "cues": [
+        "Take a long enough step that your front shin stays near vertical.",
+        "Lower until the back knee is just above the floor.",
+        "Push through the front heel to stand; keep your torso upright."
+      ],
+      "default_sets": 3,
+      "rep_min": 8,
+      "rep_max": 12,
+      "rest_seconds": 75
+    },
+    {
+      "id": "smith-machine-hip-thrust",
+      "name": "Smith Machine Hip Thrust",
+      "exercise_type": "weight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Glutes",
+      "secondary_muscles": [
+        "Hamstrings",
+        "Core"
+      ],
+      "areas": [
+        "legs",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/smith-machine-hip-thrust/frame-1.png",
+        "res://assets/exercises/smith-machine-hip-thrust/frame-2.png",
+        "res://assets/exercises/smith-machine-hip-thrust/frame-3.png"
+      ],
+      "cues": [
+        "Set your shoulders down and pull the weight into your body.",
+        "Push your hips back with a flat back — do not round your lower back.",
+        "Finish by squeezing your glutes; stop before your back arches."
+      ],
+      "default_sets": 3,
+      "rep_min": 8,
+      "rep_max": 12,
+      "rest_seconds": 75
+    },
+    {
+      "id": "smith-machine-reverse-lunge",
+      "name": "Smith Machine Reverse Lunge",
+      "exercise_type": "weight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Quads",
+      "secondary_muscles": [
+        "Glutes",
+        "Hamstrings",
+        "Core"
+      ],
+      "areas": [
+        "legs",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/smith-machine-reverse-lunge/frame-1.png",
+        "res://assets/exercises/smith-machine-reverse-lunge/frame-2.png",
+        "res://assets/exercises/smith-machine-reverse-lunge/frame-3.png"
+      ],
+      "cues": [
+        "Take a long enough step that your front shin stays near vertical.",
+        "Lower until the back knee is just above the floor.",
+        "Push through the front heel to stand; keep your torso upright."
+      ],
+      "default_sets": 3,
+      "rep_min": 8,
+      "rep_max": 12,
+      "rest_seconds": 75
+    },
+    {
+      "id": "smith-machine-romanian-deadlift",
+      "name": "Smith Machine Romanian Deadlift",
+      "exercise_type": "weight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Hamstrings",
+      "secondary_muscles": [
+        "Glutes",
+        "Lower Back"
+      ],
+      "areas": [
+        "legs",
+        "back"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/smith-machine-romanian-deadlift/frame-1.png",
+        "res://assets/exercises/smith-machine-romanian-deadlift/frame-2.png",
+        "res://assets/exercises/smith-machine-romanian-deadlift/frame-3.png"
+      ],
+      "cues": [
+        "Set your shoulders down and pull the weight into your body.",
+        "Push your hips back with a flat back — do not round your lower back.",
+        "Finish by squeezing your glutes; stop before your back arches."
+      ],
+      "default_sets": 3,
+      "rep_min": 8,
+      "rep_max": 12,
+      "rest_seconds": 75
+    },
+    {
+      "id": "smith-machine-split-squat",
+      "name": "Smith Machine Split Squat",
+      "exercise_type": "weight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Quads",
+      "secondary_muscles": [
+        "Glutes",
+        "Core"
+      ],
+      "areas": [
+        "legs",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/smith-machine-split-squat/frame-1.png",
+        "res://assets/exercises/smith-machine-split-squat/frame-2.png",
+        "res://assets/exercises/smith-machine-split-squat/frame-3.png"
+      ],
+      "cues": [
+        "Take a long enough step that your front shin stays near vertical.",
+        "Lower until the back knee is just above the floor.",
+        "Push through the front heel to stand; keep your torso upright."
+      ],
+      "default_sets": 3,
+      "rep_min": 8,
+      "rep_max": 12,
+      "rest_seconds": 75
+    },
+    {
+      "id": "smith-machine-squat",
+      "name": "Smith Machine Squat",
+      "exercise_type": "weight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Quads",
+      "secondary_muscles": [
+        "Glutes",
+        "Core"
+      ],
+      "areas": [
+        "legs",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/smith-machine-squat/frame-1.png",
+        "res://assets/exercises/smith-machine-squat/frame-2.png",
+        "res://assets/exercises/smith-machine-squat/frame-3.png"
+      ],
+      "cues": [
+        "Place your feet slightly forward of the bar with your back flat.",
+        "Lower under control until your thighs reach parallel.",
+        "Push through your heels and keep the bar path straight."
+      ],
+      "default_sets": 3,
+      "rep_min": 8,
+      "rep_max": 12,
+      "rest_seconds": 75
+    },
+    {
+      "id": "split-squat",
+      "name": "Split Squat",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Quads",
+      "secondary_muscles": [
+        "Glutes",
+        "Core"
+      ],
+      "areas": [
+        "legs",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/split-squat/frame-1.png",
+        "res://assets/exercises/split-squat/frame-2.png",
+        "res://assets/exercises/split-squat/frame-3.png"
+      ],
+      "cues": [
+        "Take a long enough step that your front shin stays near vertical.",
+        "Lower until the back knee is just above the floor.",
+        "Push through the front heel to stand; keep your torso upright."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "sprawl",
+      "name": "Sprawl",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Legs",
+      "secondary_muscles": [
+        "Core",
+        "Shoulders",
+        "Cardio"
+      ],
+      "areas": [
+        "legs",
+        "core",
+        "shoulders",
+        "cardio"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/sprawl/frame-1.png",
+        "res://assets/exercises/sprawl/frame-2.png",
+        "res://assets/exercises/sprawl/frame-3.png"
+      ],
+      "cues": [
+        "Start at a pace you could hold a short conversation at.",
+        "Keep your breathing rhythmic and your core braced.",
+        "Slow down rather than stopping abruptly when the interval ends."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "squat",
+      "name": "Squat",
+      "exercise_type": "weight_reps",
+      "equipment": "Barbell",
+      "primary_muscle": "Quads",
+      "secondary_muscles": [
+        "Glutes",
+        "Core"
+      ],
+      "areas": [
+        "legs",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/squat/frame-1.png",
+        "res://assets/exercises/squat/frame-2.png",
+        "res://assets/exercises/squat/frame-3.png"
+      ],
+      "cues": [
+        "Brace your core and set the bar on your upper back before stepping out.",
+        "Sit down and back until your hip crease drops below your knee.",
+        "Drive through mid-foot and keep your knees tracking over your toes."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "stair-climber",
+      "name": "Stair Climber",
+      "exercise_type": "duration",
+      "equipment": "Cardio",
+      "primary_muscle": "Legs",
+      "secondary_muscles": [
+        "Cardio"
+      ],
+      "areas": [
+        "legs",
+        "cardio"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/stair-climber/frame-1.png",
+        "res://assets/exercises/stair-climber/frame-2.png",
+        "res://assets/exercises/stair-climber/frame-3.png"
+      ],
+      "cues": [
+        "Start at a pace you could hold a short conversation at.",
+        "Keep your breathing rhythmic and your core braced.",
+        "Slow down rather than stopping abruptly when the interval ends."
+      ],
+      "default_sets": 3,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 45
+    },
+    {
+      "id": "standing-calf-raise",
+      "name": "Standing Calf Raise",
+      "exercise_type": "weight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Calves",
+      "secondary_muscles": [],
+      "areas": [
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/standing-calf-raise/frame-1.png",
+        "res://assets/exercises/standing-calf-raise/frame-2.png",
+        "res://assets/exercises/standing-calf-raise/frame-3.png"
+      ],
+      "cues": [
+        "Stand with the balls of your feet on the platform, knees straight.",
+        "Rise as high as you can and pause for a second at the top.",
+        "Lower until you feel a stretch in your calf, then repeat."
+      ],
+      "default_sets": 2,
+      "rep_min": 12,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "standing-dumbbell-press",
+      "name": "Standing Dumbbell Press",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Shoulders",
+      "secondary_muscles": [
+        "Triceps",
+        "Core"
+      ],
+      "areas": [
+        "shoulders",
+        "arms",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/standing-dumbbell-press/frame-1.png",
+        "res://assets/exercises/standing-dumbbell-press/frame-2.png",
+        "res://assets/exercises/standing-dumbbell-press/frame-3.png"
+      ],
+      "cues": [
+        "Start with the weight at collarbone height and your ribs down.",
+        "Press straight overhead, moving your head slightly back and through.",
+        "Lock out with your biceps next to your ears; do not arch your lower back."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "standing-quad-stretch",
+      "name": "Standing Quad Stretch",
+      "exercise_type": "duration",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Quads",
+      "secondary_muscles": [
+        "Hips",
+        "Mobility"
+      ],
+      "areas": [
+        "legs",
+        "mobility"
+      ],
+      "is_stretch": true,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/standing-quad-stretch/frame-1.png",
+        "res://assets/exercises/standing-quad-stretch/frame-2.png",
+        "res://assets/exercises/standing-quad-stretch/frame-3.png"
+      ],
+      "cues": [
+        "Stand tall and hold a wall with one hand for balance.",
+        "Pull your heel toward your glute and keep your knees together.",
+        "Tuck your pelvis under so the stretch stays in the front of the thigh."
+      ],
+      "default_sets": 1,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 0
+    },
+    {
+      "id": "step-down",
+      "name": "Step-Down",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Box",
+      "primary_muscle": "Quads",
+      "secondary_muscles": [
+        "Glutes",
+        "Hamstrings",
+        "Calves"
+      ],
+      "areas": [
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/step-down/frame-1.png",
+        "res://assets/exercises/step-down/frame-2.png",
+        "res://assets/exercises/step-down/frame-3.png"
+      ],
+      "cues": [
+        "Take a long enough step that your front shin stays near vertical.",
+        "Lower until the back knee is just above the floor.",
+        "Push through the front heel to stand; keep your torso upright."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "step-up",
+      "name": "Step-Up",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Quads",
+      "secondary_muscles": [
+        "Glutes"
+      ],
+      "areas": [
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/step-up/frame-1.png",
+        "res://assets/exercises/step-up/frame-2.png",
+        "res://assets/exercises/step-up/frame-3.png"
+      ],
+      "cues": [
+        "Take a long enough step that your front shin stays near vertical.",
+        "Lower until the back knee is just above the floor.",
+        "Push through the front heel to stand; keep your torso upright."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "straight-arm-pulldown",
+      "name": "Straight-Arm Pulldown",
+      "exercise_type": "weight_reps",
+      "equipment": "Cable",
+      "primary_muscle": "Lats",
+      "secondary_muscles": [
+        "Core"
+      ],
+      "areas": [
+        "back",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/straight-arm-pulldown/frame-1.png",
+        "res://assets/exercises/straight-arm-pulldown/frame-2.png",
+        "res://assets/exercises/straight-arm-pulldown/frame-3.png"
+      ],
+      "cues": [
+        "Start from a dead hang with your shoulders active, not slack.",
+        "Drive your elbows down toward your ribs and lead with your chest.",
+        "Lower all the way under control; no swinging or kipping."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "sumo-deadlift",
+      "name": "Sumo Deadlift",
+      "exercise_type": "weight_reps",
+      "equipment": "Barbell",
+      "primary_muscle": "Posterior Chain",
+      "secondary_muscles": [
+        "Glutes",
+        "Quads"
+      ],
+      "areas": [
+        "back",
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/sumo-deadlift/frame-1.png",
+        "res://assets/exercises/sumo-deadlift/frame-2.png",
+        "res://assets/exercises/sumo-deadlift/frame-3.png"
+      ],
+      "cues": [
+        "Take a wide stance, toes turned out, with your shins vertical.",
+        "Grip inside your knees, brace, and push the floor apart.",
+        "Keep the bar close and finish with your glutes, not by leaning back."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "superman",
+      "name": "Superman",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Lower Back",
+      "secondary_muscles": [
+        "Glutes",
+        "Upper Back",
+        "Hamstrings"
+      ],
+      "areas": [
+        "back",
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/superman/frame-1.png",
+        "res://assets/exercises/superman/frame-2.png",
+        "res://assets/exercises/superman/frame-3.png"
+      ],
+      "cues": [
+        "Use a load you can control for every rep.",
+        "Keep your core braced and your spine neutral.",
+        "Stop the set when your form starts to break down."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "superman-hold",
+      "name": "Superman Hold",
+      "exercise_type": "duration",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Lower Back",
+      "secondary_muscles": [
+        "Glutes",
+        "Upper Back",
+        "Hamstrings"
+      ],
+      "areas": [
+        "back",
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/superman-hold/frame-1.png",
+        "res://assets/exercises/superman-hold/frame-2.png",
+        "res://assets/exercises/superman-hold/frame-3.png"
+      ],
+      "cues": [
+        "Use a load you can control for every rep.",
+        "Keep your core braced and your spine neutral.",
+        "Stop the set when your form starts to break down."
+      ],
+      "default_sets": 3,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 30
+    },
+    {
+      "id": "t-bar-row",
+      "name": "T-Bar Row",
+      "exercise_type": "weight_reps",
+      "equipment": "Machine",
+      "primary_muscle": "Back",
+      "secondary_muscles": [
+        "Biceps",
+        "Rear Delts"
+      ],
+      "areas": [
+        "back",
+        "arms",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/t-bar-row/frame-1.png",
+        "res://assets/exercises/t-bar-row/frame-2.png",
+        "res://assets/exercises/t-bar-row/frame-3.png"
+      ],
+      "cues": [
+        "Straddle the bar with a flat back and your chest lifted.",
+        "Pull the handles to your chest with your elbows tracking back.",
+        "Squeeze at the top, then lower slowly without dropping your chest."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "toe-touch",
+      "name": "Toe Touch",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Core",
+      "secondary_muscles": [],
+      "areas": [
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/toe-touch/frame-1.png",
+        "res://assets/exercises/toe-touch/frame-2.png",
+        "res://assets/exercises/toe-touch/frame-3.png"
+      ],
+      "cues": [
+        "Exhale and draw your ribs toward your hips.",
+        "Move slowly — no momentum from your arms or hips.",
+        "Stop when your lower back starts to arch away from the floor."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "torso-twist-stretch",
+      "name": "Torso Twists",
+      "exercise_type": "duration",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Mobility",
+      "secondary_muscles": [
+        "Core",
+        "Back"
+      ],
+      "areas": [
+        "mobility",
+        "core",
+        "back"
+      ],
+      "is_stretch": true,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/torso-twist-stretch/frame-1.png",
+        "res://assets/exercises/torso-twist-stretch/frame-2.png",
+        "res://assets/exercises/torso-twist-stretch/frame-3.png"
+      ],
+      "cues": [
+        "Stand with your feet hip width and your knees soft.",
+        "Rotate your ribcage to one side, letting your arms swing freely.",
+        "Keep your hips fairly still and do not force the end of the range."
+      ],
+      "default_sets": 1,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 0
+    },
+    {
+      "id": "trap-bar-deadlift",
+      "name": "Trap Bar Deadlift",
+      "exercise_type": "weight_reps",
+      "equipment": "Barbell",
+      "primary_muscle": "Posterior Chain",
+      "secondary_muscles": [
+        "Quads",
+        "Grip"
+      ],
+      "areas": [
+        "back",
+        "legs",
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/trap-bar-deadlift/frame-1.png",
+        "res://assets/exercises/trap-bar-deadlift/frame-2.png",
+        "res://assets/exercises/trap-bar-deadlift/frame-3.png"
+      ],
+      "cues": [
+        "Set your shoulders down and pull the weight into your body.",
+        "Push your hips back with a flat back — do not round your lower back.",
+        "Finish by squeezing your glutes; stop before your back arches."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "tricep-pushdown",
+      "name": "Tricep Pushdown",
+      "exercise_type": "weight_reps",
+      "equipment": "Cable",
+      "primary_muscle": "Triceps",
+      "secondary_muscles": [
+        "Shoulders"
+      ],
+      "areas": [
+        "arms",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/tricep-pushdown/frame-1.png",
+        "res://assets/exercises/tricep-pushdown/frame-2.png",
+        "res://assets/exercises/tricep-pushdown/frame-3.png"
+      ],
+      "cues": [
+        "Stand close to the cable with your elbows pinned to your sides.",
+        "Push the handle down until your arms are straight, then squeeze.",
+        "Let the handle rise only until your forearms reach horizontal."
+      ],
+      "default_sets": 2,
+      "rep_min": 12,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "upright-row",
+      "name": "Upright Row",
+      "exercise_type": "weight_reps",
+      "equipment": "Barbell",
+      "primary_muscle": "Shoulders",
+      "secondary_muscles": [
+        "Upper Back",
+        "Biceps"
+      ],
+      "areas": [
+        "shoulders",
+        "back",
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/upright-row/frame-1.png",
+        "res://assets/exercises/upright-row/frame-2.png",
+        "res://assets/exercises/upright-row/frame-3.png"
+      ],
+      "cues": [
+        "Hinge to about 45 degrees with a flat back and let the weight hang.",
+        "Pull with your elbows, not your hands, and touch your lower ribs.",
+        "Lower slowly and let your shoulder blades travel; do not shrug."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "v-up",
+      "name": "V-Up",
+      "exercise_type": "bodyweight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Core",
+      "secondary_muscles": [
+        "Quads"
+      ],
+      "areas": [
+        "core",
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/v-up/frame-1.png",
+        "res://assets/exercises/v-up/frame-2.png",
+        "res://assets/exercises/v-up/frame-3.png"
+      ],
+      "cues": [
+        "Exhale and draw your ribs toward your hips.",
+        "Move slowly — no momentum from your arms or hips.",
+        "Stop when your lower back starts to arch away from the floor."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    },
+    {
+      "id": "walking-lunge",
+      "name": "Walking Lunge",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Quads",
+      "secondary_muscles": [
+        "Glutes",
+        "Hamstrings"
+      ],
+      "areas": [
+        "legs"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/walking-lunge/frame-1.png",
+        "res://assets/exercises/walking-lunge/frame-2.png",
+        "res://assets/exercises/walking-lunge/frame-3.png"
+      ],
+      "cues": [
+        "Step forward far enough that your front shin stays near vertical.",
+        "Lower until your back knee is just above the floor.",
+        "Push off the front heel and step straight into the next lunge."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "wall-calf-stretch",
+      "name": "Wall Calf Stretch",
+      "exercise_type": "duration",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Calves",
+      "secondary_muscles": [
+        "Mobility"
+      ],
+      "areas": [
+        "legs",
+        "mobility"
+      ],
+      "is_stretch": true,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/wall-calf-stretch/frame-1.png",
+        "res://assets/exercises/wall-calf-stretch/frame-2.png",
+        "res://assets/exercises/wall-calf-stretch/frame-3.png"
+      ],
+      "cues": [
+        "Place your hands on a wall with one leg back and heel down.",
+        "Keep the back knee straight and lean your hips forward.",
+        "Hold the stretch and breathe; switch legs halfway through."
+      ],
+      "default_sets": 1,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 0
+    },
+    {
+      "id": "wall-sit",
+      "name": "Wall Sit",
+      "exercise_type": "duration",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Quads",
+      "secondary_muscles": [
+        "Glutes",
+        "Core"
+      ],
+      "areas": [
+        "legs",
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "advanced",
+      "frames": [
+        "res://assets/exercises/wall-sit/frame-1.png",
+        "res://assets/exercises/wall-sit/frame-2.png",
+        "res://assets/exercises/wall-sit/frame-3.png"
+      ],
+      "cues": [
+        "Brace your core and keep your chest tall before you descend.",
+        "Sit down and back until your thighs reach at least parallel.",
+        "Drive through mid-foot and keep your knees tracking over your toes."
+      ],
+      "default_sets": 3,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 45
+    },
+    {
+      "id": "weighted-crunch",
+      "name": "Weighted Crunch",
+      "exercise_type": "weight_reps",
+      "equipment": "Plate",
+      "primary_muscle": "Core",
+      "secondary_muscles": [],
+      "areas": [
+        "core"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "advanced",
+      "frames": [
+        "res://assets/exercises/weighted-crunch/frame-1.png",
+        "res://assets/exercises/weighted-crunch/frame-2.png",
+        "res://assets/exercises/weighted-crunch/frame-3.png"
+      ],
+      "cues": [
+        "Exhale and draw your ribs toward your hips.",
+        "Move slowly — no momentum from your arms or hips.",
+        "Stop when your lower back starts to arch away from the floor."
+      ],
+      "default_sets": 3,
+      "rep_min": 8,
+      "rep_max": 12,
+      "rest_seconds": 75
+    },
+    {
+      "id": "weighted-pull-up",
+      "name": "Weighted Pull-up",
+      "exercise_type": "weight_reps",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Lats",
+      "secondary_muscles": [
+        "Biceps"
+      ],
+      "areas": [
+        "back",
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "advanced",
+      "frames": [
+        "res://assets/exercises/weighted-pull-up/frame-1.png",
+        "res://assets/exercises/weighted-pull-up/frame-2.png",
+        "res://assets/exercises/weighted-pull-up/frame-3.png"
+      ],
+      "cues": [
+        "Start from a dead hang with your shoulders active, not slack.",
+        "Drive your elbows down toward your ribs and lead with your chest.",
+        "Lower all the way under control; no swinging or kipping."
+      ],
+      "default_sets": 4,
+      "rep_min": 4,
+      "rep_max": 8,
+      "rest_seconds": 120
+    },
+    {
+      "id": "weighted-russian-twist",
+      "name": "Weighted Russian Twist",
+      "exercise_type": "weight_reps",
+      "equipment": "Dumbbell",
+      "primary_muscle": "Core",
+      "secondary_muscles": [
+        "Shoulders"
+      ],
+      "areas": [
+        "core",
+        "shoulders"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "advanced",
+      "frames": [
+        "res://assets/exercises/weighted-russian-twist/frame-1.png",
+        "res://assets/exercises/weighted-russian-twist/frame-2.png",
+        "res://assets/exercises/weighted-russian-twist/frame-3.png"
+      ],
+      "cues": [
+        "Rotate from your ribcage, not from your arms.",
+        "Keep your hips square and your core braced throughout.",
+        "Move slowly and stop the rotation rather than letting it swing."
+      ],
+      "default_sets": 3,
+      "rep_min": 8,
+      "rep_max": 12,
+      "rest_seconds": 75
+    },
+    {
+      "id": "wide-grip-lat-pulldown",
+      "name": "Wide-Grip Lat Pulldown",
+      "exercise_type": "weight_reps",
+      "equipment": "Cable",
+      "primary_muscle": "Lats",
+      "secondary_muscles": [
+        "Biceps"
+      ],
+      "areas": [
+        "back",
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": true,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/wide-grip-lat-pulldown/frame-1.png",
+        "res://assets/exercises/wide-grip-lat-pulldown/frame-2.png",
+        "res://assets/exercises/wide-grip-lat-pulldown/frame-3.png"
+      ],
+      "cues": [
+        "Start from a dead hang with your shoulders active, not slack.",
+        "Drive your elbows down toward your ribs and lead with your chest.",
+        "Lower all the way under control; no swinging or kipping."
+      ],
+      "default_sets": 4,
+      "rep_min": 6,
+      "rep_max": 10,
+      "rest_seconds": 90
+    },
+    {
+      "id": "worlds-greatest-stretch",
+      "name": "World's Greatest Stretch",
+      "exercise_type": "duration",
+      "equipment": "Bodyweight",
+      "primary_muscle": "Mobility",
+      "secondary_muscles": [
+        "Hips",
+        "Hamstrings",
+        "Upper Back"
+      ],
+      "areas": [
+        "mobility",
+        "legs",
+        "back"
+      ],
+      "is_stretch": true,
+      "compound": false,
+      "difficulty": "beginner",
+      "frames": [
+        "res://assets/exercises/worlds-greatest-stretch/frame-1.png",
+        "res://assets/exercises/worlds-greatest-stretch/frame-2.png",
+        "res://assets/exercises/worlds-greatest-stretch/frame-3.png"
+      ],
+      "cues": [
+        "Step into a deep lunge and place both hands inside your front foot.",
+        "Drop your back knee, then rotate your chest toward your front leg.",
+        "Reach the top arm to the ceiling and breathe out as you settle."
+      ],
+      "default_sets": 1,
+      "rep_min": 30,
+      "rep_max": 60,
+      "rest_seconds": 0
+    },
+    {
+      "id": "wrist-curl",
+      "name": "Wrist Curl",
+      "exercise_type": "weight_reps",
+      "equipment": "Barbell",
+      "primary_muscle": "Forearms",
+      "secondary_muscles": [],
+      "areas": [
+        "arms"
+      ],
+      "is_stretch": false,
+      "compound": false,
+      "difficulty": "intermediate",
+      "frames": [
+        "res://assets/exercises/wrist-curl/frame-1.png",
+        "res://assets/exercises/wrist-curl/frame-2.png",
+        "res://assets/exercises/wrist-curl/frame-3.png"
+      ],
+      "cues": [
+        "Keep your elbows tucked and pinned to your sides.",
+        "Move only at the elbow — no swinging from your shoulders or hips.",
+        "Squeeze at the top, then lower over two seconds."
+      ],
+      "default_sets": 3,
+      "rep_min": 10,
+      "rep_max": 15,
+      "rest_seconds": 60
+    }
+  ]
+}

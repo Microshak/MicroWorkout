@@ -1,0 +1,625 @@
+{
+  "schema_version": 1,
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "creator": {
+    "name": "Bryl Lim",
+    "url": "https://bryllim.com"
+  },
+  "source_repo": "bryllim/workout-guide",
+  "note": "Derived from the upstream workout-guide manifest. Redistributed under CC BY-SA 4.0; the ShareAlike obligation travels with these files.",
+  "assets": [
+    {
+      "id": "ab-wheel",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0285-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "assisted-dip",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0171-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "back-extension",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0103-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "barbell-row",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0026-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "bench-press",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0042-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "bicep-curl",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0224-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "bicycle-crunch",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0284-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "cable-crunch",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0288-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "cable-curl",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0212-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "cable-fly",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0048-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "cable-front-raise",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0008-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "cable-kickback",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0112-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "chin-up",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0090-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "close-grip-bench-press",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0049-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "close-grip-lat-pulldown",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0096-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "crunch",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0291-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "deadlift",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0099-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "decline-bench-press",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0051-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "decline-dumbbell-press",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0052-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "dip",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0172-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "donkey-calf-raise",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0275-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "drag-curl",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0222-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "dumbbell-bench-press",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0055-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "dumbbell-fly",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0056-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "dumbbell-shrug",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0005-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "ez-bar-curl",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0226-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "front-raise",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0033-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "front-squat",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0138-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "good-morning",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0101-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "hack-squat",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0123-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "hammer-curl",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0227-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "incline-bench-press",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0043-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "incline-cable-fly",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0060-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "incline-dumbbell-curl",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0214-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "incline-dumbbell-press",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0061-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "inverted-row",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0086-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "lat-pulldown",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0093-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "lateral-raise",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0018-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "leg-curl",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0117-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "leg-extension",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0142-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "leg-press",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0127-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "leg-press-calf-raise",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0273-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "lying-leg-curl",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0117-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "machine-chest-press",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0066-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "neutral-grip-pull-up",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0090-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "preacher-curl",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0236-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "pull-up",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0087-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "push-up",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0077-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "reverse-crunch",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0287-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "reverse-lunge",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0129-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "romanian-deadlift",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0118-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "rope-hammer-curl",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0216-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "rope-tricep-pushdown",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0206-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "seated-calf-raise",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0279-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "seated-leg-curl",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0119-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "seated-row",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0025-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "side-plank",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0113-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "skull-crusher",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0183-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "smith-machine-bench-press",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0078-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "smith-machine-squat",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0124-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "squat",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0122-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "standing-calf-raise",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0282-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "step-up",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0137-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "straight-arm-pulldown",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0092-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "t-bar-row",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0029-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "tricep-pushdown",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0205-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "upright-row",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0014-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    },
+    {
+      "id": "walking-lunge",
+      "frame": 1,
+      "upstream_name": "Everkinetic",
+      "upstream_url": "https://github.com/everkinetic/data/blob/main/dist/svg/0121-tension.svg",
+      "upstream_license": "CC BY-SA 4.0",
+      "upstream_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changes": "Rasterized on a transparent 512 × 512 canvas, recolored for monochrome display, and vector-traced; then downscaled to 384 x 384, alpha quantized to 4 levels, metadata stripped."
+    }
+  ]
+}

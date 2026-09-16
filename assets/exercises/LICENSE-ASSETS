@@ -1,0 +1,41 @@
+MicroWorkout — exercise illustration license notice
+==================================================
+
+The 612 PNG files in this directory (assets/exercises/<slug>/frame-{1,2,3}.png) are NOT
+covered by the MIT license that applies to the MicroWorkout source code. They are
+adapted artwork and they are licensed under:
+
+    Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+    https://creativecommons.org/licenses/by-sa/4.0/
+    https://creativecommons.org/licenses/by-sa/4.0/legalcode
+
+Creator of the adapted artwork
+------------------------------
+    Bryl Lim — https://bryllim.com
+    "Workout Guide" — https://github.com/bryllim/workout-guide
+
+Original pose artwork (upstream of the above), also CC BY-SA 4.0
+----------------------------------------------------------------
+    Everkinetic — https://github.com/everkinetic/data
+
+Changes made for MicroWorkout
+-----------------------------
+    Rasterized and downscaled from 512 x 512 to 384 x 384 (Lanczos filter);
+    redundant white RGB collapsed to a single grayscale channel (mode LA);
+    alpha quantized to 4 levels {0, 85, 170, 255}; all PNG metadata stripped;
+    recoloured at runtime by tinting the grayscale art through the theme text
+    token.
+
+ShareAlike
+----------
+    CC BY-SA 4.0 is a copyleft license. These frames are a derivative work of
+    CC BY-SA 4.0 material, so they are distributed under CC BY-SA 4.0 and any
+    redistribution or adaptation of them must also be licensed under
+    CC BY-SA 4.0, with credit to Bryl Lim and Everkinetic and a statement of
+    the changes made.
+
+Per-frame provenance
+--------------------
+    See ATTRIBUTION.json in this directory (one entry per Everkinetic-derived
+    frame) and docs/ATTRIBUTION.md at the repository root for the full notice
+    and the exact in-app credit strings.

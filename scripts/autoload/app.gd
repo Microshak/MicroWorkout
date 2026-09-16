@@ -61,10 +61,37 @@ func _ready() -> void:
 
 
 func _boot() -> void:
-	# Runs after every autoload is in the tree, so touching other singletons is safe.
+	# Runs after every autoload is in the tree, so reading Store is safe here (R20).
+	_adopt_stored_settings()
+	_apply_theme()
 	print("[theme] mode=%s applied" % theme_mode)
 	print("[ui] insets=(%d, %d, %d, %d) class=%d" % [
 		int(_insets.x), int(_insets.y), int(_insets.z), int(_insets.w), _layout_class])
+	# Data probe: one greppable line proving the store and the library are live.
+	if is_instance_valid(Store):
+		print("[data] settings_keys=%d history=%d library=%d" % [
+			Store.settings().size(),
+			Store.history_doc().get("entries", []).size(),
+			Library.count() if is_instance_valid(Library) else 0])
+
+
+## Adopts whatever Store loaded from disk, so a persisted theme/units choice survives a
+## restart. Store remains the single source of truth; App keeps a working copy.
+func _adopt_stored_settings() -> void:
+	if not is_instance_valid(Store):
+		return
+	var stored: Dictionary = Store.settings()
+	if stored.is_empty():
+		return
+	for key in DEFAULT_SETTINGS:
+		if stored.has(key):
+			settings[key] = stored[key]
+	var mode := String(settings.get("theme", THEME_DARK))
+	theme_mode = mode if DesignTokens.MODES.has(mode) else THEME_DARK
+	Nav.set_reduce_motion(bool(settings.get("reduce_motion", false)))
+	if is_instance_valid(Feedback):
+		Feedback.haptics_enabled = bool(settings.get("haptics_enabled", true))
+		Feedback.sfx_enabled = bool(settings.get("sfx_enabled", true))
 
 
 # ------------------------------------------------------------------ theme
@@ -98,6 +125,8 @@ func set_theme_mode(mode: String) -> bool:
 	settings["theme"] = mode
 	_apply_theme()
 	print("[theme] mode=%s applied" % mode)
+	if is_instance_valid(Store):
+		Store.set_setting("theme", mode)
 	theme_changed.emit(mode)
 	settings_changed.emit("theme")
 	return true
@@ -174,6 +203,8 @@ func set_units(new_units: String) -> bool:
 	if new_units == units():
 		return true
 	settings["units"] = new_units
+	if is_instance_valid(Store):
+		Store.set_setting("units", new_units)
 	units_changed.emit(new_units)
 	settings_changed.emit("units")
 	return true
