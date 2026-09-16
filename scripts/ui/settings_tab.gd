@@ -235,10 +235,14 @@ func _refresh_goal() -> void:
 		_goal_increase.disabled = locked or _goal >= GOAL_MAX
 	if _goal_ring != null:
 		var denominator := maxi(effective, 1)
-		_goal_ring.call(&"set_value", clampf(float(Store.completed_days_in_week()) / float(
-			denominator), 0.0, 1.0))
-		_goal_ring.call(&"set_caption", "%d/%d this week" % [
-			Store.completed_days_in_week(), denominator])
+		var completed := Store.completed_days_in_week()
+		_goal_ring.call(&"set_value", clampf(float(completed) / float(denominator), 0.0, 1.0))
+		_goal_ring.call(&"set_caption", "%d/%d this week" % [completed, denominator])
+		# Appendix §6.4: the week's day bits come from `Streak.ring_segments()` and are drawn by
+		# `progress_ring.set_segments()` — the one ring primitive, no second ring scene. Using the
+		# same call PRD-09's `weekly_ring` uses keeps Settings, Home and the Tracker identical.
+		_goal_ring.call(&"set_segments",
+			Streak.ring_segments(Store.all_entries(), Store.current_week_id(), denominator))
 	if _goal_hint != null:
 		_goal_hint.text = Strings.GOAL_FROM_PLAN_HINT if locked else ""
 

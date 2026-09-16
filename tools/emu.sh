@@ -124,8 +124,28 @@ cmd_wait() {
   echo "[emu] BOOTED in ${waited}s (Android $release / API $api)"
 }
 
+## Count running emulator instances for our AVD.
+##
+## The pattern is bracketed ("[q]emu-…") on purpose: `pkill -f` / `pgrep -f` match the full
+## command line, and an unbracketed pattern also matches the very shell that is running the
+## check — which makes pkill kill its own caller. This bit us once already.
+emulator_process_count() {
+  pgrep -f "[q]emu-system-x86_64.*$AVD_NAME" 2>/dev/null | wc -l | tr -d ' '
+}
+
 cmd_start() {
   ensure_avd
+
+  # Duplicate instances of the same AVD fight over ports 5554/5555 and make adb flap between
+  # "device" and "offline", which looks like a flaky device but is really two emulators.
+  local running
+  running="$(emulator_process_count)"
+  if (( running > 1 )); then
+    echo "[emu] found $running emulator processes for '$AVD_NAME' — cleaning up duplicates first"
+    pkill -f "[q]emu-system-x86_64.*$AVD_NAME" >/dev/null 2>&1 || true
+    sleep 4
+  fi
+
   if device_present; then
     echo "[emu] already running"
     cmd_wait
@@ -161,10 +181,13 @@ cmd_stop() {
 }
 
 cmd_kill() {
-  pkill -f "qemu-system-x86_64.*$AVD_NAME" >/dev/null 2>&1 || true
-  pkill -f "emulator.*-avd $AVD_NAME" >/dev/null 2>&1 || true
+  # Bracketed patterns: see emulator_process_count() — an unbracketed -f pattern matches the
+  # shell running this command and kills the caller.
+  pkill -f "[q]emu-system-x86_64.*$AVD_NAME" >/dev/null 2>&1 || true
+  pkill -f "[e]mulator.*-avd $AVD_NAME" >/dev/null 2>&1 || true
+  sleep 3
   adb kill-server >/dev/null 2>&1 || true
-  echo "[emu] killed"
+  echo "[emu] killed (remaining processes: $(emulator_process_count))"
 }
 
 case "${1:-status}" in

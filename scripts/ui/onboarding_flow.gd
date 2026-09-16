@@ -453,6 +453,12 @@ func _refresh_goal() -> void:
 	if _ring != null:
 		_ring.call(&"set_value", float(_goal) / float(GOAL_MAX))
 		_ring.call(&"set_caption", "%d days/week" % _goal)
+		# Appendix §6.4: the day bits come from `Streak.ring_segments()` and are drawn by
+		# `progress_ring.set_segments()` — the only ring primitive. On a first run there are no
+		# completed days yet, so the ticks show the week ahead of the user rather than a fake
+		# progress arc; the same call PRD-09's `weekly_ring` makes.
+		_ring.call(&"set_segments",
+			Streak.ring_segments(Store.all_entries(), Store.current_week_id(), _goal))
 
 
 func _refresh_summary() -> void:

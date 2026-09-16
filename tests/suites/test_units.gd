@@ -29,6 +29,7 @@ func run() -> void:
 	_test_labels_and_validation()
 	_test_no_locale_formatting()
 	_test_no_ui_formatting()
+	_test_format_helper()
 
 
 func _test_exact_factor() -> void:
@@ -154,6 +155,54 @@ func _test_labels_and_validation() -> void:
 	assert_eq(Units.validate_units_value("kg"), "", "valid units produce no message")
 	assert_eq(Units.validate_units_value("stone"), "Pick lb or kg.", "R7's exact message")
 	assert_eq(Units.UNITS.size(), 2, "the closed set has two members")
+
+
+## R11's storage formatter rides along here because it lives in the same "one place per kind of
+## number" contract as [Units]: no screen divides by 1024 either.
+func _test_format_helper() -> void:
+	begin("R11's byte table")
+	assert_eq(Format.bytes(0), "0 B", "zero")
+	assert_eq(Format.bytes(-5), "0 B", "a negative count is not a size")
+	assert_eq(Format.bytes(1), "1 B", "one byte")
+	assert_eq(Format.bytes(1023), "1023 B", "just under a kilobyte")
+	assert_eq(Format.bytes(1024), "1.0 KB", "exactly a kilobyte")
+	assert_eq(Format.bytes(1536), "1.5 KB", "a kilobyte and a half")
+	assert_eq(Format.bytes(1048575), "1024.0 KB", "just under a megabyte")
+	assert_eq(Format.bytes(1048576), "1.0 MB", "exactly a megabyte")
+	assert_eq(Format.bytes(43253760), "41.2 MB", "megabytes to one decimal")
+	assert_false(Format.bytes(1536).contains(","), "no locale decimal separator")
+
+	begin("the storage line the Settings tab shows (R11)")
+	var line := Format.storage_line(42190, {
+		"settings": 2150, "plans": 32153, "history": 7885, "backups": 0,
+	})
+	assert_eq(line, "Storage: 41.2 KB used (settings.json 2.1 KB \u00b7 plans.json 31.4 KB "
+		+ "\u00b7 history.json 7.7 KB \u00b7 backups 0 B)", "R11's example line, verbatim")
+	assert_eq(Format.storage_line(0, {}), "Storage: 0 B used (settings.json 0 B \u00b7 "
+		+ "plans.json 0 B \u00b7 history.json 0 B \u00b7 backups 0 B)", "an empty directory")
+
+	begin("relative timestamps (R11)")
+	assert_eq(Format.relative_time(""), "never", "an unset timestamp")
+	assert_eq(Format.relative_time("<null>"), "never", "a stringified null")
+	assert_eq(Format.relative_time("tomorrow"), "never", "garbage")
+	var now := Dates.now_iso8601(true)
+	assert_eq(Format.relative_time(now), "just now", "now")
+	var ages := {
+		"5 min ago": 300, "12 min ago": 720, "3 h ago": 3 * 3600, "2 days ago": 2 * 86400,
+	}
+	for expected in ages:
+		var stamp := _iso_seconds_ago(int(ages[expected]))
+		assert_eq(Format.relative_time(stamp), String(expected), "%s seconds ago" % ages[expected])
+	assert_eq(Format.relative_time(_iso_seconds_ago(86400)), "1 day ago", "singular day")
+	assert_eq(Format.relative_time(_iso_seconds_ago(-30)), "just now",
+		"a stamp in the future is clock skew, not time travel")
+
+
+## A UTC ISO-8601 stamp [param seconds] in the past, built from the real clock so the relative
+## comparison cannot drift with the date the suite happens to run on.
+func _iso_seconds_ago(seconds: int) -> String:
+	var stamp := int(Time.get_unix_time_from_system()) - seconds
+	return Time.get_datetime_string_from_unix_time(stamp, true) + "Z"
 
 
 ## R13's hard rule with a scanner behind it: no file under `scripts/ui/` or `scenes/ui/` may hold
