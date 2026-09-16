@@ -5,6 +5,12 @@ extends Node
 ## PRD-06. This autoload deliberately does NOT touch other autoloads in `_ready()` —
 ## Godot fires `_ready` as each autoload is added, so cross-singleton work is deferred
 ## through `_boot.call_deferred()`.
+##
+## PRD-06 R2 adds the two delegation methods every screen uses ([method get_setting] /
+## [method set_setting]) and the live-apply fan-out: writing `units` or `theme` repaints the
+## running UI **before** the signal fires, so a slot that re-renders a weight reads the new
+## unit. `Store` remains the single source of truth; `settings` here is only the mirror used
+## before `Store` finishes loading and by [method units] / [method theme_mode].
 
 signal units_changed(units: String)
 signal theme_changed(mode: String)
@@ -27,18 +33,45 @@ const THEME_PATHS := {
 }
 
 ## Default settings. PRD-03 makes the stored copy authoritative and this the fallback
-## used when the settings document is missing or corrupt.
+## used when the settings document is missing or corrupt. The key set mirrors appendix §5.1;
+## `Migrations.Schema.default_settings()` is the canonical table and the source of these values.
 const DEFAULT_SETTINGS := {
 	"schema_version": 2,
 	"units": UNITS_LB,
 	"theme": THEME_DARK,
 	"weekly_goal_days": 4,
 	"onboarding_complete": false,
-	"rest_timer_enabled": true,
-	"rest_timer_default_sec": 90,
-	"haptics_enabled": true,
-	"sfx_enabled": true,
-	"reduce_motion": false,
+	"attribution_seen": false,
+	"rest_timer": {
+		"enabled": true,
+		"auto_start": true,
+		"sound": true,
+		"haptic": true,
+		"default_seconds": 90,
+	},
+	"llm": {
+		"provider": "deepseek",
+		"base_url": "https://api.deepseek.com/v1",
+		"model": "deepseek-chat",
+		"api_key": "",
+		"temperature": 0.4,
+		"timeout_sec": 45,
+		"custom_auth_none": false,
+		"custom_json_mode": true,
+		"custom_name": "",
+		"configured": false,
+		"last_tested_at": null,
+		"last_test_ok": null,
+	},
+	"ui": {
+		"last_tab": 0,
+		"reduce_motion": false,
+		"sound_enabled": true,
+		"haptics_enabled": true,
+		"haptics_unavailable_shown": false,
+		"text_scale": 1.0,
+		"wizard_draft": {},
+	},
 }
 
 var settings: Dictionary = DEFAULT_SETTINGS.duplicate(true)
@@ -88,10 +121,10 @@ func _adopt_stored_settings() -> void:
 			settings[key] = stored[key]
 	var mode := String(settings.get("theme", THEME_DARK))
 	theme_mode = mode if DesignTokens.MODES.has(mode) else THEME_DARK
-	Nav.set_reduce_motion(bool(settings.get("reduce_motion", false)))
+	Nav.set_reduce_motion(bool(_mirror_get("ui.reduce_motion", false)))
 	if is_instance_valid(Feedback):
-		Feedback.haptics_enabled = bool(settings.get("haptics_enabled", true))
-		Feedback.sfx_enabled = bool(settings.get("sfx_enabled", true))
+		Feedback.haptics_enabled = bool(_mirror_get("ui.haptics_enabled", true))
+		Feedback.sfx_enabled = bool(_mirror_get("ui.sound_enabled", true))
 
 
 # ------------------------------------------------------------------ theme
@@ -197,27 +230,79 @@ func units() -> String:
 
 
 func set_units(new_units: String) -> bool:
-	if new_units != UNITS_LB and new_units != UNITS_KG:
+	if not Units.is_valid_units(new_units):
 		push_error("[App] unknown units '%s'" % new_units)
 		return false
-	if new_units == units():
-		return true
-	settings["units"] = new_units
+	return set_setting("units", new_units)
+
+
+## Dotted-path read (`"llm.model"`, `"ui.reduce_motion"`). Delegates to [method Store.get_setting]
+## so a screen never reads the file and never caches a stale copy (appendix §1.1/R20).
+func get_setting(path: String, default_value: Variant = null) -> Variant:
+	if is_instance_valid(Store) and Store.is_loaded():
+		return Store.get_setting(path, default_value)
+	return _mirror_get(path, default_value)
+
+
+## Dotted-path write (appendix §1.1, PRD-06 R2). Writes through to [Store] first — an invalid or
+## out-of-range value is rejected there and returns false without emitting — then applies any
+## visual consequence of [param path] **before** emitting, so a slot that re-renders a weight on
+## [signal units_changed] already reads the new unit.
+##
+## Signal order: [signal units_changed] / [signal theme_changed] first, then
+## [signal settings_changed] with the key that changed.
+func set_setting(path: String, value: Variant) -> bool:
 	if is_instance_valid(Store):
-		Store.set_setting("units", new_units)
-	units_changed.emit(new_units)
-	settings_changed.emit("units")
+		if not Store.set_setting(path, value):
+			return false
+	_mirror_set(path, value)
+
+	match path:
+		"theme":
+			var mode := String(value)
+			if DesignTokens.MODES.has(mode):
+				theme_mode = mode
+				_apply_theme()
+				print("[theme] mode=%s applied" % mode)
+			theme_changed.emit(theme_mode)
+		"units":
+			units_changed.emit(units())
+		"ui.reduce_motion":
+			Nav.set_reduce_motion(bool(value))
+	settings_changed.emit(path)
 	return true
 
 
 ## Applies a settings patch and emits the matching signals. Persistence is PRD-03's job.
+## Keys are appendix §5.1 dotted paths, so `ui.reduce_motion` — not the pre-PRD-03 flat alias.
 func apply_settings(patch: Dictionary) -> void:
 	for key in patch:
-		settings[key] = patch[key]
-	if patch.has("theme"):
-		set_theme_mode(String(patch["theme"]))
-	if patch.has("reduce_motion"):
-		Nav.set_reduce_motion(bool(patch["reduce_motion"]))
-	if patch.has("units"):
-		units_changed.emit(String(patch["units"]))
+		var _written := set_setting(String(key), patch[key])
 	settings_changed.emit("")
+
+
+# ------------------------------------------------------------------ mirror helpers
+
+## Reads the local mirror with the same dotted-path semantics as `Store.get_setting`.
+func _mirror_get(path: String, default_value: Variant = null) -> Variant:
+	var node: Variant = settings
+	for segment in path.split(".", false):
+		if not (node is Dictionary) or not (node as Dictionary).has(segment):
+			return default_value
+		node = (node as Dictionary)[segment]
+	return node
+
+
+## Writes one path in the local mirror, creating nothing: an unknown key is ignored, because
+## `Store` (the source of truth) has already rejected it by the time this is called.
+func _mirror_set(path: String, value: Variant) -> void:
+	var segments := path.split(".", false)
+	if segments.is_empty():
+		return
+	var cursor: Dictionary = settings
+	for i in range(segments.size() - 1):
+		var next: Variant = cursor.get(segments[i], null)
+		if not (next is Dictionary):
+			return
+		cursor = next
+	cursor[segments[segments.size() - 1]] = value

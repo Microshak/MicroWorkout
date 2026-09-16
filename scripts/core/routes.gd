@@ -2,21 +2,36 @@ class_name Routes
 extends RefCounted
 ## The route table. Adding a screen means adding one entry here — no other file changes
 ## (PRD-02 R12). Route names are StringNames so comparisons are cheap and typos are loud.
+##
+## PRD-06 adds three routes (appendix §2): the onboarding wizard, the boot screen (so the
+## reset-all-data flow can send the user back through onboarding) and the attribution screen
+## reached from Settings. Nothing existing was restructured.
 
 const SHELL := &"shell"
+const BOOT := &"boot"
+const ONBOARDING := &"onboarding"
 const HOME := &"home"
 const PLAN := &"plan"
 const TRACKER := &"tracker"
 const SETTINGS := &"settings"
+const ATTRIBUTION := &"attribution"
 const GALLERY := &"gallery"
 
 ## Tab routes, in bottom-nav order. Index in this array == nav tab index.
 const TAB_ROUTES: PackedStringArray = [HOME, PLAN, TRACKER, SETTINGS]
 
-## Pushed routes (full-screen, cover the bottom nav).
+## Routes that replace the **main scene** instead of being pushed inside the shell's ScreenHost
+## (appendix §1.5's `res://…tscn` rule, appendix §2's "Mode: main scene" column). These are the
+## only legal targets of a main-scene replacement.
+const MAIN_SCENE_ROUTES: PackedStringArray = [SHELL, BOOT, ONBOARDING]
+
+## Pushed routes (full-screen, cover the bottom nav) plus the two main-scene flows.
 const TABLE := {
 	SHELL: "res://scenes/ui/shell.tscn",
+	BOOT: "res://scenes/ui/boot_screen.tscn",
+	ONBOARDING: "res://scenes/ui/onboarding_flow.tscn",
 	GALLERY: "res://scenes/ui/dev_component_gallery.tscn",
+	ATTRIBUTION: "res://scenes/ui/attribution_screen.tscn",
 }
 
 const TAB_SCENES := {
@@ -31,3 +46,16 @@ const TAB_TITLES: PackedStringArray = ["Home", "Plan", "Tracker", "Settings"]
 
 ## Glyph kinds for the four tabs (PRD-02 R10).
 const TAB_GLYPHS: PackedStringArray = ["home", "plan", "tracker", "settings"]
+
+
+## The scene for [param route], or `""` when it is not a route.
+static func scene_for(route: StringName) -> String:
+	if TAB_SCENES.has(route):
+		return String(TAB_SCENES[route])
+	return String(TABLE.get(route, ""))
+
+
+## True when [param route] must be loaded with `change_scene_to_file()` rather than pushed into
+## the shell's ScreenHost. `BootScreen` and the wizard call this instead of guessing.
+static func is_main_scene(route: StringName) -> bool:
+	return MAIN_SCENE_ROUTES.has(route)

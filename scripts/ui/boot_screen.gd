@@ -4,14 +4,10 @@ extends Control
 ## PRD-01: prints identity + platform (the Android smoke test greps for this line),
 ## holds the splash for a moment, then routes on.
 ##
-## PRD-02 changes the destination to the real Shell and PRD-06 inserts onboarding
-## when `onboarding_complete` is false.
-
-## PRD-02 R20: boot is the only place allowed to replace the main scene. Afterwards Nav
-## only pushes scenes inside the shell's ScreenHost. PRD-06 inserts the onboarding flow
-## here when `onboarding_complete` is false.
-
-const HOME_SCENE := "res://scenes/ui/placeholder_home.tscn"
+## PRD-02 R20: boot is the only place allowed to replace the main scene. PRD-06 R4.3 uses that
+## to gate first run: when `onboarding_complete` is false the wizard *is* the next main scene,
+## otherwise the app goes straight to the shell. Nothing else in the app decides this, so
+## "am I onboarded?" has exactly one answer and one code path.
 
 @onready var _status: Label = $Center/VBox/Status
 
@@ -26,4 +22,29 @@ func _boot() -> void:
 	await get_tree().create_timer(AppInfo.MIN_SPLASH_SECONDS).timeout
 	if is_instance_valid(_status):
 		_status.text = "Ready"
-	Nav.goto(Routes.SHELL)
+	var first_run := not onboarding_complete()
+	var target := Routes.ONBOARDING if first_run else Routes.SHELL
+	print("[boot] onboarding_complete=%s goto=%s" % [str(not first_run), target])
+	_goto_main_scene(target)
+
+
+## True once the wizard has been finished. `App.get_setting` delegates to `Store`, and a missing
+## or unreadable `settings.json` yields the default `false` — which is precisely the first-run
+## behaviour R4.3 asks for (appendix §5.1).
+func onboarding_complete() -> bool:
+	return bool(App.get_setting("onboarding_complete", false))
+
+
+## Loads a main-scene route. The shell is installed by [Nav] (it owns the frame's lifecycle);
+## the wizard is a plain main-scene replacement, which is what appendix §2 marks "main scene".
+func _goto_main_scene(route: StringName) -> void:
+	if route == Routes.SHELL:
+		Nav.goto(Routes.SHELL)
+		return
+	var path := Routes.scene_for(route)
+	if path.is_empty():
+		push_error("[boot] no scene for route '%s'" % route)
+		return
+	var err := get_tree().change_scene_to_file(path)
+	if err != OK:
+		push_error("[boot] cannot load %s (error %d)" % [path, err])

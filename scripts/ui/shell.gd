@@ -123,25 +123,10 @@ func _on_layout_class_changed(_cls: int) -> void:
 
 
 ## PRD-02 R6: every interactive control must be at least 88x88 on screen. Checked one
-## frame after layout so sizes are real, not zero.
+## frame after layout so sizes are real, not zero. The rule itself lives in [TouchTargets] so
+## PRD-06's onboarding flow and Settings tab report the identical line.
 func _check_touch_targets() -> void:
-	var violations := PackedStringArray()
-	_collect_touch_violations(self, violations)
-	print("[ui] touch-target violations: %d" % violations.size())
-	for violation in violations:
-		print("      %s" % violation)
-
-
-func _collect_touch_violations(node: Node, out: PackedStringArray) -> void:
-	if node is Control:
-		var control := node as Control
-		if _is_interactive(control) and control.is_visible_in_tree():
-			var min_size := DesignTokens.TOUCH_MIN
-			if control.size.x < float(min_size) or control.size.y < float(min_size):
-				out.append("%s (%dx%d)" % [
-					String(control.get_path()), int(control.size.x), int(control.size.y)])
-	for child in node.get_children():
-		_collect_touch_violations(child, out)
+	var _violations := TouchTargets.report(self)
 
 
 ## Publishes the rects the Android test tooling needs to drive the app (debug builds only).
@@ -151,8 +136,3 @@ func _log_probe_rects() -> void:
 		for i in range(Routes.TAB_ROUTES.size()):
 			var button := _bottom_nav.call(&"tab_button", i) as Control
 			UiProbe.log_rect("nav_tab_%d" % i, button)
-
-
-func _is_interactive(control: Control) -> bool:
-	return control is Button or control is CheckButton or control is LineEdit \
-		or control is TextEdit or control is TextureButton
