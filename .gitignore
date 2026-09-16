@@ -26,3 +26,7 @@ Thumbs.db
 *.swp
 assets_src/
 .test_tmp/
+
+# Throwaway dev probes/runners (scripts/dev/ holds only real dev tools like build_themes.gd)
+scripts/dev/_*.gd
+scripts/dev/_*.gd.uid
