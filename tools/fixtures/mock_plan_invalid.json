@@ -1,0 +1,44 @@
+{
+  "name": "Broken Plan",
+  "goal": "hypertrophy",
+  "days_per_week": 4,
+  "duration_min": 40,
+  "sessions": [
+    {
+      "id": "s1",
+      "index": 0,
+      "title": "Upper A",
+      "focus": ["chest"],
+      "est_minutes": 40,
+      "blocks": [
+        { "exercise_id": "bench-press", "sets": 99, "reps": "8-10", "rest_seconds": 90 },
+        { "exercise_id": "not-a-real-exercise", "sets": 3, "reps": "8-10", "rest_seconds": 60 },
+        { "exercise_id": "barbell-row", "sets": 3, "reps": "8-10", "rest_seconds": 60 }
+      ]
+    },
+    {
+      "id": "s2",
+      "index": 1,
+      "title": "Lower A",
+      "focus": ["legs"],
+      "est_minutes": 40,
+      "warmup": [{ "exercise_id": "arm-circles", "duration_sec": 60 }],
+      "blocks": [
+        { "exercise_id": "back-squat", "sets": 4, "reps": "8-10", "rest_seconds": 90 }
+      ],
+      "cooldown": [{ "exercise_id": "childs-pose", "duration_sec": 60 }]
+    },
+    {
+      "id": "s3",
+      "index": 2,
+      "title": "Upper B",
+      "focus": ["back"],
+      "est_minutes": 40,
+      "warmup": [{ "exercise_id": "arm-circles", "duration_sec": 60 }],
+      "blocks": [
+        { "exercise_id": "lat-pulldown", "sets": 3, "reps": "10-12", "rest_seconds": 75 }
+      ],
+      "cooldown": [{ "exercise_id": "childs-pose", "duration_sec": 60 }]
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "name": "4-Day Upper / Lower",
+  "goal": "hypertrophy",
+  "days_per_week": 4,
+  "duration_min": 40,
+  "split_name": "Upper / Lower",
+  "sessions": [
+    {
+      "id": "s1",
+      "index": 0,
+      "title": "Upper A — Push Focus",
+      "focus": ["chest", "shoulders", "arms"],
+      "est_minutes": 41,
+      "warmup": [
+        { "exercise_id": "arm-circles", "duration_sec": 60 }
+      ],
+      "blocks": [
+        { "exercise_id": "bench-press", "sets": 4, "reps": "8-10", "rest_seconds": 90 },
+        { "exercise_id": "overhead-press", "sets": 3, "reps": "8-10", "rest_seconds": 90 },
+        { "exercise_id": "barbell-row", "sets": 4, "reps": "8-10", "rest_seconds": 90 },
+        { "exercise_id": "lat-pulldown", "sets": 3, "reps": "10-12", "rest_seconds": 75 },
+        { "exercise_id": "plank", "sets": 3, "reps": "45s", "rest_seconds": 60 }
+      ],
+      "cooldown": [
+        { "exercise_id": "childs-pose", "duration_sec": 60 }
+      ]
+    },
+    {
+      "id": "s2",
+      "index": 1,
+      "title": "Lower A — Squat Focus",
+      "focus": ["legs", "core"],
+      "est_minutes": 42,
+      "warmup": [
+        { "exercise_id": "arm-circles", "duration_sec": 60 }
+      ],
+      "blocks": [
+        { "exercise_id": "back-squat", "sets": 4, "reps": "6-8", "rest_seconds": 120 },
+        { "exercise_id": "romanian-deadlift", "sets": 3, "reps": "8-10", "rest_seconds": 105 },
+        { "exercise_id": "plank", "sets": 3, "reps": "45s", "rest_seconds": 60 },
+        { "exercise_id": "back-squat", "sets": 3, "reps": "10-12", "rest_seconds": 90 }
+      ],
+      "cooldown": [
+        { "exercise_id": "childs-pose", "duration_sec": 60 }
+      ]
+    },
+    {
+      "id": "s3",
+      "index": 2,
+      "title": "Upper B — Pull Focus",
+      "focus": ["back", "arms", "shoulders"],
+      "est_minutes": 40,
+      "warmup": [
+        { "exercise_id": "arm-circles", "duration_sec": 60 }
+      ],
+      "blocks": [
+        { "exercise_id": "barbell-row", "sets": 4, "reps": "8-10", "rest_seconds": 90 },
+        { "exercise_id": "lat-pulldown", "sets": 4, "reps": "10-12", "rest_seconds": 75 },
+        { "exercise_id": "bench-press", "sets": 3, "reps": "8-10", "rest_seconds": 90 },
+        { "exercise_id": "overhead-press", "sets": 3, "reps": "10-12", "rest_seconds": 75 }
+      ],
+      "cooldown": [
+        { "exercise_id": "childs-pose", "duration_sec": 60 }
+      ]
+    },
+    {
+      "id": "s4",
+      "index": 3,
+      "title": "Lower B — Hinge Focus",
+      "focus": ["legs", "core"],
+      "est_minutes": 41,
+      "warmup": [
+        { "exercise_id": "arm-circles", "duration_sec": 60 }
+      ],
+      "blocks": [
+        { "exercise_id": "romanian-deadlift", "sets": 4, "reps": "6-8", "rest_seconds": 120 },
+        { "exercise_id": "back-squat", "sets": 3, "reps": "8-10", "rest_seconds": 105 },
+        { "exercise_id": "plank", "sets": 3, "reps": "60s", "rest_seconds": 60 }
+      ],
+      "cooldown": [
+        { "exercise_id": "childs-pose", "duration_sec": 60 }
+      ]
+    }
+  ]
+}
