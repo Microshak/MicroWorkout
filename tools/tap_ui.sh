@@ -47,24 +47,44 @@ latest_rect() {
 }
 
 # ------------------------------------------------------------------ calibration
+#
+# The viewport→screen offset is learned by comparing a *measured* pixel position with the
+# rect the app reported for the same control. The bottom nav is the best anchor because it is
+# always present in the shell and is easy to find in pixels. But screens that replace the shell
+# entirely — onboarding, a pushed full-screen flow — have no bottom nav, so an offset measured
+# on a previous screen is cached and reused. It only depends on the device geometry and the
+# safe-area insets, which do not change between screens on one device.
+OFFSET_CACHE="$TMP/viewport_offset_y"
+
 calibrate() {
   local shot="$TMP/calib.png"
   adb exec-out screencap -p > "$shot"
-  local nav_out
-  nav_out="$(python3 "$ROOT/tools/find_nav.py" "$shot")"
-  local nav_y="${nav_out#nav_y=}"; nav_y="${nav_y%% *}"
 
   local nav_rect
   nav_rect="$(latest_rect bottom_nav)"
-  if [[ -z "$nav_rect" ]]; then
-    echo "ERROR: the app has not logged 'bottom_nav' — is the debug build running?" >&2
-    exit 1
+  if [[ -n "$nav_rect" ]]; then
+    local nav_out nav_y
+    nav_out="$(python3 "$ROOT/tools/find_nav.py" "$shot" 2>/dev/null || true)"
+    nav_y="${nav_out#nav_y=}"; nav_y="${nav_y%% *}"
+    if [[ "$nav_y" =~ ^[0-9]+$ ]]; then
+      local ny nh
+      ny="$(sed -E 's/.* y=([0-9]+).*/\1/' <<<"$nav_rect")"
+      nh="$(sed -E 's/.* h=([0-9]+).*/\1/' <<<"$nav_rect")"
+      local offset=$(( nav_y - (ny + nh / 2) ))
+      printf '%s' "$offset" > "$OFFSET_CACHE"
+      echo "$offset"
+      return
+    fi
   fi
-  local ny nh
-  ny="$(sed -E 's/.* y=([0-9]+).*/\1/' <<<"$nav_rect")"
-  nh="$(sed -E 's/.* h=([0-9]+).*/\1/' <<<"$nav_rect")"
-  local anchor=$(( ny + nh / 2 ))
-  echo $(( nav_y - anchor ))
+
+  if [[ -s "$OFFSET_CACHE" ]]; then
+    echo "[tap] no bottom nav on this screen — reusing cached offset from a previous screen" >&2
+    cat "$OFFSET_CACHE"
+    return
+  fi
+
+  echo "ERROR: cannot calibrate: no bottom_nav rect logged and no cached offset in $OFFSET_CACHE" >&2
+  exit 1
 }
 
 OFFSET_Y="$(calibrate)"

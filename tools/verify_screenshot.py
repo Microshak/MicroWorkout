@@ -85,7 +85,7 @@ def main() -> int:
     parser.add_argument("--inset-bottom", type=int, default=150,
                         help="pixels to skip at the bottom (Android navigation bar)")
     parser.add_argument("--inset-x", type=int, default=6, help="pixels to skip at the sides")
-    parser.add_argument("--min-bg-coverage", type=float, default=0.55,
+    parser.add_argument("--min-bg-coverage", type=float, default=0.10,
                         help="fraction of the sampled app region that must be the background token")
     parser.add_argument("--ascii", action="store_true", help="print a text-mode layout preview")
     args = parser.parse_args()
