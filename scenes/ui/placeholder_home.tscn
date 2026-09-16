@@ -38,14 +38,12 @@ theme_override_constants/separation = 20
 
 [node name="Greeting" type="Label" parent="Margin/VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.956863, 0.964706, 0.980392, 1)
-theme_override_font_sizes/font_size = 44
+theme_type_variation = &"H1"
 text = "Hey Workout"
 
 [node name="Subtitle" type="Label" parent="Margin/VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.603922, 0.647059, 0.713726, 1)
-theme_override_font_sizes/font_size = 22
+theme_type_variation = &"MutedLabel"
 text = "Foundation build — the real screens arrive in PRD-02 onward."
 
 [node name="Spacer" type="Control" parent="Margin/VBox"]
@@ -64,7 +62,6 @@ theme_override_constants/margin_bottom = 24
 
 [node name="DiagText" type="Label" parent="Margin/VBox/Diagnostics/DiagMargin"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.207843, 0.831373, 0.541176, 1)
-theme_override_font_sizes/font_size = 19
+theme_type_variation = &"BodySmall"
 text = "diagnostics"
 autowrap_mode = 2

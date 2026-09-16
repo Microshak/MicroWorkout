@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/components/empty_state.gd" id="1_empty_state"]
+[ext_resource type="PackedScene" path="res://scenes/components/glyph.tscn" id="2_glyph"]
+
+[node name="empty_state" type="VBoxContainer"]
+theme_override_constants/separation = 16
+alignment = 1
+theme_type_variation = &"EmptyState"
+script = ExtResource("1_empty_state")
+
+[node name="Icon" parent="." instance=ExtResource("2_glyph")]
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
+size_flags_horizontal = 4
+kind = &"info"
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 2
+theme_type_variation = &"H3"
+text = ""
+horizontal_alignment = 1
+
+[node name="Body" type="Label" parent="."]
+layout_mode = 2
+theme_type_variation = &"MutedLabel"
+text = ""
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Action" type="Button" parent="."]
+visible = false
+custom_minimum_size = Vector2(88, 112)
+layout_mode = 2
+theme_type_variation = &"PrimaryButton"

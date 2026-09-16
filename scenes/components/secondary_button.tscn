@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/components/tappable_button.gd" id="1_tappable_button"]
+
+[node name="secondary_button" type="Button"]
+custom_minimum_size = Vector2(0, 112)
+theme_type_variation = &"SecondaryButton"
+script = ExtResource("1_tappable_button")

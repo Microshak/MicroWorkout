@@ -7,6 +7,10 @@ extends Control
 ## PRD-02 changes the destination to the real Shell and PRD-06 inserts onboarding
 ## when `onboarding_complete` is false.
 
+## PRD-02 R20: boot is the only place allowed to replace the main scene. Afterwards Nav
+## only pushes scenes inside the shell's ScreenHost. PRD-06 inserts the onboarding flow
+## here when `onboarding_complete` is false.
+
 const HOME_SCENE := "res://scenes/ui/placeholder_home.tscn"
 
 @onready var _status: Label = $Center/VBox/Status
@@ -22,4 +26,4 @@ func _boot() -> void:
 	await get_tree().create_timer(AppInfo.MIN_SPLASH_SECONDS).timeout
 	if is_instance_valid(_status):
 		_status.text = "Ready"
-	Nav.goto(HOME_SCENE)
+	Nav.goto(Routes.SHELL)

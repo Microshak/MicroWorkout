@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/components/toast.gd" id="1_toast"]
+[ext_resource type="PackedScene" path="res://scenes/components/glyph.tscn" id="2_glyph"]
+
+[node name="toast" type="PanelContainer"]
+custom_minimum_size = Vector2(0, 88)
+mouse_filter = 2
+theme_type_variation = &"Toast"
+script = ExtResource("1_toast")
+
+[node name="Row" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="KindIcon" parent="Row" instance=ExtResource("2_glyph")]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+kind = &"info"
+
+[node name="Message" type="Label" parent="Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_type_variation = &"BodySmall"
+text = ""
+vertical_alignment = 1

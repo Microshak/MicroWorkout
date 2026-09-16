@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/components/chip_toggle.gd" id="1_chip_toggle"]
+
+[node name="chip_toggle" type="Button"]
+custom_minimum_size = Vector2(0, 88)
+toggle_mode = true
+theme_type_variation = &"ChipToggle"
+script = ExtResource("1_chip_toggle")

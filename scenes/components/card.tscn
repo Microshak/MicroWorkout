@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/components/card.gd" id="1_card"]
+
+[node name="card" type="PanelContainer"]
+theme_type_variation = &"Card"
+script = ExtResource("1_card")
+
+[node name="Body" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="Items" type="VBoxContainer" parent="Body"]
+layout_mode = 2
+theme_override_constants/separation = 12

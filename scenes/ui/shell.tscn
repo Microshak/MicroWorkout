@@ -1,0 +1,73 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/shell.gd" id="1_shell"]
+[ext_resource type="PackedScene" path="res://scenes/components/bottom_nav.tscn" id="2_nav"]
+
+[node name="Shell" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_shell")
+
+[node name="Bg" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.058824, 0.066667, 0.086275, 1)
+
+[node name="SafeAreaHost" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TabLayout" type="VBoxContainer" parent="SafeAreaHost"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TabHost" type="Control" parent="SafeAreaHost/TabLayout"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BottomNav" parent="SafeAreaHost/TabLayout" instance=ExtResource("2_nav")]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="ScreenHost" type="Control" parent="SafeAreaHost"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ToastLayer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TransitionVeil" type="ColorRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.058824, 0.066667, 0.086275, 1)

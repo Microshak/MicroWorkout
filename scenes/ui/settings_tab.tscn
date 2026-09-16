@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/settings_tab.gd" id="1_tab"]
+[ext_resource type="PackedScene" path="res://scenes/components/section_header.tscn" id="2_header"]
+[ext_resource type="PackedScene" path="res://scenes/components/empty_state.tscn" id="3_empty"]
+[ext_resource type="PackedScene" path="res://scenes/components/secondary_button.tscn" id="4_btn"]
+
+[node name="SettingsTab" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tab")
+
+[node name="Scroll" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="Gutter" type="MarginContainer" parent="Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="Page" type="VBoxContainer" parent="Scroll/Gutter"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 32
+
+[node name="SectionHeader" parent="Scroll/Gutter/Page" instance=ExtResource("2_header")]
+layout_mode = 2
+
+[node name="ThemeButton" parent="Scroll/Gutter/Page" instance=ExtResource("4_btn")]
+layout_mode = 2
+text = "Theme: dark"
+
+[node name="GalleryButton" parent="Scroll/Gutter/Page" instance=ExtResource("4_btn")]
+layout_mode = 2
+text = "Component gallery"
+
+[node name="EmptyState" parent="Scroll/Gutter/Page" instance=ExtResource("3_empty")]
+layout_mode = 2
+size_flags_vertical = 3

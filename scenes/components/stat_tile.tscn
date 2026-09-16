@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/components/stat_tile.gd" id="1_stat_tile"]
+[ext_resource type="PackedScene" path="res://scenes/components/glyph.tscn" id="2_glyph"]
+
+[node name="stat_tile" type="PanelContainer"]
+theme_type_variation = &"StatTile"
+script = ExtResource("1_stat_tile")
+
+[node name="Stack" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Icon" parent="Stack" instance=ExtResource("2_glyph")]
+visible = false
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="ValueLabel" type="Label" parent="Stack"]
+layout_mode = 2
+theme_type_variation = &"H2"
+text = "0"
+
+[node name="TitleLabel" type="Label" parent="Stack"]
+layout_mode = 2
+theme_type_variation = &"Caption"
+text = ""

@@ -35,21 +35,18 @@ alignment = 1
 
 [node name="Title" type="Label" parent="Center/VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.956863, 0.964706, 0.980392, 1)
-theme_override_font_sizes/font_size = 64
+theme_type_variation = &"DisplayLabel"
 text = "MicroWorkout"
 horizontal_alignment = 1
 
 [node name="Tagline" type="Label" parent="Center/VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.603922, 0.647059, 0.713726, 1)
-theme_override_font_sizes/font_size = 22
+theme_type_variation = &"MutedLabel"
 text = "Your week, planned."
 horizontal_alignment = 1
 
 [node name="Status" type="Label" parent="Center/VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.419608, 0.207843, 1)
-theme_override_font_sizes/font_size = 16
+theme_type_variation = &"Caption"
 text = "Loading…"
 horizontal_alignment = 1

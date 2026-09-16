@@ -5,9 +5,15 @@ extends Node
 ## (OpenAI-compatible incl. DeepSeek, OpenAI, Anthropic, Gemini), validation,
 ## one repair retry, and the permanent fallback to the built-in generator.
 
+## These signals are the contract PRD-07 implements; they are declared now so screens can
+## connect before the client exists.
+@warning_ignore("unused_signal")
 signal generation_started
+@warning_ignore("unused_signal")
 signal generation_progress(message: String)
+@warning_ignore("unused_signal")
 signal generation_finished(plan: Dictionary, source: String)
+@warning_ignore("unused_signal")
 signal generation_failed(reason: String)
 
 

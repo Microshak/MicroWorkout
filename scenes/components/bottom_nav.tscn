@@ -1,0 +1,134 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/components/bottom_nav.gd" id="1_bottom_nav"]
+[ext_resource type="PackedScene" path="res://scenes/components/glyph.tscn" id="2_glyph"]
+
+[node name="bottom_nav" type="PanelContainer"]
+custom_minimum_size = Vector2(0, 132)
+size_flags_vertical = 8
+theme_type_variation = &"BottomNav"
+script = ExtResource("1_bottom_nav")
+
+[node name="Tabs" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Tab0" type="Button" parent="Tabs"]
+custom_minimum_size = Vector2(88, 88)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"NavTab"
+toggle_mode = true
+
+[node name="Stack" type="VBoxContainer" parent="Tabs/Tab0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="Icon" parent="Tabs/Tab0/Stack" instance=ExtResource("2_glyph")]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+kind = &"home"
+
+[node name="Caption" type="Label" parent="Tabs/Tab0/Stack"]
+layout_mode = 2
+theme_type_variation = &"NavTabLabel"
+text = "Home"
+horizontal_alignment = 1
+
+[node name="Tab1" type="Button" parent="Tabs"]
+custom_minimum_size = Vector2(88, 88)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"NavTab"
+toggle_mode = true
+
+[node name="Stack" type="VBoxContainer" parent="Tabs/Tab1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="Icon" parent="Tabs/Tab1/Stack" instance=ExtResource("2_glyph")]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+kind = &"plan"
+
+[node name="Caption" type="Label" parent="Tabs/Tab1/Stack"]
+layout_mode = 2
+theme_type_variation = &"NavTabLabel"
+text = "Plan"
+horizontal_alignment = 1
+
+[node name="Tab2" type="Button" parent="Tabs"]
+custom_minimum_size = Vector2(88, 88)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"NavTab"
+toggle_mode = true
+
+[node name="Stack" type="VBoxContainer" parent="Tabs/Tab2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="Icon" parent="Tabs/Tab2/Stack" instance=ExtResource("2_glyph")]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+kind = &"tracker"
+
+[node name="Caption" type="Label" parent="Tabs/Tab2/Stack"]
+layout_mode = 2
+theme_type_variation = &"NavTabLabel"
+text = "Tracker"
+horizontal_alignment = 1
+
+[node name="Tab3" type="Button" parent="Tabs"]
+custom_minimum_size = Vector2(88, 88)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"NavTab"
+toggle_mode = true
+
+[node name="Stack" type="VBoxContainer" parent="Tabs/Tab3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="Icon" parent="Tabs/Tab3/Stack" instance=ExtResource("2_glyph")]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+kind = &"settings"
+
+[node name="Caption" type="Label" parent="Tabs/Tab3/Stack"]
+layout_mode = 2
+theme_type_variation = &"NavTabLabel"
+text = "Settings"
+horizontal_alignment = 1

@@ -102,7 +102,7 @@ fi
 
 LOGFILE="$BUILD_DIR/logcat-${MODE}-${STAMP}.txt"
 adb logcat -d > "$LOGFILE" 2>&1 || true
-grep -E "\[(boot|App|Store|Library|LLM|Nav|Feedback|home)\]" "$LOGFILE" | tail -20 || true
+grep -E "\[(boot|App|Store|Library|LLM|Nav|nav|Feedback|home|theme|ui|toast)\]" "$LOGFILE" | tail -24 || true
 if grep -q "\[boot\] MicroWorkout" "$LOGFILE"; then
   pass "app boot log found in logcat"
   grep -m1 "\[boot\] MicroWorkout" "$LOGFILE" | sed 's/^/      /'
@@ -114,13 +114,33 @@ fi
 # NOTE: logcat lines are timestamp-prefixed ("09-15 19:04:48.778  4178  4211 E godot : ..."),
 # so an anchored ^ERROR grep never matches and silently yields a FALSE PASS. Match the
 # godot tag/level columns and "ERROR:" appearing anywhere in the message instead.
+#
+# Godot routes *warnings* to stderr too, so logcat shows them at level E. Those are
+# reported separately and are not fatal — e.g. "Failed to load cached shader, recompiling"
+# is expected on a cold first launch and resolves itself.
+BENIGN="editor_settings|Cannot save file|app_userdata|user://logs"
+
+GODOT_WARNINGS="$(grep -E "E godot *: *WARNING:|WARNING:" "$LOGFILE" \
+  | grep -viE "$BENIGN" || true)"
+# Godot prints a warning as a two-line block ("WARNING: …" then "at: …"). Drop the block as
+# a unit, otherwise the location line survives the WARNING filter and fails the build.
 GODOT_ERRORS="$(grep -E "E godot *:|ERROR:|SCRIPT ERROR:" "$LOGFILE" \
-  | grep -viE "editor_settings|Cannot save file|app_userdata|user://logs" || true)"
+  | grep -viE "$BENIGN" \
+  | awk '/WARNING:/ { warn = 1; next } warn && /at: / { warn = 0; next } { warn = 0; print }' \
+  || true)"
+
 if [[ -n "$GODOT_ERRORS" ]]; then
   fail "engine errors present in logcat:"
   head -8 <<<"$GODOT_ERRORS" | sed 's/^/      /'
 else
   pass "no engine errors in logcat"
+fi
+
+if [[ -n "$GODOT_WARNINGS" ]]; then
+  echo "  • engine warnings (non-fatal, reported for review):"
+  head -4 <<<"$GODOT_WARNINGS" | sed 's/^/      /'
+else
+  pass "no engine warnings in logcat"
 fi
 
 # Shader compilation/linking failures produce a blank window while the process still
