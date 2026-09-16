@@ -126,11 +126,36 @@ cmd_wait() {
 
 ## Count running emulator instances for our AVD.
 ##
-## The pattern is bracketed ("[q]emu-…") on purpose: `pkill -f` / `pgrep -f` match the full
-## command line, and an unbracketed pattern also matches the very shell that is running the
-## check — which makes pkill kill its own caller. This bit us once already.
+## Two traps this avoids:
+## 1. The pattern is bracketed ("[q]emu-…") on purpose: `pkill -f` / `pgrep -f` match the full
+##    command line, and an unbracketed pattern also matches the very shell running the check —
+##    so pkill would kill its own caller. That bit us once already.
+## 2. `pgrep` exits 1 when nothing matches, and under `set -o pipefail` that failure propagates
+##    through the pipeline and `set -e` aborts the caller *during a variable assignment* —
+##    silently, before any output. `|| true` keeps this function's status 0 in the empty case,
+##    which is the common case (no emulator running, about to start one).
 emulator_process_count() {
-  pgrep -f "[q]emu-system-x86_64.*$AVD_NAME" 2>/dev/null | wc -l | tr -d ' '
+  local count=0
+  count="$(pgrep -f "[q]emu-system-x86_64.*$AVD_NAME" 2>/dev/null | wc -l || true)"
+  printf '%s' "${count//[[:space:]]/}"
+}
+
+## Remove lock artifacts left behind when an emulator was killed rather than shut down.
+##
+## A killed emulator (pkill / crash) leaves `multiinstance.lock` behind, and the next start
+## then refuses with "Running multiple emulators with the same AVD is an experimental feature"
+## even though nothing is running. Only call this once we have confirmed no emulator for this
+## AVD is alive — otherwise it would break a genuinely concurrent instance.
+clear_stale_locks() {
+  local removed=0
+  for lock in "$AVD_DIR/multiinstance.lock" "$AVD_DIR/hardware-qemu.ini.lock"; do
+    if [[ -e "$lock" ]]; then
+      rm -rf "$lock" && removed=$((removed + 1))
+    fi
+  done
+  if (( removed > 0 )); then
+    echo "[emu] cleared $removed stale lock artifact(s) from a previous killed instance"
+  fi
 }
 
 cmd_start() {
@@ -144,12 +169,18 @@ cmd_start() {
     echo "[emu] found $running emulator processes for '$AVD_NAME' — cleaning up duplicates first"
     pkill -f "[q]emu-system-x86_64.*$AVD_NAME" >/dev/null 2>&1 || true
     sleep 4
+    running="$(emulator_process_count)"
   fi
 
   if device_present; then
     echo "[emu] already running"
     cmd_wait
     return
+  fi
+
+  # No live process for our AVD => any lock file is stale and must go, or the start fails.
+  if (( running == 0 )); then
+    clear_stale_locks
   fi
   echo "[emu] starting $AVD_NAME ($WINDOW_FLAG, gpu=$GPU_MODE) — log: ${LOG#$ROOT/}"
   nohup "$EMU" -avd "$AVD_NAME" \
