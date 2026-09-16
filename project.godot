@@ -30,6 +30,10 @@ window/size/viewport_height=1920
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/handheld/orientation=1
+; Godot defaults this to true, which keeps the screen awake on every screen and drains
+; battery. It is turned off globally here and enabled at runtime only while a workout
+; session is in progress (PRD-10), where the phone is propped up and must not sleep.
+window/energy_saving/keep_screen_on=false
 
 [input_devices]
 
