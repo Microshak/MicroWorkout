@@ -1,0 +1,216 @@
+{
+  "expected_plan": {
+    "areas": [
+      "chest",
+      "back",
+      "legs",
+      "core"
+    ],
+    "created_at": "2026-09-15T12:00:00Z",
+    "days_per_week": 2,
+    "duration_min": 30,
+    "equipment": [
+      "barbell",
+      "machine",
+      "cable",
+      "dumbbell",
+      "bodyweight"
+    ],
+    "goal": "general_fitness",
+    "id": "plan-1757941200",
+    "name": "2-Day Full Body A / B",
+    "notes": "",
+    "provider": "",
+    "sessions": [
+      {
+        "blocks": [
+          {
+            "exercise_id": "frog-pump",
+            "reps": "10-15",
+            "rest_seconds": 60,
+            "sets": 2
+          },
+          {
+            "exercise_id": "dumbbell-bench-press",
+            "reps": "8-10",
+            "rest_seconds": 75,
+            "sets": 3
+          },
+          {
+            "exercise_id": "prone-y-raise",
+            "reps": "10-15",
+            "rest_seconds": 60,
+            "sets": 2
+          },
+          {
+            "exercise_id": "half-burpee",
+            "reps": "8-10",
+            "rest_seconds": 75,
+            "sets": 3
+          }
+        ],
+        "cooldown": [
+          {
+            "duration_sec": 60,
+            "exercise_id": "childs-pose"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "cross-body-shoulder-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "hamstring-stretch"
+          }
+        ],
+        "est_minutes": 26,
+        "focus": [
+          "legs",
+          "chest",
+          "back",
+          "core"
+        ],
+        "id": "s1",
+        "index": 0,
+        "title": "Full Body A",
+        "warmup": [
+          {
+            "duration_sec": 60,
+            "exercise_id": "arm-circles"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "butterfly-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "cat-cow-stretch"
+          }
+        ]
+      },
+      {
+        "blocks": [
+          {
+            "exercise_id": "heel-elevated-goblet-squat",
+            "reps": "8-12",
+            "rest_seconds": 75,
+            "sets": 2
+          },
+          {
+            "exercise_id": "inverted-row",
+            "reps": "8-10",
+            "rest_seconds": 75,
+            "sets": 3
+          },
+          {
+            "exercise_id": "cable-fly",
+            "reps": "8-12",
+            "rest_seconds": 75,
+            "sets": 2
+          },
+          {
+            "exercise_id": "cable-pallof-hold",
+            "reps": "45s",
+            "rest_seconds": 60,
+            "sets": 2
+          }
+        ],
+        "cooldown": [
+          {
+            "duration_sec": 60,
+            "exercise_id": "cross-body-shoulder-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "hamstring-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "kneeling-hip-flexor-stretch"
+          }
+        ],
+        "est_minutes": 27,
+        "focus": [
+          "legs",
+          "chest",
+          "back",
+          "core"
+        ],
+        "id": "s2",
+        "index": 1,
+        "title": "Full Body B",
+        "warmup": [
+          {
+            "duration_sec": 60,
+            "exercise_id": "butterfly-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "cat-cow-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "childs-pose"
+          }
+        ]
+      }
+    ],
+    "source": "builtin",
+    "split_name": "Full Body A / B"
+  },
+  "expected_plan_sha256": "db4e421de7770ce49b3d78646f5e7a47793758c3f02279f6a712c164164fdc8c",
+  "expected_volume": {
+    "back": {
+      "cap": 22,
+      "coverage": 2,
+      "direct": 5,
+      "effective": 5,
+      "target": 10
+    },
+    "chest": {
+      "cap": 22,
+      "coverage": 2,
+      "direct": 5,
+      "effective": 5,
+      "target": 10
+    },
+    "core": {
+      "cap": 22,
+      "coverage": 2,
+      "direct": 5,
+      "effective": 7.5,
+      "target": 10
+    },
+    "legs": {
+      "cap": 22,
+      "coverage": 2,
+      "direct": 4,
+      "effective": 6.5,
+      "target": 10
+    }
+  },
+  "input": {
+    "areas": [
+      "chest",
+      "back",
+      "legs",
+      "core"
+    ],
+    "created_at": "2026-09-15T12:00:00Z",
+    "days_per_week": 2,
+    "duration_min": 30,
+    "equipment": [
+      "barbell",
+      "machine",
+      "cable",
+      "dumbbell",
+      "bodyweight"
+    ],
+    "goal": "general_fitness",
+    "id": "plan-1757941200",
+    "notes": ""
+  },
+  "scenario": "2day_full_body",
+  "schema_version": 1,
+  "seed": 20260915
+}

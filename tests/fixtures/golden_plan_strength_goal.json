@@ -1,0 +1,283 @@
+{
+  "expected_plan": {
+    "areas": [
+      "chest",
+      "back",
+      "legs",
+      "core"
+    ],
+    "created_at": "2026-09-15T12:00:00Z",
+    "days_per_week": 3,
+    "duration_min": 60,
+    "equipment": [
+      "barbell",
+      "machine",
+      "cable",
+      "dumbbell",
+      "bodyweight"
+    ],
+    "goal": "strength",
+    "id": "plan-1757941200",
+    "name": "3-Day Push / Pull / Legs",
+    "notes": "",
+    "provider": "",
+    "sessions": [
+      {
+        "blocks": [
+          {
+            "exercise_id": "incline-bench-press",
+            "reps": "3-6",
+            "rest_seconds": 180,
+            "sets": 4
+          },
+          {
+            "exercise_id": "plate-front-raise",
+            "reps": "3-6",
+            "rest_seconds": 150,
+            "sets": 4
+          },
+          {
+            "exercise_id": "incline-dumbbell-press",
+            "reps": "3-6",
+            "rest_seconds": 180,
+            "sets": 4
+          },
+          {
+            "exercise_id": "inchworm",
+            "reps": "3-6",
+            "rest_seconds": 150,
+            "sets": 4
+          }
+        ],
+        "cooldown": [
+          {
+            "duration_sec": 60,
+            "exercise_id": "butterfly-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "childs-pose"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "cross-body-shoulder-stretch"
+          }
+        ],
+        "est_minutes": 58,
+        "focus": [
+          "chest",
+          "core"
+        ],
+        "id": "s1",
+        "index": 0,
+        "title": "Push",
+        "warmup": [
+          {
+            "duration_sec": 60,
+            "exercise_id": "arm-circles"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "cat-cow-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "torso-twist-stretch"
+          }
+        ]
+      },
+      {
+        "blocks": [
+          {
+            "exercise_id": "prone-y-raise",
+            "reps": "3-6",
+            "rest_seconds": 150,
+            "sets": 4
+          },
+          {
+            "exercise_id": "rack-pull",
+            "reps": "3-6",
+            "rest_seconds": 150,
+            "sets": 4
+          },
+          {
+            "exercise_id": "shrug",
+            "reps": "3-6",
+            "rest_seconds": 150,
+            "sets": 4
+          },
+          {
+            "exercise_id": "half-burpee",
+            "reps": "3-6",
+            "rest_seconds": 180,
+            "sets": 4
+          }
+        ],
+        "cooldown": [
+          {
+            "duration_sec": 60,
+            "exercise_id": "seated-forward-fold-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "torso-twist-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "worlds-greatest-stretch"
+          }
+        ],
+        "est_minutes": 56,
+        "focus": [
+          "back",
+          "core"
+        ],
+        "id": "s2",
+        "index": 1,
+        "title": "Pull",
+        "warmup": [
+          {
+            "duration_sec": 60,
+            "exercise_id": "cat-cow-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "childs-pose"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "cross-body-shoulder-stretch"
+          }
+        ]
+      },
+      {
+        "blocks": [
+          {
+            "exercise_id": "heel-elevated-goblet-squat",
+            "reps": "3-6",
+            "rest_seconds": 180,
+            "sets": 4
+          },
+          {
+            "exercise_id": "leg-press-calf-raise",
+            "reps": "3-6",
+            "rest_seconds": 180,
+            "sets": 4
+          },
+          {
+            "exercise_id": "leg-press",
+            "reps": "3-6",
+            "rest_seconds": 180,
+            "sets": 4
+          },
+          {
+            "exercise_id": "dumbbell-side-bend",
+            "reps": "3-6",
+            "rest_seconds": 150,
+            "sets": 2
+          }
+        ],
+        "cooldown": [
+          {
+            "duration_sec": 60,
+            "exercise_id": "kneeling-hip-flexor-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "leg-swings-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "seated-forward-fold-stretch"
+          }
+        ],
+        "est_minutes": 54,
+        "focus": [
+          "legs",
+          "core"
+        ],
+        "id": "s3",
+        "index": 2,
+        "title": "Legs",
+        "warmup": [
+          {
+            "duration_sec": 60,
+            "exercise_id": "cat-cow-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "childs-pose"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "hamstring-stretch"
+          }
+        ]
+      }
+    ],
+    "source": "builtin",
+    "split_name": "Push / Pull / Legs"
+  },
+  "expected_plan_sha256": "9845efdaaaf8a59f88c0a1171c1cb16be15a9b4f8e3a603be3ef0eb018395eb7",
+  "expected_volume": {
+    "back": {
+      "cap": 22,
+      "coverage": 1,
+      "direct": 12,
+      "effective": 12,
+      "target": 16
+    },
+    "chest": {
+      "cap": 22,
+      "coverage": 1,
+      "direct": 8,
+      "effective": 12,
+      "target": 16
+    },
+    "core": {
+      "cap": 22,
+      "coverage": 3,
+      "direct": 10,
+      "effective": 12,
+      "target": 16
+    },
+    "legs": {
+      "cap": 22,
+      "coverage": 1,
+      "direct": 12,
+      "effective": 18,
+      "target": 16
+    },
+    "shoulders": {
+      "cap": 22,
+      "coverage": 0,
+      "direct": 4,
+      "effective": 14,
+      "target": 16
+    }
+  },
+  "input": {
+    "areas": [
+      "chest",
+      "back",
+      "legs",
+      "core"
+    ],
+    "created_at": "2026-09-15T12:00:00Z",
+    "days_per_week": 3,
+    "duration_min": 60,
+    "equipment": [
+      "barbell",
+      "machine",
+      "cable",
+      "dumbbell",
+      "bodyweight"
+    ],
+    "goal": "strength",
+    "id": "plan-1757941200",
+    "notes": ""
+  },
+  "scenario": "strength_goal",
+  "schema_version": 1,
+  "seed": 20260915
+}

@@ -1,0 +1,393 @@
+{
+  "expected_plan": {
+    "areas": [
+      "cardio",
+      "legs",
+      "core",
+      "arms"
+    ],
+    "created_at": "2026-09-15T12:00:00Z",
+    "days_per_week": 4,
+    "duration_min": 30,
+    "equipment": [
+      "machine",
+      "cable",
+      "dumbbell",
+      "bodyweight"
+    ],
+    "goal": "conditioning",
+    "id": "plan-1757941200",
+    "name": "4-Day Upper / Lower",
+    "notes": "bad left shoulder, avoid overhead pressing",
+    "provider": "",
+    "sessions": [
+      {
+        "blocks": [
+          {
+            "exercise_id": "rope-tricep-pushdown",
+            "reps": "12-15",
+            "rest_seconds": 30,
+            "sets": 2
+          },
+          {
+            "exercise_id": "bear-crawl",
+            "reps": "30s",
+            "rest_seconds": 30,
+            "sets": 2
+          },
+          {
+            "exercise_id": "tricep-pushdown",
+            "reps": "12-15",
+            "rest_seconds": 30,
+            "sets": 2
+          },
+          {
+            "exercise_id": "bear-plank",
+            "reps": "30s",
+            "rest_seconds": 30,
+            "sets": 2
+          },
+          {
+            "exercise_id": "jump-rope",
+            "reps": "30s",
+            "rest_seconds": 45,
+            "sets": 2
+          }
+        ],
+        "cooldown": [
+          {
+            "duration_sec": 60,
+            "exercise_id": "butterfly-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "childs-pose"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "cross-body-shoulder-stretch"
+          }
+        ],
+        "est_minutes": 26,
+        "focus": [
+          "arms",
+          "core",
+          "cardio"
+        ],
+        "id": "s1",
+        "index": 0,
+        "title": "Upper A",
+        "warmup": [
+          {
+            "duration_sec": 60,
+            "exercise_id": "cat-cow-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "torso-twist-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "arm-circles"
+          }
+        ]
+      },
+      {
+        "blocks": [
+          {
+            "exercise_id": "cable-standing-hip-adduction",
+            "reps": "12-15",
+            "rest_seconds": 30,
+            "sets": 2
+          },
+          {
+            "exercise_id": "belt-squat",
+            "reps": "12-20",
+            "rest_seconds": 45,
+            "sets": 3
+          },
+          {
+            "exercise_id": "weighted-russian-twist",
+            "reps": "12-20",
+            "rest_seconds": 30,
+            "sets": 2
+          },
+          {
+            "exercise_id": "donkey-kick",
+            "reps": "12-15",
+            "rest_seconds": 30,
+            "sets": 2
+          },
+          {
+            "exercise_id": "bird-dog",
+            "reps": "12-15",
+            "rest_seconds": 30,
+            "sets": 2
+          },
+          {
+            "exercise_id": "burpee",
+            "reps": "12-20",
+            "rest_seconds": 45,
+            "sets": 2
+          }
+        ],
+        "cooldown": [
+          {
+            "duration_sec": 60,
+            "exercise_id": "hamstring-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "kneeling-hip-flexor-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "leg-swings-stretch"
+          }
+        ],
+        "est_minutes": 28,
+        "focus": [
+          "legs",
+          "core",
+          "cardio"
+        ],
+        "id": "s2",
+        "index": 1,
+        "title": "Lower A",
+        "warmup": [
+          {
+            "duration_sec": 60,
+            "exercise_id": "butterfly-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "cat-cow-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "childs-pose"
+          }
+        ]
+      },
+      {
+        "blocks": [
+          {
+            "exercise_id": "assisted-dip",
+            "reps": "12-20",
+            "rest_seconds": 45,
+            "sets": 2
+          },
+          {
+            "exercise_id": "bicep-curl",
+            "reps": "12-15",
+            "rest_seconds": 30,
+            "sets": 2
+          },
+          {
+            "exercise_id": "russian-twist",
+            "reps": "12-15",
+            "rest_seconds": 30,
+            "sets": 2
+          },
+          {
+            "exercise_id": "hammer-curl",
+            "reps": "12-15",
+            "rest_seconds": 30,
+            "sets": 2
+          },
+          {
+            "exercise_id": "overhead-tricep-extension",
+            "reps": "12-15",
+            "rest_seconds": 30,
+            "sets": 2
+          },
+          {
+            "exercise_id": "battle-ropes",
+            "reps": "30s",
+            "rest_seconds": 45,
+            "sets": 2
+          }
+        ],
+        "cooldown": [
+          {
+            "duration_sec": 60,
+            "exercise_id": "cross-body-shoulder-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "hamstring-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "kneeling-hip-flexor-stretch"
+          }
+        ],
+        "est_minutes": 26,
+        "focus": [
+          "arms",
+          "core",
+          "cardio"
+        ],
+        "id": "s3",
+        "index": 2,
+        "title": "Upper B",
+        "warmup": [
+          {
+            "duration_sec": 60,
+            "exercise_id": "cat-cow-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "torso-twist-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "childs-pose"
+          }
+        ]
+      },
+      {
+        "blocks": [
+          {
+            "exercise_id": "cable-kickback",
+            "reps": "12-20",
+            "rest_seconds": 45,
+            "sets": 2
+          },
+          {
+            "exercise_id": "goblet-squat",
+            "reps": "12-20",
+            "rest_seconds": 45,
+            "sets": 2
+          },
+          {
+            "exercise_id": "inchworm",
+            "reps": "12-15",
+            "rest_seconds": 30,
+            "sets": 2
+          },
+          {
+            "exercise_id": "cable-pull-through",
+            "reps": "12-20",
+            "rest_seconds": 45,
+            "sets": 2
+          },
+          {
+            "exercise_id": "seal-jack",
+            "reps": "30s",
+            "rest_seconds": 45,
+            "sets": 2
+          }
+        ],
+        "cooldown": [
+          {
+            "duration_sec": 60,
+            "exercise_id": "leg-swings-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "seated-forward-fold-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "standing-quad-stretch"
+          }
+        ],
+        "est_minutes": 26,
+        "focus": [
+          "legs",
+          "core",
+          "arms",
+          "cardio"
+        ],
+        "id": "s4",
+        "index": 3,
+        "title": "Lower B",
+        "warmup": [
+          {
+            "duration_sec": 60,
+            "exercise_id": "childs-pose"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "hamstring-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "kneeling-hip-flexor-stretch"
+          }
+        ]
+      }
+    ],
+    "source": "builtin",
+    "split_name": "Upper / Lower"
+  },
+  "expected_plan_sha256": "ebd08ebda0a4bb23bc014890393cb501316b5fed03f901e6b35bc79a0238389a",
+  "expected_volume": {
+    "arms": {
+      "cap": 22,
+      "coverage": 3,
+      "direct": 12,
+      "effective": 12,
+      "target": 10
+    },
+    "cardio": {
+      "cap": 22,
+      "coverage": 4,
+      "direct": 0,
+      "effective": 5,
+      "target": 10
+    },
+    "chest": {
+      "cap": 22,
+      "coverage": 0,
+      "direct": 2,
+      "effective": 5,
+      "target": 10
+    },
+    "core": {
+      "cap": 22,
+      "coverage": 4,
+      "direct": 12,
+      "effective": 17,
+      "target": 10
+    },
+    "legs": {
+      "cap": 22,
+      "coverage": 2,
+      "direct": 17,
+      "effective": 22,
+      "target": 10
+    },
+    "shoulders": {
+      "cap": 22,
+      "coverage": 0,
+      "direct": 2,
+      "effective": 14,
+      "target": 10
+    }
+  },
+  "input": {
+    "areas": [
+      "cardio",
+      "legs",
+      "core",
+      "arms"
+    ],
+    "created_at": "2026-09-15T12:00:00Z",
+    "days_per_week": 4,
+    "duration_min": 30,
+    "equipment": [
+      "dumbbell",
+      "bodyweight",
+      "cable",
+      "machine"
+    ],
+    "goal": "conditioning",
+    "id": "plan-1757941200",
+    "notes": "bad left shoulder, avoid overhead pressing"
+  },
+  "scenario": "conditioning_goal",
+  "schema_version": 1,
+  "seed": 20260915
+}

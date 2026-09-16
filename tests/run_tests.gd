@@ -16,6 +16,8 @@ const SUITES: Array[Script] = [
 	preload("res://tests/suites/test_streak.gd"),
 	preload("res://tests/suites/test_library.gd"),
 	preload("res://tests/suites/test_library_data.gd"),
+	preload("res://tests/suites/test_plan_model.gd"),
+	preload("res://tests/suites/test_generator.gd"),
 ]
 
 
