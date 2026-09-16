@@ -40,7 +40,6 @@ const DEFAULT_MAX_ATTEMPTS: int = 3
 var _client: LLMClient = null
 var _probe: LLMProbe = null
 var _cancelled: bool = false
-var _labels: Dictionary = {}
 
 
 func _ready() -> void:
@@ -121,8 +120,13 @@ func is_configured(cfg: Dictionary = {}) -> bool:
 # R6 — the ladder itself
 # ===========================================================================
 
-func _ladder(input: Dictionary, opts: Dictionary) -> Dictionary:
-	var seed := PlanModel.as_int(opts.get("seed"), 0)
+func _ladder(raw_input: Dictionary, opts: Dictionary) -> Dictionary:
+	# The request is clamped **once**, before the prompt is built, so the prompt and the validator
+	# can never disagree about how many sessions a valid reply holds (appendix R60: a plan holds
+	# 1..6 days even though `settings.weekly_goal_days` may be 7). The built-in generator clamps
+	# the same two fields identically, so both paths see the same request.
+	var input := _normalize_request(raw_input)
+	var rng_seed := PlanModel.as_int(opts.get("seed"), 0)
 	var timeout_sec := PlanModel.as_int(opts.get("timeout_sec"), DEFAULT_TIMEOUT_SEC)
 	var max_attempts := maxi(1, PlanModel.as_int(opts.get("max_attempts"), DEFAULT_MAX_ATTEMPTS))
 	var allow_llm := bool(opts.get("allow_llm", true))
@@ -137,7 +141,6 @@ func _ladder(input: Dictionary, opts: Dictionary) -> Dictionary:
 	var attempts := 0
 	var latency := 0
 	var http_status := 0
-	var detail := ""
 
 	# --- step 1: gate. No key, no base URL or `allow_llm == false` never touches the network and
 	# never counts an attempt.
@@ -145,21 +148,21 @@ func _ladder(input: Dictionary, opts: Dictionary) -> Dictionary:
 	var base_url := LLMProviders.base_url_for(provider, cfg)
 	if not allow_llm or base_url.is_empty() \
 			or (LLMProviders.requires_key(provider, cfg) and api_key.is_empty()):
-		return _fallback(input, seed, "no_key", 0, provider, model, label, digest, 0, 0)
+		return _fallback(input, rng_seed, "no_key", 0, provider, model, label, digest, 0, 0)
 
 	# --- step 3: the catalog and the prompt. R10: an empty catalog is the missing library, which
 	# no provider can fix.
 	var catalog := _catalog(opts, input)
 	if catalog.is_empty():
 		print("[llm] catalog empty — using built-in generator")
-		return _fallback(input, seed, "validation", 0, provider, model, label, digest, 0, 0)
+		return _fallback(input, rng_seed, "validation", 0, provider, model, label, digest, 0, 0)
 	var lines := PlanPrompt.catalog_lines(catalog)
 	digest = PlanPrompt.catalog_digest(lines)
 	var user_prompt := PlanPrompt.user_prompt(input, catalog)
 
 	var client := _ensure_client()
 	if client == null:
-		return _fallback(input, seed, "no_network", 0, provider, model, label, digest, 0, 0)
+		return _fallback(input, rng_seed, "no_network", 0, provider, model, label, digest, 0, 0)
 	var call_opts := {
 		"timeout_sec": timeout_sec,
 		"retries": max_attempts - 1,
@@ -175,9 +178,9 @@ func _ladder(input: Dictionary, opts: Dictionary) -> Dictionary:
 	latency += first.latency_ms
 	http_status = first.http_status
 	if _cancelled:
-		return _cancelled_result(attempts, latency, provider, model)
+		return _cancelled_result(attempts, latency, provider)
 	if not first.ok:
-		return _fallback(input, seed, _reason_for(first.error_code), attempts, provider, model,
+		return _fallback(input, rng_seed, _reason_for(first.error_code), attempts, provider, model,
 			label, digest, latency, http_status, first.redacted_detail)
 
 	# --- step 6: validate.
@@ -195,17 +198,17 @@ func _ladder(input: Dictionary, opts: Dictionary) -> Dictionary:
 	attempts += repair.attempts
 	latency += repair.latency_ms
 	if _cancelled:
-		return _cancelled_result(attempts, latency, provider, model)
+		return _cancelled_result(attempts, latency, provider)
 	if repair.ok:
 		var second := PlanValidator.validate(repair.text, catalog, input)
 		if bool(second["ok"]):
 			return _llm_result(second, attempts, true, provider, model, label, digest, latency,
 				200)
 		_repair_failed(second, provider, model)
-		return _fallback(input, seed, _reason_from_errors(second), attempts, provider, model,
+		return _fallback(input, rng_seed, _reason_from_errors(second), attempts, provider, model,
 			label, digest, latency, 200)
 	_repair_failed(validation, provider, model)
-	return _fallback(input, seed, _reason_for(repair.error_code), attempts, provider, model, label,
+	return _fallback(input, rng_seed, _reason_for(repair.error_code), attempts, provider, model, label,
 		digest, latency, repair.http_status, repair.redacted_detail)
 
 
@@ -239,10 +242,10 @@ func _llm_result(validation: Dictionary, attempts: int, repaired: bool, provider
 
 ## The built-in path (R6 step 8): `Generator.build_plan()`, renamed, un-provided and annotated
 ## with the reason it was needed.
-func _fallback(input: Dictionary, seed: int, reason_code: String, attempts: int, provider: String,
+func _fallback(input: Dictionary, rng_seed: int, reason_code: String, attempts: int, provider: String,
 		model: String, label: String, digest: String, latency: int, http_status: int = 0,
 		detail: String = "") -> Dictionary:
-	var plan := Generator.build_plan(input, seed)
+	var plan := Generator.build_plan(input, rng_seed)
 	if plan.has("error"):
 		# The built-in generator could not run either (`no areas`, `library_not_loaded`). There is
 		# no plan to return, so the result is a failure — still with the full result shape.
@@ -260,7 +263,7 @@ func _fallback(input: Dictionary, seed: int, reason_code: String, attempts: int,
 
 
 ## Cancel (R6 step 9): no fallback, nothing saved, no provider label in the copy.
-func _cancelled_result(attempts: int, latency: int, provider: String, model: String) -> Dictionary:
+func _cancelled_result(attempts: int, latency: int, provider: String) -> Dictionary:
 	print("[llm] cancelled attempts=%d provider=%s" % [attempts, provider])
 	return _result(false, {}, "", "cancelled", _copy("cancelled", ""), attempts, false,
 		_error("cancelled", 0, "", latency))
@@ -479,6 +482,20 @@ func _autoload(singleton_name: StringName) -> Node:
 	if tree_root == null:
 		return null
 	return tree_root.get_node_or_null(NodePath(String(singleton_name)))
+
+
+## The request as the ladder will use it: the two scalars the plan schema constrains are clamped
+## into their appendix ranges, everything else is passed through untouched. `input` is never
+## mutated, so PRD-08 can keep its own copy.
+static func _normalize_request(input: Dictionary) -> Dictionary:
+	var out := input.duplicate()
+	out["days_per_week"] = clampi(
+		PlanModel.as_int(input.get("days_per_week"), Generator.DEFAULT_DAYS),
+		PlanModel.DAYS_PER_WEEK_MIN, PlanModel.DAYS_PER_WEEK_MAX)
+	out["duration_min"] = clampi(
+		PlanModel.as_int(input.get("duration_min"), Generator.DEFAULT_DURATION_MIN),
+		PlanModel.DURATION_MIN_MIN, PlanModel.DURATION_MIN_MAX)
+	return out
 
 
 static func _array(value: Variant) -> PackedStringArray:

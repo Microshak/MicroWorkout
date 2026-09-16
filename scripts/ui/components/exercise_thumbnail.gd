@@ -42,8 +42,8 @@ func _ready() -> void:
 
 ## Loads [param exercise_id] and its frames. [param frames_arg] may be omitted for
 ## art-less entries (`set_exercise("bench-press")`), which renders the placeholder.
-func set_exercise(exercise_id: String, frames_arg: PackedStringArray = PackedStringArray()) -> void:
-	_exercise_id = exercise_id
+func set_exercise(new_exercise_id: String, frames_arg: PackedStringArray = PackedStringArray()) -> void:
+	_exercise_id = new_exercise_id
 	if not frames_arg.is_empty():
 		frames = frames_arg
 	_cursor = 0

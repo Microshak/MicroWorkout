@@ -23,8 +23,8 @@ var _tween: Tween = null
 
 
 ## Shows [param text]. [param kind] ∈ `info|success|warning|danger`.
-func show_message(text: String, kind: StringName = &"info") -> void:
-	_kind = kind if KIND_GLYPHS.has(String(kind)) else &"info"
+func show_message(text: String, new_kind: StringName = &"info") -> void:
+	_kind = new_kind if KIND_GLYPHS.has(String(new_kind)) else &"info"
 	var message := message_label()
 	if message != null:
 		message.text = text

@@ -154,8 +154,9 @@ func _test_parse_tolerance() -> void:
 		"whitespace only")
 
 	begin("the error object has R5's six fields")
-	var error: Dictionary = (truncated and PlanValidator.validate("nope", _catalog(),
-		SAMPLE_INPUT)["errors"] as Array)[0]
+	var not_json := PlanValidator.validate(truncated, _catalog(), SAMPLE_INPUT)
+	assert_gt(float((not_json["errors"] as Array).size()), 0.0, "there is an error to inspect")
+	var error: Dictionary = (not_json["errors"] as Array)[0]
 	assert_eq(error.size(), 6, "six fields")
 	for field in PackedStringArray(["code", "path", "message", "got", "expected", "severity"]):
 		assert_has_key(error, field, "missing %s" % field)
@@ -736,7 +737,7 @@ func _test_normalisation_helpers() -> void:
 	assert_eq(PlanValidator.normalize_id("LAT PULLDOWNS"), "lat pulldown", "a trailing plural")
 
 	begin("normalize_text is the name-side twin")
-	assert_eq(PlanValidator.normalize_text("Bench  Press"), "bench pres",
+	assert_eq(PlanValidator.normalize_text("Bench  Press"), "bench press",
 		"punctuation and runs of spaces collapse")
 	assert_eq(PlanValidator.normalize_text("Press"), "press", "a doubled s is never singularised")
 	assert_eq(PlanValidator.normalize_text("abs"), "abs", "short words are left alone")
@@ -774,7 +775,7 @@ func _test_estimate_helpers() -> void:
 	assert_eq(PlanValidator.estimate_minutes(blocks, warmup, warmup), 9,
 		"two mobility items add 120 s")
 	assert_eq(PlanValidator.estimate_minutes([{"sets": 3, "reps": "45s", "rest_seconds": 60}], [], []),
-		9, "a seconds block uses its own value")
+		10, "a seconds block uses its own value: 3 x (45x3 + 12 + 60) = 621 s")
 
 	begin("the generator's constants are the ones being used")
 	assert_eq(Generator.REP_SEC, 3, "3 s per rep")
@@ -855,15 +856,30 @@ func _scenarios() -> Array:
 	var no_warmup := _plan()
 	(_session(no_warmup, 0) as Dictionary).erase("warmup")
 	out.append(no_warmup)
+	var missing_field := _plan()
+	(_session(missing_field, 0) as Dictionary).erase("index")
+	out.append(missing_field)
 	var bad_sets := _plan()
-	_block(bad_sets, 0, 2)["sets"] = 99
+	_block(bad_sets, 0, 2)["sets"] = "four"
 	out.append(bad_sets)
+	var clamped_sets := _plan()
+	_block(clamped_sets, 0, 2)["sets"] = 99
+	out.append(clamped_sets)
 	var bad_rest := _plan()
-	_block(bad_rest, 0, 0)["rest_seconds"] = 999
+	_block(bad_rest, 0, 0)["rest_seconds"] = "ninety"
 	out.append(bad_rest)
+	var clamped_rest := _plan()
+	_block(clamped_rest, 0, 0)["rest_seconds"] = 999
+	out.append(clamped_rest)
 	var bad_duration := _plan()
-	_mobility(bad_duration, 0, "warmup", 0)["duration_sec"] = 5
+	_mobility(bad_duration, 0, "warmup", 0)["duration_sec"] = "sixty"
 	out.append(bad_duration)
+	var clamped_duration := _plan()
+	_mobility(clamped_duration, 0, "warmup", 0)["duration_sec"] = 5
+	out.append(clamped_duration)
+	var wrong_est := _plan()
+	_session(wrong_est, 0)["est_minutes"] = 90
+	out.append(wrong_est)
 	var bad_reps := _plan()
 	_block(bad_reps, 0, 0)["reps"] = "lots"
 	out.append(bad_reps)
@@ -894,6 +910,27 @@ func _scenarios() -> Array:
 	var unnamed := _plan()
 	unnamed.erase("name")
 	out.append(unnamed)
+	var no_blocks := _plan()
+	var lonely_blocks: Array = [_block(no_blocks, 0, 0)]
+	(no_blocks["sessions"] as Array)[0]["blocks"] = lonely_blocks
+	_block(no_blocks, 0, 0)["exercise_id"] = "ghost"
+	out.append(no_blocks)
+	var too_many := _plan()
+	var many: Array = _blocks_of_dict(too_many, 0)
+	while many.size() < 13:
+		var clone: Dictionary = _copy(many[many.size() - 1])
+		clone["exercise_id"] = "spare-%d" % many.size()
+		many.append(clone)
+	out.append(too_many)
+	var adjacent := _plan()
+	(adjacent["sessions"] as Array)[0]["blocks"] = [
+		{"exercise_id": "bench-press", "sets": 3, "reps": "8-10", "rest_seconds": 90},
+		{"exercise_id": "incline-bench-press", "sets": 3, "reps": "8-10", "rest_seconds": 90},
+	]
+	out.append(adjacent)
+	var empty_id := _plan()
+	_block(empty_id, 0, 0)["exercise_id"] = ""
+	out.append(empty_id)
 	return out
 
 

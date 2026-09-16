@@ -215,7 +215,7 @@ func _test_empty_text_paths() -> void:
 	var envelope := LLMClient.extract_envelope(ADAPTER_OPENAI, empty)
 	assert_eq(String(envelope["error_code"]), "", "no transport-level error")
 	assert_eq(String(envelope["text"]), "", "empty text")
-	assert_false(String(envelope["detail"]).is_empty(), "but the envelope explains itself")
+	assert_empty(envelope["detail"], "and a readable envelope has nothing to explain")
 
 	begin("the validator turns that empty reply into E_NOT_JSON")
 	var validation := PlanValidator.validate(String(envelope["text"]), [],

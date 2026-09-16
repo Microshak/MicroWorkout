@@ -358,13 +358,23 @@ func _test_http_failures_are_never_retried() -> void:
 		+ "MicroWorkout couldn't use, so it built your plan on-device.", "R6's copy")
 	truncated.dispose()
 
-	begin("a blocked prompt falls back with the same copy")
-	var blocked := _harness([_reply(200, JSON.stringify({"promptFeedback": {"blockReason": "SAFETY"},
-		"candidates": []}))])
+	begin("a content-filtered reply falls back with the same copy")
+	var blocked := _harness([_openai("", "content_filter")])
 	var result_blocked: Dictionary = await blocked.run()
 	assert_eq(String(result_blocked["reason_code"]), "blocked", "blocked")
 	assert_eq(String(result_blocked["source"]), "builtin", "source")
+	assert_eq(String(result_blocked["user_message"]), "Custom (OpenAI-compatible) sent a reply "
+		+ "MicroWorkout couldn't use, so it built your plan on-device.", "R6's copy")
 	blocked.dispose()
+
+	begin("a Gemini safety block is `blocked` too")
+	var gemini_block := _harness([_reply(200, JSON.stringify({
+		"promptFeedback": {"blockReason": "SAFETY"}, "candidates": []}))],
+		{"provider": "gemini", "base_url": "https://generativelanguage.googleapis.com/v1beta"})
+	var result_gemini: Dictionary = await gemini_block.run()
+	assert_eq(String(result_gemini["reason_code"]), "blocked", "blocked")
+	assert_eq(String(result_gemini["source"]), "builtin", "source")
+	gemini_block.dispose()
 
 	begin("an empty reply costs one repair, and the repair's success still wins")
 	var empty_first := _harness([_openai(""), _openai(_fixture_text())])
@@ -676,8 +686,11 @@ func _test_fallback_is_the_golden_plan() -> void:
 	begin("the same seed produces the same fallback twice (determinism preserved)")
 	var again := _harness([_reply(401, "{}")])
 	var result_again: Dictionary = await again.run({"seed": 4242})
-	assert_eq(JSON.stringify(result_again["plan"]), JSON.stringify(result["plan"]),
-		"byte-identical fallback")
+	assert_eq(JSON.stringify(result_again["plan"]["sessions"]),
+		JSON.stringify(result["plan"]["sessions"]), "identical sessions")
+	assert_eq(_generation_without_latency(result_again["plan"]["generation"]),
+		_generation_without_latency(result["plan"]["generation"]),
+		"identical generation metadata (latency excluded: it is a wall clock)")
 	again.dispose()
 
 	begin("a different seed is really used")
@@ -778,8 +791,10 @@ func _test_shapes_and_copies() -> void:
 		[_openai(_fixture_text()), {"max_attempts": 1}],
 	]
 	for entry in branches:
-		var one := _harness((entry as Array)[0] as Array)
-		var result_branch: Dictionary = await one.run((entry as Array)[1] as Dictionary)
+		var pair: Array = entry
+		var reply: Dictionary = pair[0]
+		var one := _harness([reply])
+		var result_branch: Dictionary = await one.run(pair[1])
 		_assert_result_shape(result_branch)
 		one.dispose()
 
@@ -861,6 +876,13 @@ func _fixture_text() -> String:
 
 func _invalid_text() -> String:
 	return FileAccess.get_file_as_string(INVALID_PATH)
+
+
+## `plan.generation` without the one wall-clock field, so two runs can be compared.
+func _generation_without_latency(generation: Dictionary) -> String:
+	var copy := generation.duplicate()
+	copy.erase("latency_ms")
+	return JSON.stringify(copy)
 
 
 ## The recorded backoff as `1.0, 3.0`, so the assertion reads like R7's own sentence.

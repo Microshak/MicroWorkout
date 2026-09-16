@@ -1,0 +1,87 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/generating_overlay.gd" id="1_generating_overlay"]
+[ext_resource type="PackedScene" path="res://scenes/components/progress_ring.tscn" id="2_progress_ring"]
+[ext_resource type="PackedScene" path="res://scenes/components/status_chip.tscn" id="3_status_chip"]
+
+[node name="generating_overlay" type="CanvasLayer"]
+layer = 10
+script = ExtResource("1_generating_overlay")
+
+[node name="Root" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Gutter" type="MarginContainer" parent="Root"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -360.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 48
+
+[node name="Card" type="PanelContainer" parent="Root/Gutter"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_type_variation = &"Sheet"
+
+[node name="Body" type="VBoxContainer" parent="Root/Gutter/Card"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Spinner" parent="Root/Gutter/Card/Body" instance=ExtResource("2_progress_ring")]
+custom_minimum_size = Vector2(88, 88)
+layout_mode = 2
+size_flags_horizontal = 4
+indeterminate = true
+
+[node name="MessageLabel" type="Label" parent="Root/Gutter/Card/Body"]
+layout_mode = 2
+theme_type_variation = &"BodyLabel"
+text = "Generating…"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="SubLabel" type="Label" parent="Root/Gutter/Card/Body"]
+visible = false
+layout_mode = 2
+theme_type_variation = &"Caption"
+text = ""
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="SourceBanner" parent="Root/Gutter/Card/Body" instance=ExtResource("3_status_chip")]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="FixButton" type="Button" parent="Root/Gutter/Card/Body"]
+visible = false
+custom_minimum_size = Vector2(200, 88)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"SecondaryButton"
+text = "Fix in Settings"
+
+[node name="CancelButton" type="Button" parent="Root/Gutter/Card/Body"]
+custom_minimum_size = Vector2(240, 88)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"SecondaryButton"
+text = "Cancel"
+
+[node name="ResultTimer" type="Timer" parent="."]
+wait_time = 2.6
+one_shot = true

@@ -185,6 +185,25 @@ static func is_known_code(code: String) -> bool:
 	return ERROR_CODES.has(code)
 
 
+# ------------------------------------------------------------------ parsing
+
+## The silent JSON reader the envelope extractor and the plan validator both use.
+##
+## [b]Why not `JSON.parse_string()`:[/b] Godot 4.7 prints `ERROR: Parse JSON failed. …` to stderr
+## for every malformed input, and a provider that answers with prose or an HTML error page is a
+## *normal* branch of this feature — an engine error line for it would pollute the app's log and
+## fail the "zero errors" bar for a reply the ladder handles on purpose. `JSON.parse()` returns
+## the error code instead of printing it.
+##
+## Returns the parsed value, or `null` when the text is not JSON. A JSON `null` is therefore
+## indistinguishable from a parse failure, which is fine for both callers: neither accepts `null`.
+static func parse_json(raw_text: String) -> Variant:
+	var json := JSON.new()
+	if json.parse(raw_text) != OK:
+		return null
+	return json.data
+
+
 # ------------------------------------------------------------------ serialisation
 
 ## The complete object as a dictionary, provably free of secrets (R12): the key is not a field

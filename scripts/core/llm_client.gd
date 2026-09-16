@@ -157,7 +157,7 @@ static func _number(value: float) -> String:
 ##
 ## Pure and static so the envelope suite needs neither a socket nor a scene tree.
 static func extract_envelope(adapter: String, body: String) -> Dictionary:
-	var parsed: Variant = JSON.parse_string(body)
+	var parsed: Variant = LLMResult.parse_json(body)
 	if not (parsed is Dictionary):
 		return _envelope_error("bad_response", "reply was not a JSON object")
 	var root: Dictionary = parsed
@@ -511,6 +511,11 @@ func _settle_attempt() -> void:
 
 ## R7's backoff, `Engine.time_scale`-independent, and interruptible so a cancel during the wait
 ## does not make the user sit through it.
+##
+## The wait is **dead-reckoned against the wall clock** rather than counted down in slices: a
+## `SceneTreeTimer` can fire a frame early, and sixteen 0.25 s slices would then lose ~0.3 s of the
+## documented 4 s. With a deadline the requested total is always met (the loop simply takes one
+## more short slice), while a cancel is still noticed within [constant CANCEL_SLICE_SEC].
 func _delay(seconds: float) -> void:
 	if seconds <= 0.0 or _cancelled:
 		return
@@ -519,11 +524,13 @@ func _delay(seconds: float) -> void:
 		return
 	if not is_inside_tree():
 		return
-	var remaining := seconds
-	while remaining > 0.0 and not _cancelled:
-		var slice := minf(remaining, CANCEL_SLICE_SEC)
+	var deadline := Time.get_ticks_msec() + int(round(seconds * 1000.0))
+	while not _cancelled:
+		var left_ms := deadline - Time.get_ticks_msec()
+		if left_ms <= 0:
+			break
+		var slice := minf(float(left_ms) / 1000.0, CANCEL_SLICE_SEC)
 		await get_tree().create_timer(slice, true, false, true).timeout
-		remaining -= slice
 
 
 # ------------------------------------------------------------------ settling

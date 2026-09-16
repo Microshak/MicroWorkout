@@ -60,6 +60,11 @@ var _reset_field: LineEdit = null
 var _plan_dialog: ConfirmationDialog = null
 var _goal: int = 4
 var _generating: bool = false
+## PRD-07 R9's debug-only `Test plan generation` row (debug builds only).
+var _test_generation_button: Button = null
+var _test_generation_status: Label = null
+var _test_generation_dialog: AcceptDialog = null
+var _test_generating: bool = false
 
 
 func _ready() -> void:
@@ -323,6 +328,72 @@ func _build_ai_provider() -> void:
 	_provider_block.set_actions_visible(true, true)
 	_provider_block.set_privacy_expanded(false)
 	_provider_block.dirty_changed.connect(_on_ai_dirty_changed)
+	_build_test_generation(items)
+
+
+## PRD-07 R9: a **debug-only** row that runs `LLM.generate_plan(sample_input())` end to end and
+## reports `source`, `reason_code`, `attempts` and the session count. It is what makes the
+## emulator acceptance criterion reachable before PRD-08's wizard exists.
+##
+## It never touches `Store`: the ladder does not save, and the caller (PRD-08) is the only thing
+## that ever writes a generated plan.
+func _build_test_generation(parent: Node) -> void:
+	if not OS.is_debug_build():
+		return
+	_test_generation_button = _button(parent, "TestPlanGenerationButton", "Test plan generation",
+		&"SecondaryButton")
+	_test_generation_button.pressed.connect(_on_test_generation_pressed)
+	_test_generation_status = _caption(parent, "")
+	_test_generation_status.name = "TestPlanGenerationStatus"
+	_test_generation_dialog = AcceptDialog.new()
+	_test_generation_dialog.name = "TestPlanGenerationDialog"
+	_test_generation_dialog.title = "Test plan generation"
+	_test_generation_dialog.ok_button_text = "Close"
+	add_child(_test_generation_dialog)
+
+
+## R9's fixed sample request — the same four areas and all five equipment types, so the debug row
+## exercises the real catalog filter, the real prompt and the real validator.
+func sample_input() -> Dictionary:
+	return {
+		"goal": "hypertrophy",
+		"days_per_week": 4,
+		"duration_min": 40,
+		"areas": ["chest", "back", "shoulders", "core"],
+		"equipment": ["barbell", "machine", "cable", "dumbbell", "bodyweight"],
+		"notes": "",
+	}
+
+
+func _on_test_generation_pressed() -> void:
+	if _test_generating or not is_instance_valid(LLM):
+		return
+	_test_generating = true
+	_test_generation_button.disabled = true
+	_test_generation_status.text = "Generating…"
+	# One frame so the disabled button and the status line are painted before the request.
+	await get_tree().process_frame
+
+	var result: Dictionary = await LLM.generate_plan(sample_input())
+	var plan: Dictionary = result.get("plan", {})
+	var summary := "source: %s\nreason_code: %s\nattempts: %d\nrepaired: %s\nsessions: %d" % [
+		String(result.get("source", "")),
+		String(result.get("reason_code", "")) if not String(result.get("reason_code", "")).is_empty() 			else "(none)",
+		int(result.get("attempts", 0)),
+		str(bool(result.get("repaired", false))),
+		(plan.get("sessions", []) as Array).size(),
+	]
+	if not plan.is_empty():
+		summary += "\nname: %s\nsplit: %s" % [
+			String(plan.get("name", "")), String(plan.get("split_name", ""))]
+	summary += "\n\n%s" % String(result.get("user_message", ""))
+	_test_generation_dialog.dialog_text = summary
+	_test_generation_dialog.popup_centered()
+	_test_generation_status.text = "source=%s reason=%s attempts=%d sessions=%d" % [
+		String(result.get("source", "")), String(result.get("reason_code", "")),
+		int(result.get("attempts", 0)), (plan.get("sessions", []) as Array).size()]
+	_test_generating = false
+	_test_generation_button.disabled = false
 
 
 func _on_ai_dirty_changed(_is_dirty: bool) -> void:
@@ -692,3 +763,4 @@ func _publish_probe_rects() -> void:
 	UiProbe.log_rect("reset_all_data_button", _reset_button)
 	UiProbe.log_rect("gallery_button", _gallery_button)
 	UiProbe.log_rect("rest_slider", _rest_slider)
+	UiProbe.log_rect("test_plan_generation_button", _test_generation_button)

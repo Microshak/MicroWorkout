@@ -224,7 +224,7 @@ static func equipment_key(record: Dictionary) -> String:
 ## document; when empty the shipped library is used. Returns `{"error": …}` only for the
 ## documented failure modes (`no areas`, `library_not_loaded`) — out-of-range scalars are
 ## clamped and logged, never rejected. `input` is never mutated.
-static func build_plan(input: Dictionary, seed: int, catalog: Dictionary = {}) -> Dictionary:
+static func build_plan(input: Dictionary, rng_seed: int, catalog: Dictionary = {}) -> Dictionary:
 	var catalog_map := _resolve_catalog(catalog)
 	if catalog_map.is_empty():
 		_log("error=library_not_loaded")
@@ -294,7 +294,7 @@ static func build_plan(input: Dictionary, seed: int, catalog: Dictionary = {}) -
 	}
 
 	var rng := RandomNumberGenerator.new()
-	rng.seed = seed
+	rng.seed = rng_seed
 	ctx["rng"] = rng
 	ctx["cheapest_set_sec"] = _cheapest_set_time(catalog_map, goal)
 
@@ -790,7 +790,9 @@ static func _session_quotas(index: int, focuses: Array, targets: Dictionary,
 		var area := String(entry)
 		var cover := maxi(1, int(coverage.get(area, 1)))
 		var target := int(targets.get(area, WEEKLY_MIN_SETS))
-		var base := target / cover
+		# Whole sets per cover: divide in float then truncate, so this is not an
+		# `int / int` integer-division (which the parser warns about).
+		var base := int(float(target) / float(cover))
 		var remainder := target % cover
 		var rank := 0
 		for other in focuses.size():
@@ -1360,7 +1362,7 @@ static func _pick(queues: Dictionary, quotas: Dictionary, ctx: Dictionary,
 			blocked[area] = true
 			continue
 		var record: Dictionary = queue[index]
-		var step := _set_time(String(prescription["reps"]), int(prescription["rest"]))
+		var _step := _set_time(String(prescription["reps"]), int(prescription["rest"]))
 		var need := maxi(0, int(targets.get(area, 0)) - int(direct.get(area, 0)))
 		# `order` is the position in `focus`; a lower value is better (R11 step 4:
 		# "ties → earlier in focus"), which is what `_score_better` compares last.
@@ -1523,9 +1525,9 @@ static func _report_volume(plan: Dictionary, ctx: Dictionary) -> void:
 		var row: Dictionary = table.get(area, {})
 		if row.is_empty():
 			continue
-		var floor := int(floors.get(area, 0))
+		var floor_sets := int(floors.get(area, 0))
 		var effective: Variant = row["effective"]
-		var below_floor := float(effective) < float(floor)
+		var below_floor := float(effective) < float(floor_sets)
 		var below_direct := int(row["direct"]) < DIRECT_FLOOR
 		if not below_floor and not below_direct:
 			continue
@@ -1533,7 +1535,7 @@ static func _report_volume(plan: Dictionary, ctx: Dictionary) -> void:
 		if not below_floor and below_direct:
 			reason = "coverage_limit"
 		_log("volume_shortfall area=%s direct=%d effective=%s floor=%d reason=%s"
-			% [area, int(row["direct"]), str(effective), floor, reason])
+			% [area, int(row["direct"]), str(effective), floor_sets, reason])
 
 
 ## PRD-05 R9 — a pure function of the plan document (the §5.3 schema is not extended).
@@ -1586,7 +1588,9 @@ static func volume_table(plan: Dictionary, catalog: Dictionary = {}) -> Dictiona
 		var direct_sets := int(direct.get(area, 0))
 		var secondary_sets := int(secondary.get(area, 0))
 		var raw := _effective(direct_sets, secondary_sets)
-		var effective: Variant = int(raw) if raw == floorf(raw) else raw
+		var effective: Variant = int(raw)
+		if raw != floorf(raw):
+			effective = float(raw)
 		var target := clampi(roundi(float(capacity) / float(areas.size())
 			* float(boosts.get(area, 1.0))), WEEKLY_MIN_SETS, WEEKLY_MAX_SETS)
 		table[area] = {

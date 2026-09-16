@@ -85,18 +85,32 @@ const WARNING_CODES: PackedStringArray = [
 static func validate(raw_text: String, catalog: Array[Dictionary],
 		input: Dictionary) -> Dictionary:
 	var result := empty_result()
-	var sliced := slice_object(raw_text)
-	if sliced.is_empty():
-		add_error(result, "E_NOT_JSON", "root", "the reply contained no JSON object",
-			clip(raw_text), "one JSON object")
-		return result
-	var parsed: Variant = JSON.parse_string(sliced)
-	if not (parsed is Dictionary):
-		add_error(result, "E_ROOT_TYPE", "root", "the reply was not a JSON object",
-			type_name(parsed), "one JSON object")
-		return result
+	# R5's tolerance, in two steps: a reply that *is* a JSON document is taken as it stands (so a
+	# bare array is reported as E_ROOT_TYPE rather than as unparseable), and anything else is
+	# sliced from the first `{` to the last `}` before being parsed again.
+	var direct: Variant = LLMResult.parse_json(raw_text.strip_edges())
+	var nested: Variant = null
+	if not (direct is Dictionary):
+		if direct != null:
+			add_error(result, "E_ROOT_TYPE", "root", "the reply was not a JSON object",
+				type_name(direct), "one JSON object")
+			return result
+		var sliced := slice_object(raw_text)
+		if sliced.is_empty():
+			add_error(result, "E_NOT_JSON", "root", "the reply contained no JSON object",
+				clip(raw_text), "one JSON object")
+			return result
+		nested = LLMResult.parse_json(sliced)
+		if not (nested is Dictionary):
+			if nested != null:
+				add_error(result, "E_ROOT_TYPE", "root", "the reply was not a JSON object",
+					type_name(nested), "one JSON object")
+			else:
+				add_error(result, "E_NOT_JSON", "root", "the reply is not valid JSON",
+					clip(sliced), "one JSON object")
+			return result
 
-	var root: Dictionary = parsed
+	var root: Dictionary = direct if direct is Dictionary else nested
 	var index := CatalogIndex.build(catalog)
 	var request := Request.resolve(input)
 
@@ -753,11 +767,11 @@ class CatalogIndex extends RefCounted:
 	static func build(catalog: Array[Dictionary]) -> CatalogIndex:
 		var index := CatalogIndex.new()
 		var sorted_ids: Array = []
-		for record in catalog:
-			var id := String(record.get("id", ""))
+		for entry in catalog:
+			var id := String(entry.get("id", ""))
 			if id.is_empty() or index.by_id.has(id):
 				continue
-			index.by_id[id] = record
+			index.by_id[id] = entry
 			sorted_ids.append(id)
 		# Sorted so the fuzzy tie-break (and therefore the prompt's `repaired` list) is
 		# deterministic whatever order the catalog arrived in.

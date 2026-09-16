@@ -85,9 +85,10 @@ class Harness extends RefCounted:
 	var llm: Node = null
 	var client: Node = null
 	var lines: Array = []
+	var cfg: Dictionary = {}
 
 	func run(opts: Dictionary = {}) -> Dictionary:
-		var merged: Dictionary = {"cfg": CFG, "seed": 7}
+		var merged: Dictionary = {"cfg": cfg, "seed": 7}
 		for field in opts.keys():
 			merged[field] = opts[field]
 		var result: Variant = llm.call("generate_plan", INPUT, merged)
@@ -145,13 +146,15 @@ func _test_every_failure_mode() -> void:
 		"no key": [_openai(_fixture_text())],
 		"empty catalog": [_openai(_fixture_text())],
 	}
+	# The three branches that never reach a provider: no request log line exists for them, which
+	# is itself the property being asserted (the gate must not log anything either).
+	var gated: PackedStringArray = ["no key", "empty catalog", "device blocked"]
 	var keys: Array = modes.keys()
 	keys.sort()
 	for name in keys:
 		var harness := _harness(modes[name])
 		var opts: Dictionary = {}
 		if String(name) == "no key":
-			harness.llm.call("cancel")  # no-op: the config, not the ladder, carries the key
 			opts["cfg"] = _cfg_without_key()
 		elif String(name) == "empty catalog":
 			opts["catalog"] = []
@@ -162,7 +165,11 @@ func _test_every_failure_mode() -> void:
 		_assert_clean("user_message for '%s'" % name, String(result["user_message"]))
 		_assert_clean("error for '%s'" % name, JSON.stringify(result["error"]))
 		_assert_clean("plan for '%s'" % name, JSON.stringify(result["plan"]))
-		assert_true(harness.lines.size() > 0, "'%s' produced at least one log line" % name)
+		if gated.has(String(name)):
+			assert_eq(harness.lines.size(), 0, "'%s' never reaches a provider, so it must not log "
+				% name)
+		else:
+			assert_true(harness.lines.size() > 0, "'%s' produced at least one log line" % name)
 		harness.dispose()
 
 	begin("a provider that echoes the key back is scrubbed in redacted_detail")
@@ -212,7 +219,7 @@ func _test_success_path() -> void:
 
 func _test_gemini_url_is_never_logged() -> void:
 	begin("Gemini's ?key= URL is the radioactive case: it never reaches a log (R12)")
-	var harness := _harness([_openai(_fixture_text())], {"provider": "gemini",
+	var harness := _harness([_gemini(_fixture_text())], {"provider": "gemini",
 		"base_url": "https://generativelanguage.googleapis.com/v1beta",
 		"model": "gemini-1.5-flash"})
 	var result: Dictionary = await harness.run()
@@ -301,8 +308,8 @@ func _test_generation_block_is_clean() -> void:
 func _test_redaction_helper_contract() -> void:
 	begin("Redact.safe_error is the only scrubber, and it is applied at construction")
 	var long_key := "sk-verylongtestkey1234567890"
-	var detail := "request to https://api.example.test/v1/chat/completions?key=" + long_key
-	+ " failed with Bearer " + long_key
+	var detail := "request to https://api.example.test/v1/chat/completions?key=" + long_key \
+		+ " failed with Bearer " + long_key
 	var scrubbed := Redact.safe_error(detail, long_key)
 	assert_false(scrubbed.contains(long_key), "the key is gone")
 	assert_false(scrubbed.contains(long_key.uri_encode()), "and so is its encoded form")
@@ -358,19 +365,25 @@ func _test_source_scan() -> void:
 	begin("the scan really looked at the files that hold the secret")
 	assert_ge(float(checked), 6.0, "six files were scanned")
 
-	begin("only the transport and the URL builder may touch the key at all")
+	begin("only the four files on the request path may even name the key")
+	# `llm.gd` reads it out of settings, `llm_client.gd` puts it in a header or a URL,
+	# `llm_providers.gd` knows where it goes and `llm_result.gd` scrubs it. The prompt builder,
+	# the validator and the overlay must not reference it at all.
+	var allowed: PackedStringArray = [
+		"res://scripts/core/llm_client.gd",
+		"res://scripts/core/llm_result.gd",
+		"res://scripts/core/llm_providers.gd",
+		"res://scripts/autoload/llm.gd",
+	]
 	for path in SCANNED_FILES:
-		if not FileAccess.file_exists(path):
+		if not FileAccess.file_exists(path) or allowed.has(path):
 			continue
 		var source := FileAccess.get_file_as_string(path)
-		if path.ends_with("llm_client.gd") or path.ends_with("llm_providers.gd") \
-				or path.ends_with("llm_result.gd"):
-			continue
 		assert_false(source.contains("api_key"),
 			"%s must not reference api_key at all" % path.get_file())
 
 	begin("the log sink seam exists and is what produced the lines above")
-	var client := (load("res://scripts/core/llm_client.gd") as GDScript).new()
+	var client: Node = (load("res://scripts/core/llm_client.gd") as GDScript).new()
 	assert_true(client.get("log_sink") is Callable, "log_sink is a Callable")
 	assert_false((client.get("log_sink") as Callable).is_valid(),
 		"and it is unset in production, so nothing is captured or forwarded")
@@ -391,6 +404,13 @@ func _openai(text: String, finish: String = "stop") -> Dictionary:
 	return {"result": HTTPRequest.RESULT_SUCCESS, "status": 200, "body": JSON.stringify({
 		"choices": [{"index": 0, "message": {"role": "assistant", "content": text},
 			"finish_reason": finish}],
+	})}
+
+
+## The Gemini wire shape (R2 C): the same plan text, in the envelope that adapter expects.
+func _gemini(text: String) -> Dictionary:
+	return {"result": HTTPRequest.RESULT_SUCCESS, "status": 200, "body": JSON.stringify({
+		"candidates": [{"content": {"parts": [{"text": text}]}, "finishReason": "STOP"}],
 	})}
 
 
