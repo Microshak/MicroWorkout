@@ -53,6 +53,13 @@ if grep -q "android.permission.INTERNET" <<<"$PERMS"; then
 else
   fail "android.permission.INTERNET NOT declared — LLM calls will fail on device"
 fi
+# Haptics fail *silently* without this (Input.vibrate_handheld just does nothing), so it is
+# asserted here rather than discovered later on a phone.
+if grep -q "android.permission.VIBRATE" <<<"$PERMS"; then
+  pass "android.permission.VIBRATE declared (required for haptics, PRD-12)"
+else
+  fail "android.permission.VIBRATE NOT declared — haptics will silently do nothing"
+fi
 
 # --------------------------------------------------------------- 3. device
 echo "[3/6] emulator"
