@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/components/status_chip.gd" id="1_status_chip"]
+[ext_resource type="PackedScene" path="res://scenes/components/glyph.tscn" id="2_glyph"]
+
+[node name="status_chip" type="PanelContainer"]
+theme_type_variation = &"CardAlt"
+script = ExtResource("1_status_chip")
+
+[node name="Row" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Icon" parent="Row" instance=ExtResource("2_glyph")]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+kind = &"dot"
+
+[node name="Text" type="Label" parent="Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_type_variation = &"BodySmall"
+text = "Not verified"

@@ -1,0 +1,126 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/onboarding_flow.gd" id="1_flow"]
+[ext_resource type="PackedScene" path="res://scenes/components/secondary_button.tscn" id="2_secondary"]
+[ext_resource type="PackedScene" path="res://scenes/components/primary_button.tscn" id="3_primary"]
+
+[node name="OnboardingFlow" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_flow")
+
+[node name="Bg" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.058824, 0.066667, 0.086275, 1)
+
+[node name="Gutter" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="Layout" type="VBoxContainer" parent="Gutter"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Header" type="HBoxContainer" parent="Gutter/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="BackButton" parent="Gutter/Layout/Header" instance=ExtResource("2_secondary")]
+layout_mode = 2
+text = "Back"
+
+[node name="ProgressDots" type="HBoxContainer" parent="Gutter/Layout/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="SkipButton" parent="Gutter/Layout/Header" instance=ExtResource("2_secondary")]
+visible = false
+layout_mode = 2
+text = "Skip"
+
+[node name="Pages" type="Control" parent="Gutter/Layout"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Welcome" type="Control" parent="Gutter/Layout/Pages"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Units" type="Control" parent="Gutter/Layout/Pages"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Theme" type="Control" parent="Gutter/Layout/Pages"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Goal" type="Control" parent="Gutter/Layout/Pages"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LLM" type="Control" parent="Gutter/Layout/Pages"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Done" type="Control" parent="Gutter/Layout/Pages"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Footer" type="VBoxContainer" parent="Gutter/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ContinueButton" parent="Gutter/Layout/Footer" instance=ExtResource("3_primary")]
+layout_mode = 2
+text = "Get started"

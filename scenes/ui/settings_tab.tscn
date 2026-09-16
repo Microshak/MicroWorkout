@@ -1,9 +1,7 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=13 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/settings_tab.gd" id="1_tab"]
-[ext_resource type="PackedScene" path="res://scenes/components/section_header.tscn" id="2_header"]
-[ext_resource type="PackedScene" path="res://scenes/components/empty_state.tscn" id="3_empty"]
-[ext_resource type="PackedScene" path="res://scenes/components/secondary_button.tscn" id="4_btn"]
+[ext_resource type="PackedScene" path="res://scenes/components/card.tscn" id="2_card"]
 
 [node name="SettingsTab" type="Control"]
 layout_mode = 3
@@ -31,22 +29,37 @@ theme_override_constants/margin_top = 24
 theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 24
 
-[node name="Page" type="VBoxContainer" parent="Scroll/Gutter"]
+[node name="Sections" type="VBoxContainer" parent="Scroll/Gutter"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 32
 
-[node name="SectionHeader" parent="Scroll/Gutter/Page" instance=ExtResource("2_header")]
+[node name="Units" parent="Scroll/Gutter/Sections" instance=ExtResource("2_card")]
 layout_mode = 2
 
-[node name="ThemeButton" parent="Scroll/Gutter/Page" instance=ExtResource("4_btn")]
+[node name="Theme" parent="Scroll/Gutter/Sections" instance=ExtResource("2_card")]
 layout_mode = 2
-text = "Theme: dark"
 
-[node name="GalleryButton" parent="Scroll/Gutter/Page" instance=ExtResource("4_btn")]
+[node name="WeeklyGoal" parent="Scroll/Gutter/Sections" instance=ExtResource("2_card")]
 layout_mode = 2
-text = "Component gallery"
 
-[node name="EmptyState" parent="Scroll/Gutter/Page" instance=ExtResource("3_empty")]
+[node name="RestTimer" parent="Scroll/Gutter/Sections" instance=ExtResource("2_card")]
 layout_mode = 2
-size_flags_vertical = 3
+
+[node name="AIProvider" parent="Scroll/Gutter/Sections" instance=ExtResource("2_card")]
+layout_mode = 2
+
+[node name="Plan" parent="Scroll/Gutter/Sections" instance=ExtResource("2_card")]
+layout_mode = 2
+
+[node name="Storage" parent="Scroll/Gutter/Sections" instance=ExtResource("2_card")]
+layout_mode = 2
+
+[node name="Attribution" parent="Scroll/Gutter/Sections" instance=ExtResource("2_card")]
+layout_mode = 2
+
+[node name="About" parent="Scroll/Gutter/Sections" instance=ExtResource("2_card")]
+layout_mode = 2
+
+[node name="Danger" parent="Scroll/Gutter/Sections" instance=ExtResource("2_card")]
+layout_mode = 2

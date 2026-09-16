@@ -79,7 +79,7 @@ static func redact(text: String, secrets: PackedStringArray = PackedStringArray(
 		if value.length() < MIN_SECRET_LENGTH:
 			continue
 		out = out.replace(value, PLACEHOLDER)
-		var encoded := String.uri_encode(value)
+		var encoded := value.uri_encode()
 		if encoded != value:
 			out = out.replace(encoded, PLACEHOLDER)
 	out = _sub(out, SK_PATTERN, PLACEHOLDER)
@@ -112,7 +112,7 @@ static func contains_secret(text: String, key: String) -> bool:
 		return false
 	if text.contains(value):
 		return true
-	var encoded := String.uri_encode(value)
+	var encoded := value.uri_encode()
 	return encoded != value and text.contains(encoded)
 
 

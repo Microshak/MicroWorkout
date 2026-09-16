@@ -13,6 +13,12 @@ const MINUTE := 60
 const HOUR := 3600
 const DAY := 86400
 
+## The `Sections/Storage` line's document order (R10/R11). `backups` is the aggregate bucket
+## `JsonStore.breakdown()` returns for `.bak`/`.tmp`/quarantine siblings.
+const STORAGE_ORDER: PackedStringArray = [
+	"settings.json", "plans.json", "history.json", "backups",
+]
+
 
 ## `"0 B"`, `"512 B"`, `"41.2 KB"`, `"7.7 MB"` — 1024-based (R11).
 static func bytes(n: int) -> String:
@@ -54,7 +60,7 @@ static func storage_line(usage_bytes: int, breakdown: Dictionary) -> String:
 ## The parenthesised part of [method storage_line], on its own so a narrow layout can wrap it.
 static func storage_parts(breakdown: Dictionary) -> String:
 	var parts := PackedStringArray()
-	for doc_name in ["settings.json", "plans.json", "history.json", "backups"]:
+	for doc_name: String in STORAGE_ORDER:
 		var key := doc_name.trim_suffix(".json")
 		parts.append("%s %s" % [doc_name, bytes(_as_int(breakdown.get(key, 0)))])
 	return " · ".join(parts)

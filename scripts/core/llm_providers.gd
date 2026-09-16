@@ -306,9 +306,11 @@ static func connection_request(provider_key: String, cfg: Dictionary) -> Diction
 			body = ('{"model":%s,"max_tokens":1,"messages":[{"role":"user","content":"ping"}]}'
 				% JSON.stringify(model))
 		"gemini":
-			url = "%s/models/%s:generateContent" % [base, String.uri_encode(model, false)]
+			# `String.uri_encode()` takes no arguments in Godot 4.7.2 (PRD-07's
+			# `uri_encode(model, false)` spelling does not exist — it must be corrected there).
+			url = "%s/models/%s:generateContent" % [base, model.uri_encode()]
 			if style == "query_key" and not key.is_empty():
-				url = "%s?key=%s" % [url, String.uri_encode(key)]
+				url = "%s?key=%s" % [url, key.uri_encode()]
 			body = ('{"contents":[{"role":"user","parts":[{"text":"ping"}]}],'
 				+ '"generationConfig":{"maxOutputTokens":1}}')
 		_:
