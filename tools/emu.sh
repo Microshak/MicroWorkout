@@ -80,7 +80,23 @@ device_present() {
   adb devices | grep -qE "emulator-[0-9]+\s+device"
 }
 
+## A running emulator can report as "offline" purely because the adb server's connection went
+## stale — this happens when the shell that started the adb server exits. Restarting the adb
+## server revives the connection without touching the emulator, so never conclude "the device
+## died" (and never restart it, which needs /dev/kvm and an approval) before trying this.
+revive_adb_if_stale() {
+  if adb devices | grep -qE "emulator-[0-9]+\s+offline"; then
+    echo "[emu] adb reports 'offline' — restarting the adb server to revive the connection"
+    adb kill-server >/dev/null 2>&1 || true
+    sleep 1
+    adb start-server >/dev/null 2>&1 || true
+    sleep 2
+    adb devices | sed 's/^/      /'
+  fi
+}
+
 cmd_wait() {
+  revive_adb_if_stale
   local waited=0
   echo "[emu] waiting for device (timeout ${BOOT_TIMEOUT_SEC}s)…"
   until device_present; do
