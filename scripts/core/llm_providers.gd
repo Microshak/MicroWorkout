@@ -89,6 +89,111 @@ const PRESETS: Dictionary = {
 	},
 }
 
+## Anthropic's required API version header (PRD-06 R9). Declared before [constant SHAPES]
+## because the Anthropic entry carries it in `extra_headers`.
+const ANTHROPIC_VERSION := "2023-06-01"
+
+## PRD-07 R1 — the request-shaping half of the same table, keyed identically.
+##
+## [b]Why this is a second constant and not more keys inside [constant PRESETS]:[/b] PRD-06's
+## suite (`tests/suites/test_settings_validation.gd`) pins `PRESETS[key].size() == 7` —
+## "each preset carries exactly R5's seven keys" — and that suite is frozen. R1 says the table
+## "gains, per preset" this metadata, and a parallel table keyed by the same seven names is how
+## both requirements hold at once: [method preset] still returns PRD-06's seven fields, and
+## [method shape] merges the two for every R2 request-building decision. There is exactly one
+## entry per preset and each entry carries exactly R1's seven fields.
+##
+## Key meanings:
+##   `chat_path`           appended to the base URL; `{model}` is substituted (Gemini only)
+##   `supports_json_mode`  the provider has a JSON-mode request flag at all
+##   `supports_system_role` true when the system prompt rides in `messages`/`contents`;
+##                         false when it needs its own top-level field (Anthropic, Gemini)
+##   `max_tokens_key`      what the token cap is called in the body — `max_tokens`
+##                         (OpenAI-compatible), `max_tokens_required` (Anthropic: not optional),
+##                         `maxOutputTokens` (Gemini)
+##   `extra_headers`       provider-mandated headers beyond Content-Type/Accept/auth
+##   `key_prefix_hint`     shown by Settings as a paste sanity check; never matched strictly
+##   `default_timeout_sec` R2/R7's per-attempt timeout, 45 s for every preset
+const SHAPES: Dictionary = {
+	"openai": {
+		"chat_path": "/chat/completions",
+		"supports_json_mode": true,
+		"supports_system_role": true,
+		"max_tokens_key": "max_tokens",
+		"extra_headers": {},
+		"key_prefix_hint": "sk-",
+		"default_timeout_sec": 45,
+	},
+	"deepseek": {
+		"chat_path": "/chat/completions",
+		"supports_json_mode": true,
+		"supports_system_role": true,
+		"max_tokens_key": "max_tokens",
+		"extra_headers": {},
+		"key_prefix_hint": "sk-",
+		"default_timeout_sec": 45,
+	},
+	"anthropic": {
+		"chat_path": "/messages",
+		"supports_json_mode": false,
+		"supports_system_role": false,
+		"max_tokens_key": "max_tokens_required",
+		"extra_headers": {"anthropic-version": ANTHROPIC_VERSION},
+		"key_prefix_hint": "sk-ant-",
+		"default_timeout_sec": 45,
+	},
+	"gemini": {
+		"chat_path": "/models/{model}:generateContent",
+		"supports_json_mode": true,
+		"supports_system_role": false,
+		"max_tokens_key": "maxOutputTokens",
+		"extra_headers": {},
+		"key_prefix_hint": "AIza",
+		"default_timeout_sec": 45,
+	},
+	"openrouter": {
+		"chat_path": "/chat/completions",
+		"supports_json_mode": true,
+		"supports_system_role": true,
+		"max_tokens_key": "max_tokens",
+		"extra_headers": {
+			"HTTP-Referer": "https://github.com/microshak/microworkout",
+			"X-Title": "MicroWorkout",
+		},
+		"key_prefix_hint": "sk-or-",
+		"default_timeout_sec": 45,
+	},
+	"groq": {
+		"chat_path": "/chat/completions",
+		"supports_json_mode": true,
+		"supports_system_role": true,
+		"max_tokens_key": "max_tokens",
+		"extra_headers": {},
+		"key_prefix_hint": "gsk_",
+		"default_timeout_sec": 45,
+	},
+	"custom": {
+		"chat_path": "/chat/completions",
+		"supports_json_mode": true,
+		"supports_system_role": true,
+		"max_tokens_key": "max_tokens",
+		"extra_headers": {},
+		"key_prefix_hint": "",
+		"default_timeout_sec": 45,
+	},
+}
+
+## R1's field names, in table order — what [method shape] must contain per preset.
+const SHAPE_FIELDS: PackedStringArray = [
+	"chat_path", "supports_json_mode", "supports_system_role", "max_tokens_key",
+	"extra_headers", "key_prefix_hint", "default_timeout_sec",
+]
+
+## R1's closed set for `max_tokens_key`.
+const MAX_TOKENS_KEYS: PackedStringArray = [
+	"max_tokens", "maxOutputTokens", "max_tokens_required",
+]
+
 ## The preset a wiped install starts on (`settings.json` `llm.provider`).
 const DEFAULT_KEY := "deepseek"
 
@@ -107,9 +212,6 @@ const KEY_MAX_LENGTH := 512
 
 ## `Test connection` waits this long, once, and never retries (R9).
 const TEST_TIMEOUT_SEC := 20
-
-## Anthropic's required API version header (R9).
-const ANTHROPIC_VERSION := "2023-06-01"
 
 
 # ------------------------------------------------------------------ table access (R5)
@@ -188,6 +290,128 @@ static func host_of(url: String) -> String:
 	if colon > 0:
 		return authority.substr(0, colon)
 	return authority
+
+
+# ------------------------------------------------------------------ request shaping (PRD-07 R1)
+
+## The R1 entry for [param key], or `custom`'s for an unknown key (the same degradation
+## [method preset] performs, so the two tables can never disagree about which key exists).
+static func shape(key: String) -> Dictionary:
+	var entry: Dictionary = SHAPES.get(key, SHAPES["custom"])
+	return entry
+
+
+## PRD-06's seven fields merged with R1's seven. Nothing but a reader needs this; it exists so a
+## debug dump or a suite can show one complete picture of a preset.
+static func merged(key: String) -> Dictionary:
+	var out: Dictionary = preset(key).duplicate()
+	for field in shape(key).keys():
+		out[field] = shape(key)[field]
+	return out
+
+
+static func shape_field(key: String, field: String, fallback: Variant) -> Variant:
+	return shape(key).get(field, fallback)
+
+
+## Appended to the (possibly user-edited) base URL. Gemini's contains `{model}`.
+static func chat_path_for(key: String) -> String:
+	return String(shape(key).get("chat_path", "/chat/completions"))
+
+
+static func supports_json_mode(key: String) -> bool:
+	return bool(shape(key).get("supports_json_mode", true))
+
+
+## False for Anthropic (`system` is a top-level field) and Gemini (`systemInstruction`).
+static func supports_system_role(key: String) -> bool:
+	return bool(shape(key).get("supports_system_role", true))
+
+
+## `max_tokens` | `maxOutputTokens` | `max_tokens_required`.
+static func max_tokens_key_for(key: String) -> String:
+	return String(shape(key).get("max_tokens_key", "max_tokens"))
+
+
+## Provider-mandated headers (Anthropic's version, OpenRouter's attribution pair). Returned as a
+## fresh dictionary so a caller cannot mutate the table.
+static func extra_headers_for(key: String) -> Dictionary:
+	var out: Dictionary = {}
+	var headers: Variant = shape(key).get("extra_headers", {})
+	if headers is Dictionary:
+		for field in (headers as Dictionary).keys():
+			out[String(field)] = String((headers as Dictionary)[field])
+	return out
+
+
+## A paste sanity hint for Settings; never a validation rule (a provider may issue any shape).
+static func key_prefix_hint(key: String) -> String:
+	return String(shape(key).get("key_prefix_hint", ""))
+
+
+static func default_timeout_sec(key: String) -> int:
+	return int(shape(key).get("default_timeout_sec", 45))
+
+
+## R1's `json_mode_ok`: the provider must support it *and* the configuration must not have
+## switched it off. `custom` is the only preset whose flag is a user setting
+## (`llm.custom_json_mode`, default true).
+static func json_mode_ok(key: String, cfg: Dictionary) -> bool:
+	if not supports_json_mode(key):
+		return false
+	if key == "custom":
+		return bool(cfg.get("custom_json_mode", true))
+	return true
+
+
+## The model this configuration will ask for: the user's `llm.model` when set, else the preset
+## default. Never empty for a shipped preset, which matters because Gemini's path contains it.
+static func model_for(key: String, cfg: Dictionary) -> String:
+	var model := String(cfg.get("model", "")).strip_edges()
+	if not model.is_empty():
+		return model
+	return default_model(key)
+
+
+## The base URL this configuration will use, with the trailing slash removed so the join with
+## [method chat_path_for] never produces a double slash.
+static func base_url_for(key: String, cfg: Dictionary) -> String:
+	var base := String(cfg.get("base_url", "")).strip_edges()
+	if base.is_empty():
+		base = default_base_url(key)
+	return base.trim_suffix("/")
+
+
+## R1's `resolve_url`: base + `chat_path`, with `{model}` percent-encoded in, and `?key=` for the
+## `query_key` auth style. This is the **only** function that builds a generation URL, so the one
+## place a Gemini key can enter a URL is also the one place it is easy to audit (R12).
+##
+## `String.uri_encode()` takes no arguments in Godot 4.7.2 — R1's `uri_encode(model, false)`
+## spelling does not exist (PRD-06 R9 already recorded this).
+static func resolve_url(key: String, cfg: Dictionary) -> String:
+	var url := base_url_for(key, cfg) + chat_path_for(key)
+	url = url.replace("{model}", model_for(key, cfg).uri_encode())
+	if effective_auth_style(key, cfg) == "query_key":
+		var secret := String(cfg.get("api_key", "")).strip_edges()
+		if not secret.is_empty():
+			url = "%s?key=%s" % [url, secret.uri_encode()]
+	return url
+
+
+## The authentication headers for [param key], given the already-resolved [param style].
+## Split out from the URL because Gemini's key never becomes a header and Anthropic's never
+## becomes a query parameter.
+static func auth_headers_for(key: String, cfg: Dictionary) -> PackedStringArray:
+	var out := PackedStringArray()
+	var secret := String(cfg.get("api_key", "")).strip_edges()
+	match effective_auth_style(key, cfg):
+		"bearer":
+			if not secret.is_empty():
+				out.append("Authorization: Bearer %s" % secret)
+		"x_api_key":
+			if not secret.is_empty():
+				out.append("x-api-key: %s" % secret)
+	return out
 
 
 # ------------------------------------------------------------------ Test connection (R9)

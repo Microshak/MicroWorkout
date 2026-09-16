@@ -21,6 +21,10 @@ const SUITES: Array[Script] = [
 	preload("res://tests/suites/test_units.gd"),
 	preload("res://tests/suites/test_settings_validation.gd"),
 	preload("res://tests/suites/test_redaction.gd"),
+	# PRD-07's seven suites exist on disk but are NOT registered yet: as of this commit
+	# test_plan_validator has 12 failures, test_llm_envelope 1, test_llm_ladder 2, and
+	# test_key_never_logged HANGS (which would stall the whole runner). Register them once
+	# PRD-07 reports complete and all seven pass in isolation.
 ]
 
 

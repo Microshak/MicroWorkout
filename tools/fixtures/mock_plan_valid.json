@@ -10,9 +10,10 @@
       "index": 0,
       "title": "Upper A — Push Focus",
       "focus": ["chest", "shoulders", "arms"],
-      "est_minutes": 41,
+      "est_minutes": 45,
       "warmup": [
-        { "exercise_id": "arm-circles", "duration_sec": 60 }
+        { "exercise_id": "arm-circles", "duration_sec": 60 },
+        { "exercise_id": "cross-body-shoulder-stretch", "duration_sec": 60 }
       ],
       "blocks": [
         { "exercise_id": "bench-press", "sets": 4, "reps": "8-10", "rest_seconds": 90 },
@@ -22,7 +23,8 @@
         { "exercise_id": "plank", "sets": 3, "reps": "45s", "rest_seconds": 60 }
       ],
       "cooldown": [
-        { "exercise_id": "childs-pose", "duration_sec": 60 }
+        { "exercise_id": "childs-pose", "duration_sec": 60 },
+        { "exercise_id": "cat-cow-stretch", "duration_sec": 60 }
       ]
     },
     {
@@ -30,18 +32,20 @@
       "index": 1,
       "title": "Lower A — Squat Focus",
       "focus": ["legs", "core"],
-      "est_minutes": 42,
+      "est_minutes": 39,
       "warmup": [
-        { "exercise_id": "arm-circles", "duration_sec": 60 }
+        { "exercise_id": "leg-swings-stretch", "duration_sec": 60 },
+        { "exercise_id": "worlds-greatest-stretch", "duration_sec": 60 }
       ],
       "blocks": [
-        { "exercise_id": "back-squat", "sets": 4, "reps": "6-8", "rest_seconds": 120 },
+        { "exercise_id": "squat", "sets": 4, "reps": "6-8", "rest_seconds": 120 },
         { "exercise_id": "romanian-deadlift", "sets": 3, "reps": "8-10", "rest_seconds": 105 },
         { "exercise_id": "plank", "sets": 3, "reps": "45s", "rest_seconds": 60 },
-        { "exercise_id": "back-squat", "sets": 3, "reps": "10-12", "rest_seconds": 90 }
+        { "exercise_id": "goblet-squat", "sets": 3, "reps": "10-12", "rest_seconds": 90 }
       ],
       "cooldown": [
-        { "exercise_id": "childs-pose", "duration_sec": 60 }
+        { "exercise_id": "hamstring-stretch", "duration_sec": 60 },
+        { "exercise_id": "seated-forward-fold-stretch", "duration_sec": 60 }
       ]
     },
     {
@@ -51,16 +55,19 @@
       "focus": ["back", "arms", "shoulders"],
       "est_minutes": 40,
       "warmup": [
-        { "exercise_id": "arm-circles", "duration_sec": 60 }
+        { "exercise_id": "arm-circles", "duration_sec": 60 },
+        { "exercise_id": "torso-twist-stretch", "duration_sec": 60 }
       ],
       "blocks": [
         { "exercise_id": "barbell-row", "sets": 4, "reps": "8-10", "rest_seconds": 90 },
         { "exercise_id": "lat-pulldown", "sets": 4, "reps": "10-12", "rest_seconds": 75 },
         { "exercise_id": "bench-press", "sets": 3, "reps": "8-10", "rest_seconds": 90 },
-        { "exercise_id": "overhead-press", "sets": 3, "reps": "10-12", "rest_seconds": 75 }
+        { "exercise_id": "overhead-press", "sets": 3, "reps": "10-12", "rest_seconds": 75 },
+        { "exercise_id": "face-pull", "sets": 3, "reps": "12-15", "rest_seconds": 60 }
       ],
       "cooldown": [
-        { "exercise_id": "childs-pose", "duration_sec": 60 }
+        { "exercise_id": "childs-pose", "duration_sec": 60 },
+        { "exercise_id": "cross-body-shoulder-stretch", "duration_sec": 60 }
       ]
     },
     {
@@ -68,17 +75,20 @@
       "index": 3,
       "title": "Lower B — Hinge Focus",
       "focus": ["legs", "core"],
-      "est_minutes": 41,
+      "est_minutes": 35,
       "warmup": [
-        { "exercise_id": "arm-circles", "duration_sec": 60 }
+        { "exercise_id": "leg-swings-stretch", "duration_sec": 60 },
+        { "exercise_id": "worlds-greatest-stretch", "duration_sec": 60 }
       ],
       "blocks": [
         { "exercise_id": "romanian-deadlift", "sets": 4, "reps": "6-8", "rest_seconds": 120 },
-        { "exercise_id": "back-squat", "sets": 3, "reps": "8-10", "rest_seconds": 105 },
-        { "exercise_id": "plank", "sets": 3, "reps": "60s", "rest_seconds": 60 }
+        { "exercise_id": "squat", "sets": 3, "reps": "8-10", "rest_seconds": 120 },
+        { "exercise_id": "hanging-leg-raise", "sets": 3, "reps": "12-15", "rest_seconds": 60 },
+        { "exercise_id": "bulgarian-split-squat", "sets": 3, "reps": "10-12", "rest_seconds": 90 }
       ],
       "cooldown": [
-        { "exercise_id": "childs-pose", "duration_sec": 60 }
+        { "exercise_id": "hamstring-stretch", "duration_sec": 60 },
+        { "exercise_id": "seated-forward-fold-stretch", "duration_sec": 60 }
       ]
     }
   ]
