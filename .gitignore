@@ -32,6 +32,4 @@ scripts/dev/_*.gd
 scripts/dev/_*.gd.uid
 
 # Throwaway dev probes + the generated compile-sweep scene
-scripts/dev/_*.gd
-scripts/dev/_*.gd.uid
 scenes/dev_compile_check.tscn
