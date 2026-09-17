@@ -28,6 +28,9 @@ const SUITES: Array[Script] = [
 	preload("res://tests/suites/test_llm_envelope.gd"),
 	preload("res://tests/suites/test_llm_ladder.gd"),
 	preload("res://tests/suites/test_key_never_logged.gd"),
+	preload("res://tests/suites/test_wizard_state.gd"),
+	preload("res://tests/suites/test_plan_schedule.gd"),
+	preload("res://tests/suites/test_home_state.gd"),
 ]
 
 
