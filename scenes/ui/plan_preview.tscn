@@ -1,0 +1,161 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/plan_preview.gd" id="1_preview"]
+[ext_resource type="PackedScene" path="res://scenes/components/primary_button.tscn" id="2_primary"]
+[ext_resource type="PackedScene" path="res://scenes/components/secondary_button.tscn" id="3_secondary"]
+[ext_resource type="PackedScene" path="res://scenes/components/glyph.tscn" id="4_glyph"]
+[ext_resource type="PackedScene" path="res://scenes/components/source_badge.tscn" id="5_badge"]
+[ext_resource type="PackedScene" path="res://scenes/components/generating_overlay.tscn" id="6_overlay"]
+
+[node name="PlanPreview" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_preview")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="SafeArea" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="Layout" type="VBoxContainer" parent="SafeArea"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Header" type="HBoxContainer" parent="SafeArea/Layout"]
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="BackButton" type="Button" parent="SafeArea/Layout/Header"]
+custom_minimum_size = Vector2(88, 88)
+layout_mode = 2
+theme_type_variation = &"GhostButton"
+
+[node name="Center" type="CenterContainer" parent="SafeArea/Layout/Header/BackButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Glyph" parent="SafeArea/Layout/Header/BackButton/Center" instance=ExtResource("4_glyph")]
+custom_minimum_size = Vector2(44, 44)
+layout_mode = 2
+kind = &"chevron_left"
+
+[node name="PlanNameLabel" type="Label" parent="SafeArea/Layout/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_type_variation = &"H2"
+text = ""
+clip_text = true
+
+[node name="BadgeHost" type="Control" parent="SafeArea/Layout/Header"]
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="SourceBadge" parent="SafeArea/Layout/Header/BadgeHost" instance=ExtResource("5_badge")]
+layout_mode = 0
+
+[node name="MetaRow" type="HBoxContainer" parent="SafeArea/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="MetaLabel" type="Label" parent="SafeArea/Layout/MetaRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_type_variation = &"MutedLabel"
+text = ""
+
+[node name="ReasonLabel" type="Label" parent="SafeArea/Layout"]
+layout_mode = 2
+theme_type_variation = &"BodySmall"
+text = ""
+autowrap_mode = 3
+
+[node name="ReasonAction" type="Button" parent="SafeArea/Layout"]
+visible = false
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 2
+theme_type_variation = &"SecondaryButton"
+text = "Fix in Settings"
+
+[node name="RegenerateHintLabel" type="Label" parent="SafeArea/Layout"]
+visible = false
+layout_mode = 2
+theme_type_variation = &"Caption"
+text = ""
+autowrap_mode = 3
+
+[node name="WeekScroller" type="ScrollContainer" parent="SafeArea/Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="DayList" type="VBoxContainer" parent="SafeArea/Layout/WeekScroller"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="Actions" type="VBoxContainer" parent="SafeArea/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SaveButton" parent="SafeArea/Layout/Actions" instance=ExtResource("2_primary")]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+text = "Save plan"
+
+[node name="RegenerateButton" parent="SafeArea/Layout/Actions" instance=ExtResource("3_secondary")]
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 2
+text = "Regenerate"
+
+[node name="KeepPreviousButton" type="Button" parent="SafeArea/Layout/Actions"]
+visible = false
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 2
+theme_type_variation = &"GhostButton"
+text = "Keep previous version"
+
+[node name="EditAnswersButton" type="Button" parent="SafeArea/Layout/Actions"]
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 2
+theme_type_variation = &"GhostButton"
+text = "Edit answers"
+
+[node name="GeneratingOverlay" parent="." instance=ExtResource("6_overlay")]
+
+[node name="GenTimer" type="Timer" parent="."]
+wait_time = 1.0
+
+[node name="ReplaceDialog" type="ConfirmationDialog" parent="."]
+title = "Replace your current plan?"
+dialog_text = "Your current plan and every workout you've already finished stay in your history. The new plan starts fresh from your next session."
+ok_button_text = "Replace plan"
+cancel_button_text = "Keep current"

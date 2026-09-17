@@ -14,6 +14,11 @@ func _apply_theme() -> void:
 
 func _ready() -> void:
 	_apply_theme()
+	# NOTIFICATION_THEME_CHANGED is NOT delivered to descendants when the root Window's theme
+	# is swapped (measured in Godot 4.7.2), so without this the scrim keeps its dark colour
+	# after the user switches to light mode. Connect the app signal as well.
+	if is_instance_valid(App) and not App.theme_changed.is_connected(_on_theme_changed):
+		App.theme_changed.connect(_on_theme_changed)
 	# The spinner carries no number: blank the ring's automatic "0%" text (appendix §3.1).
 	var spinner := ring()
 	if spinner != null and spinner.has_method(&"set_caption_value"):
@@ -23,6 +28,11 @@ func _ready() -> void:
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_THEME_CHANGED:
 		_apply_theme()
+
+
+## Re-applied on a live theme switch (see the note in `_ready`).
+func _on_theme_changed(_mode: String) -> void:
+	_apply_theme()
 
 
 ## Shows the overlay, optionally with a message under the spinner.

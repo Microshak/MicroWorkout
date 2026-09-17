@@ -1,0 +1,383 @@
+{
+  "schema_version": 1,
+  "active_plan_id": "plan-1757941200",
+  "plans": [
+    {
+      "areas": [
+        "chest",
+        "back",
+        "shoulders",
+        "arms",
+        "legs",
+        "core"
+      ],
+      "created_at": "2026-09-14T06:00:00Z",
+      "days_per_week": 5,
+      "duration_min": 45,
+      "equipment": [
+        "barbell",
+        "machine",
+        "cable",
+        "dumbbell",
+        "bodyweight"
+      ],
+      "goal": "hypertrophy",
+      "id": "plan-1757941200",
+      "name": "5-Day Push / Pull / Legs + Upper / Lower",
+      "notes": "",
+      "provider": "",
+      "sessions": [
+        {
+          "blocks": [
+            {
+              "exercise_id": "incline-bench-press",
+              "reps": "8-10",
+              "rest_seconds": 90,
+              "sets": 4
+            },
+            {
+              "exercise_id": "feet-elevated-pike-push-up",
+              "reps": "8-12",
+              "rest_seconds": 90,
+              "sets": 4
+            },
+            {
+              "exercise_id": "hammer-curl",
+              "reps": "10-12",
+              "rest_seconds": 75,
+              "sets": 3
+            },
+            {
+              "exercise_id": "half-burpee",
+              "reps": "8-10",
+              "rest_seconds": 90,
+              "sets": 4
+            }
+          ],
+          "cooldown": [
+            {
+              "duration_sec": 60,
+              "exercise_id": "cross-body-shoulder-stretch"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "torso-twist-stretch"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "butterfly-stretch"
+            }
+          ],
+          "est_minutes": 39,
+          "focus": [
+            "chest",
+            "shoulders",
+            "arms",
+            "core"
+          ],
+          "id": "s1",
+          "index": 0,
+          "title": "Push",
+          "warmup": [
+            {
+              "duration_sec": 60,
+              "exercise_id": "arm-circles"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "cat-cow-stretch"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "childs-pose"
+            }
+          ]
+        },
+        {
+          "blocks": [
+            {
+              "exercise_id": "dumbbell-shrug",
+              "reps": "10-12",
+              "rest_seconds": 75,
+              "sets": 3
+            },
+            {
+              "exercise_id": "rack-pull",
+              "reps": "10-12",
+              "rest_seconds": 75,
+              "sets": 3
+            },
+            {
+              "exercise_id": "assisted-chin-up",
+              "reps": "8-12",
+              "rest_seconds": 90,
+              "sets": 3
+            },
+            {
+              "exercise_id": "half-kneeling-pallof-press",
+              "reps": "8-12",
+              "rest_seconds": 75,
+              "sets": 2
+            },
+            {
+              "exercise_id": "prone-t-raise",
+              "reps": "10-12",
+              "rest_seconds": 75,
+              "sets": 3
+            },
+            {
+              "exercise_id": "assisted-dip",
+              "reps": "8-12",
+              "rest_seconds": 90,
+              "sets": 3
+            }
+          ],
+          "cooldown": [
+            {
+              "duration_sec": 60,
+              "exercise_id": "seated-forward-fold-stretch"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "torso-twist-stretch"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "worlds-greatest-stretch"
+            }
+          ],
+          "est_minutes": 42,
+          "focus": [
+            "back",
+            "arms",
+            "core"
+          ],
+          "id": "s2",
+          "index": 1,
+          "title": "Pull",
+          "warmup": [
+            {
+              "duration_sec": 60,
+              "exercise_id": "cat-cow-stretch"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "childs-pose"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "cross-body-shoulder-stretch"
+            }
+          ]
+        },
+        {
+          "blocks": [
+            {
+              "exercise_id": "high-knees",
+              "reps": "45s",
+              "rest_seconds": 90,
+              "sets": 3
+            },
+            {
+              "exercise_id": "jump-rope",
+              "reps": "45s",
+              "rest_seconds": 90,
+              "sets": 3
+            },
+            {
+              "exercise_id": "hanging-leg-raise",
+              "reps": "10-12",
+              "rest_seconds": 75,
+              "sets": 3
+            },
+            {
+              "exercise_id": "clamshell",
+              "reps": "10-12",
+              "rest_seconds": 75,
+              "sets": 3
+            }
+          ],
+          "cooldown": [
+            {
+              "duration_sec": 60,
+              "exercise_id": "kneeling-hip-flexor-stretch"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "leg-swings-stretch"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "seated-forward-fold-stretch"
+            }
+          ],
+          "est_minutes": 42,
+          "focus": [
+            "legs",
+            "core"
+          ],
+          "id": "s3",
+          "index": 2,
+          "title": "Legs",
+          "warmup": [
+            {
+              "duration_sec": 60,
+              "exercise_id": "cat-cow-stretch"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "childs-pose"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "hamstring-stretch"
+            }
+          ]
+        },
+        {
+          "blocks": [
+            {
+              "exercise_id": "pec-deck",
+              "reps": "8-10",
+              "rest_seconds": 90,
+              "sets": 4
+            },
+            {
+              "exercise_id": "arnold-press",
+              "reps": "8-10",
+              "rest_seconds": 90,
+              "sets": 4
+            },
+            {
+              "exercise_id": "trap-bar-deadlift",
+              "reps": "8-10",
+              "rest_seconds": 90,
+              "sets": 4
+            },
+            {
+              "exercise_id": "rope-hammer-curl",
+              "reps": "10-12",
+              "rest_seconds": 75,
+              "sets": 2
+            },
+            {
+              "exercise_id": "cable-fly",
+              "reps": "8-12",
+              "rest_seconds": 90,
+              "sets": 2
+            }
+          ],
+          "cooldown": [
+            {
+              "duration_sec": 60,
+              "exercise_id": "torso-twist-stretch"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "worlds-greatest-stretch"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "arm-circles"
+            }
+          ],
+          "est_minutes": 41,
+          "focus": [
+            "chest",
+            "back",
+            "shoulders",
+            "arms",
+            "core"
+          ],
+          "id": "s4",
+          "index": 3,
+          "title": "Upper",
+          "warmup": [
+            {
+              "duration_sec": 60,
+              "exercise_id": "childs-pose"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "cross-body-shoulder-stretch"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "seated-forward-fold-stretch"
+            }
+          ]
+        },
+        {
+          "blocks": [
+            {
+              "exercise_id": "bulgarian-split-squat",
+              "reps": "8-10",
+              "rest_seconds": 90,
+              "sets": 4
+            },
+            {
+              "exercise_id": "inchworm",
+              "reps": "10-12",
+              "rest_seconds": 75,
+              "sets": 3
+            },
+            {
+              "exercise_id": "seal-jack",
+              "reps": "45s",
+              "rest_seconds": 90,
+              "sets": 2
+            },
+            {
+              "exercise_id": "toe-touch",
+              "reps": "10-12",
+              "rest_seconds": 75,
+              "sets": 3
+            }
+          ],
+          "cooldown": [
+            {
+              "duration_sec": 60,
+              "exercise_id": "leg-swings-stretch"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "seated-forward-fold-stretch"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "standing-quad-stretch"
+            }
+          ],
+          "est_minutes": 35,
+          "focus": [
+            "legs",
+            "core",
+            "chest",
+            "back",
+            "shoulders",
+            "arms"
+          ],
+          "id": "s5",
+          "index": 4,
+          "title": "Lower",
+          "warmup": [
+            {
+              "duration_sec": 60,
+              "exercise_id": "cross-body-shoulder-stretch"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "hamstring-stretch"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "kneeling-hip-flexor-stretch"
+            }
+          ]
+        }
+      ],
+      "source": "builtin",
+      "split_name": "Push / Pull / Legs + Upper / Lower"
+    }
+  ]
+}

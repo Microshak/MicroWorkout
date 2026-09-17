@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/components/day_pill.gd" id="1_day_pill"]
+[ext_resource type="PackedScene" path="res://scenes/components/glyph.tscn" id="2_glyph"]
+
+[node name="day_pill" type="PanelContainer"]
+custom_minimum_size = Vector2(0, 88)
+script = ExtResource("1_day_pill")
+
+[node name="Stack" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="PillLetter" type="Label" parent="Stack"]
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"Caption"
+text = "M"
+horizontal_alignment = 1
+
+[node name="Marker" type="CenterContainer" parent="Stack"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="CheckGlyph" parent="Stack/Marker" instance=ExtResource("2_glyph")]
+visible = false
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+kind = &"check"
+
+[node name="DotGlyph" parent="Stack/Marker" instance=ExtResource("2_glyph")]
+visible = false
+custom_minimum_size = Vector2(8, 8)
+layout_mode = 2
+kind = &"dot"

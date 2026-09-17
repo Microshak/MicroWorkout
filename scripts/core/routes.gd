@@ -6,6 +6,9 @@ extends RefCounted
 ## PRD-06 adds three routes (appendix §2): the onboarding wizard, the boot screen (so the
 ## reset-all-data flow can send the user back through onboarding) and the attribution screen
 ## reached from Settings. Nothing existing was restructured.
+##
+## PRD-08 adds the two the New Workout wizard needs: the six-step wizard and the generated-plan
+## preview. Both are PUSH routes, so they cover the bottom nav until the flow ends (PRD-08 R1/R12).
 
 const SHELL := &"shell"
 const BOOT := &"boot"
@@ -16,6 +19,8 @@ const TRACKER := &"tracker"
 const SETTINGS := &"settings"
 const ATTRIBUTION := &"attribution"
 const GALLERY := &"gallery"
+const NEW_WORKOUT_WIZARD := &"new_workout_wizard"
+const PLAN_PREVIEW := &"plan_preview"
 
 ## Tab routes, in bottom-nav order. Index in this array == nav tab index.
 const TAB_ROUTES: PackedStringArray = [HOME, PLAN, TRACKER, SETTINGS]
@@ -32,6 +37,8 @@ const TABLE := {
 	ONBOARDING: "res://scenes/ui/onboarding_flow.tscn",
 	GALLERY: "res://scenes/ui/dev_component_gallery.tscn",
 	ATTRIBUTION: "res://scenes/ui/attribution_screen.tscn",
+	NEW_WORKOUT_WIZARD: "res://scenes/ui/new_workout_wizard.tscn",
+	PLAN_PREVIEW: "res://scenes/ui/plan_preview.tscn",
 }
 
 const TAB_SCENES := {

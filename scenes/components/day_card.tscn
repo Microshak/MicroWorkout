@@ -1,0 +1,57 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/components/day_card.gd" id="1_day_card"]
+[ext_resource type="PackedScene" path="res://scenes/components/glyph.tscn" id="2_glyph"]
+
+[node name="day_card" type="PanelContainer"]
+theme_type_variation = &"Card"
+script = ExtResource("1_day_card")
+
+[node name="Body" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="DayHeader" type="Button" parent="Body"]
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 2
+theme_type_variation = &"GhostButton"
+
+[node name="Row" type="HBoxContainer" parent="Body/DayHeader"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="DayNumberLabel" type="Label" parent="Body/DayHeader/Row"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"H3"
+text = "Day 1"
+
+[node name="DayFocusLabel" type="Label" parent="Body/DayHeader/Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_type_variation = &"MutedLabel"
+text = ""
+clip_text = true
+
+[node name="ChevronGlyph" parent="Body/DayHeader/Row" instance=ExtResource("2_glyph")]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_vertical = 4
+kind = &"chevron_right"
+
+[node name="DayMetaLabel" type="Label" parent="Body"]
+layout_mode = 2
+theme_type_variation = &"BodyLabel"
+text = "0 exercises · 0 min"
+
+[node name="ExerciseList" type="VBoxContainer" parent="Body"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 8

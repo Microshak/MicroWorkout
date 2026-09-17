@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "entries": [
+    {
+      "id": "h-dt-1",
+      "plan_id": "plan-1757941200",
+      "session_id": "s1",
+      "session_title": "Push",
+      "date": "2026-09-14",
+      "started_at": "2026-09-14T18:05:00Z",
+      "completed_at": "2026-09-14T18:45:00Z",
+      "duration_sec": 2340,
+      "exercises_completed": 4,
+      "exercises_total": 4,
+      "completed": true,
+      "sets_completed": 12,
+      "sets_total": 12,
+      "focus": [
+        "chest",
+        "shoulders",
+        "arms",
+        "core"
+      ],
+      "exercise_ids": []
+    },
+    {
+      "id": "h-dt-2",
+      "plan_id": "plan-1757941200",
+      "session_id": "s2",
+      "session_title": "Pull",
+      "date": "2026-09-15",
+      "started_at": "2026-09-15T18:05:00Z",
+      "completed_at": "2026-09-15T18:45:00Z",
+      "duration_sec": 2520,
+      "exercises_completed": 4,
+      "exercises_total": 4,
+      "completed": true,
+      "sets_completed": 12,
+      "sets_total": 12,
+      "focus": [
+        "back",
+        "arms",
+        "core"
+      ],
+      "exercise_ids": []
+    },
+    {
+      "id": "h-dt-3",
+      "plan_id": "plan-1757941200",
+      "session_id": "s3",
+      "session_title": "Legs",
+      "date": "2026-09-16",
+      "started_at": "2026-09-16T18:05:00Z",
+      "completed_at": "2026-09-16T18:45:00Z",
+      "duration_sec": 2460,
+      "exercises_completed": 4,
+      "exercises_total": 4,
+      "completed": true,
+      "sets_completed": 12,
+      "sets_total": 12,
+      "focus": [
+        "legs",
+        "core"
+      ],
+      "exercise_ids": []
+    }
+  ]
+}

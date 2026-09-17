@@ -1,0 +1,308 @@
+{
+  "schema_version": 1,
+  "active_plan_id": "plan-1757941200",
+  "plans": [
+    {
+      "areas": [
+        "chest",
+        "back",
+        "shoulders",
+        "arms",
+        "core"
+      ],
+      "created_at": "2026-09-14T06:00:00Z",
+      "days_per_week": 4,
+      "duration_min": 40,
+      "equipment": [
+        "barbell",
+        "machine",
+        "cable",
+        "dumbbell",
+        "bodyweight"
+      ],
+      "goal": "hypertrophy",
+      "id": "plan-1757941200",
+      "name": "4-Day Upper / Lower",
+      "notes": "",
+      "provider": "",
+      "sessions": [
+        {
+          "blocks": [
+            {
+              "exercise_id": "incline-bench-press",
+              "reps": "8-10",
+              "rest_seconds": 90,
+              "sets": 4
+            },
+            {
+              "exercise_id": "assisted-pull-up",
+              "reps": "8-12",
+              "rest_seconds": 90,
+              "sets": 3
+            },
+            {
+              "exercise_id": "bent-over-rear-delt-raise",
+              "reps": "10-12",
+              "rest_seconds": 75,
+              "sets": 3
+            },
+            {
+              "exercise_id": "skull-crusher",
+              "reps": "10-12",
+              "rest_seconds": 75,
+              "sets": 3
+            }
+          ],
+          "cooldown": [
+            {
+              "duration_sec": 60,
+              "exercise_id": "cross-body-shoulder-stretch"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "seated-forward-fold-stretch"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "torso-twist-stretch"
+            }
+          ],
+          "est_minutes": 34,
+          "focus": [
+            "chest",
+            "back",
+            "shoulders",
+            "arms",
+            "core"
+          ],
+          "id": "s1",
+          "index": 0,
+          "title": "Upper A",
+          "warmup": [
+            {
+              "duration_sec": 60,
+              "exercise_id": "arm-circles"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "cat-cow-stretch"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "childs-pose"
+            }
+          ]
+        },
+        {
+          "blocks": [
+            {
+              "exercise_id": "cable-pallof-hold",
+              "reps": "45s",
+              "rest_seconds": 75,
+              "sets": 3
+            },
+            {
+              "exercise_id": "landmine-squat",
+              "reps": "8-10",
+              "rest_seconds": 90,
+              "sets": 4
+            },
+            {
+              "exercise_id": "dumbbell-side-bend",
+              "reps": "10-12",
+              "rest_seconds": 75,
+              "sets": 3
+            },
+            {
+              "exercise_id": "deadlift",
+              "reps": "8-10",
+              "rest_seconds": 90,
+              "sets": 2
+            }
+          ],
+          "cooldown": [
+            {
+              "duration_sec": 60,
+              "exercise_id": "seated-forward-fold-stretch"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "torso-twist-stretch"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "worlds-greatest-stretch"
+            }
+          ],
+          "est_minutes": 36,
+          "focus": [
+            "core",
+            "chest",
+            "back",
+            "shoulders",
+            "arms"
+          ],
+          "id": "s2",
+          "index": 1,
+          "title": "Lower A",
+          "warmup": [
+            {
+              "duration_sec": 60,
+              "exercise_id": "cat-cow-stretch"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "childs-pose"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "cross-body-shoulder-stretch"
+            }
+          ]
+        },
+        {
+          "blocks": [
+            {
+              "exercise_id": "rear-delt-fly",
+              "reps": "8-10",
+              "rest_seconds": 90,
+              "sets": 4
+            },
+            {
+              "exercise_id": "cable-curl",
+              "reps": "8-12",
+              "rest_seconds": 75,
+              "sets": 2
+            },
+            {
+              "exercise_id": "dumbbell-fly",
+              "reps": "8-10",
+              "rest_seconds": 90,
+              "sets": 4
+            },
+            {
+              "exercise_id": "trap-bar-deadlift",
+              "reps": "8-10",
+              "rest_seconds": 90,
+              "sets": 4
+            }
+          ],
+          "cooldown": [
+            {
+              "duration_sec": 60,
+              "exercise_id": "seated-forward-fold-stretch"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "torso-twist-stretch"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "worlds-greatest-stretch"
+            }
+          ],
+          "est_minutes": 37,
+          "focus": [
+            "back",
+            "chest",
+            "shoulders",
+            "arms",
+            "core"
+          ],
+          "id": "s3",
+          "index": 2,
+          "title": "Upper B",
+          "warmup": [
+            {
+              "duration_sec": 60,
+              "exercise_id": "cat-cow-stretch"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "childs-pose"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "cross-body-shoulder-stretch"
+            }
+          ]
+        },
+        {
+          "blocks": [
+            {
+              "exercise_id": "inchworm",
+              "reps": "10-12",
+              "rest_seconds": 75,
+              "sets": 3
+            },
+            {
+              "exercise_id": "bicep-curl",
+              "reps": "10-12",
+              "rest_seconds": 75,
+              "sets": 3
+            },
+            {
+              "exercise_id": "plate-front-raise",
+              "reps": "10-12",
+              "rest_seconds": 75,
+              "sets": 3
+            },
+            {
+              "exercise_id": "smith-machine-bench-press",
+              "reps": "8-12",
+              "rest_seconds": 90,
+              "sets": 3
+            },
+            {
+              "exercise_id": "drag-curl",
+              "reps": "10-12",
+              "rest_seconds": 75,
+              "sets": 3
+            }
+          ],
+          "cooldown": [
+            {
+              "duration_sec": 60,
+              "exercise_id": "torso-twist-stretch"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "worlds-greatest-stretch"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "arm-circles"
+            }
+          ],
+          "est_minutes": 38,
+          "focus": [
+            "core",
+            "chest",
+            "back",
+            "shoulders",
+            "arms"
+          ],
+          "id": "s4",
+          "index": 3,
+          "title": "Lower B",
+          "warmup": [
+            {
+              "duration_sec": 60,
+              "exercise_id": "childs-pose"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "cross-body-shoulder-stretch"
+            },
+            {
+              "duration_sec": 60,
+              "exercise_id": "seated-forward-fold-stretch"
+            }
+          ]
+        }
+      ],
+      "source": "builtin",
+      "split_name": "Upper / Lower"
+    }
+  ]
+}

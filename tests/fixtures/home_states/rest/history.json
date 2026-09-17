@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "entries": [
+    {
+      "id": "h-rs-1",
+      "plan_id": "plan-1757941200",
+      "session_id": "s1",
+      "session_title": "Upper A",
+      "date": "2026-09-14",
+      "started_at": "2026-09-14T18:05:00Z",
+      "completed_at": "2026-09-14T18:45:00Z",
+      "duration_sec": 2040,
+      "exercises_completed": 4,
+      "exercises_total": 4,
+      "completed": true,
+      "sets_completed": 12,
+      "sets_total": 12,
+      "focus": [
+        "chest",
+        "back",
+        "shoulders",
+        "arms",
+        "core"
+      ],
+      "exercise_ids": []
+    },
+    {
+      "id": "h-rs-2",
+      "plan_id": "plan-1757941200",
+      "session_id": "s2",
+      "session_title": "Lower A",
+      "date": "2026-09-15",
+      "started_at": "2026-09-15T18:05:00Z",
+      "completed_at": "2026-09-15T18:45:00Z",
+      "duration_sec": 2160,
+      "exercises_completed": 4,
+      "exercises_total": 4,
+      "completed": true,
+      "sets_completed": 12,
+      "sets_total": 12,
+      "focus": [
+        "core",
+        "chest",
+        "back",
+        "shoulders",
+        "arms"
+      ],
+      "exercise_ids": []
+    }
+  ]
+}

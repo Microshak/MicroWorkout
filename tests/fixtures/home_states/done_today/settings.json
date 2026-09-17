@@ -1,0 +1,12 @@
+{
+  "schema_version": 2,
+  "units": "lb",
+  "theme": "dark",
+  "weekly_goal_days": 4,
+  "onboarding_complete": true,
+  "meta": {
+    "created_at": "2026-09-01T08:00:00Z",
+    "updated_at": "2026-09-01T08:00:00Z",
+    "app_version": "0.1.0"
+  }
+}

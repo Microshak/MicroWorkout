@@ -1,0 +1,171 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/new_workout_wizard.gd" id="1_wizard"]
+[ext_resource type="PackedScene" path="res://scenes/components/secondary_button.tscn" id="2_secondary"]
+[ext_resource type="PackedScene" path="res://scenes/components/primary_button.tscn" id="3_primary"]
+[ext_resource type="PackedScene" path="res://scenes/components/glyph.tscn" id="4_glyph"]
+[ext_resource type="PackedScene" path="res://scenes/components/generating_overlay.tscn" id="5_overlay"]
+
+[node name="NewWorkoutWizard" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wizard")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="SafeArea" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="Layout" type="VBoxContainer" parent="SafeArea"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Header" type="HBoxContainer" parent="SafeArea/Layout"]
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="CloseButton" type="Button" parent="SafeArea/Layout/Header"]
+custom_minimum_size = Vector2(88, 88)
+layout_mode = 2
+theme_type_variation = &"GhostButton"
+
+[node name="Center" type="CenterContainer" parent="SafeArea/Layout/Header/CloseButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Glyph" parent="SafeArea/Layout/Header/CloseButton/Center" instance=ExtResource("4_glyph")]
+custom_minimum_size = Vector2(44, 44)
+layout_mode = 2
+kind = &"close"
+
+[node name="HeaderCenter" type="VBoxContainer" parent="SafeArea/Layout/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="SafeArea/Layout/Header/HeaderCenter"]
+layout_mode = 2
+theme_type_variation = &"H3"
+text = "What matters to you?"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="StepIndicator" type="Label" parent="SafeArea/Layout/Header/HeaderCenter"]
+layout_mode = 2
+theme_type_variation = &"Caption"
+text = "STEP 1/5"
+horizontal_alignment = 1
+
+[node name="HeaderRight" type="Control" parent="SafeArea/Layout/Header"]
+custom_minimum_size = Vector2(88, 88)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="StepScroller" type="ScrollContainer" parent="SafeArea/Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="StepHost" type="MarginContainer" parent="SafeArea/Layout/StepScroller"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="StepNotes" type="VBoxContainer" parent="SafeArea/Layout/StepScroller/StepHost"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="StepAreas" type="VBoxContainer" parent="SafeArea/Layout/StepScroller/StepHost"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="StepDays" type="VBoxContainer" parent="SafeArea/Layout/StepScroller/StepHost"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="StepDuration" type="VBoxContainer" parent="SafeArea/Layout/StepScroller/StepHost"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="StepGoal" type="VBoxContainer" parent="SafeArea/Layout/StepScroller/StepHost"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="StepReview" type="VBoxContainer" parent="SafeArea/Layout/StepScroller/StepHost"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Footer" type="VBoxContainer" parent="SafeArea/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ValidationLabel" type="Label" parent="SafeArea/Layout/Footer"]
+visible = false
+layout_mode = 2
+theme_type_variation = &"BodySmall"
+text = ""
+autowrap_mode = 3
+
+[node name="FooterRow" type="HBoxContainer" parent="SafeArea/Layout/Footer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="BackButton" parent="SafeArea/Layout/Footer/FooterRow" instance=ExtResource("2_secondary")]
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 2
+text = "Cancel"
+
+[node name="NextButton" parent="SafeArea/Layout/Footer/FooterRow" instance=ExtResource("3_primary")]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Next"
+
+[node name="GenerationOverlay" parent="." instance=ExtResource("5_overlay")]
+
+[node name="GenTimer" type="Timer" parent="."]
+wait_time = 1.0
+
+[node name="DiscardDialog" type="ConfirmationDialog" parent="."]
+title = "Discard this setup?"
+dialog_text = "Your answers are kept if you come back."
+ok_button_text = "Discard"
+cancel_button_text = "Keep editing"
+
+[node name="StartOverDialog" type="ConfirmationDialog" parent="."]
+title = "Start over?"
+dialog_text = "Every answer goes back to the default."
+ok_button_text = "Start over"
+cancel_button_text = "Keep my answers"

@@ -1,8 +1,14 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/home_tab.gd" id="1_tab"]
-[ext_resource type="PackedScene" path="res://scenes/components/section_header.tscn" id="2_header"]
-[ext_resource type="PackedScene" path="res://scenes/components/empty_state.tscn" id="3_empty"]
+[ext_resource type="PackedScene" path="res://scenes/components/week_strip.tscn" id="2_week_strip"]
+[ext_resource type="PackedScene" path="res://scenes/components/stat_tile.tscn" id="3_stat_tile"]
+[ext_resource type="PackedScene" path="res://scenes/components/weekly_ring.tscn" id="4_weekly_ring"]
+[ext_resource type="PackedScene" path="res://scenes/components/source_badge.tscn" id="5_source_badge"]
+[ext_resource type="PackedScene" path="res://scenes/components/glyph.tscn" id="6_glyph"]
+[ext_resource type="PackedScene" path="res://scenes/components/primary_button.tscn" id="7_primary_button"]
+[ext_resource type="PackedScene" path="res://scenes/components/secondary_button.tscn" id="8_secondary_button"]
+[ext_resource type="Script" path="res://scripts/ui/components/tappable_button.gd" id="9_tappable"]
 
 [node name="HomeTab" type="Control"]
 layout_mode = 3
@@ -13,7 +19,16 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_tab")
 
-[node name="Scroll" type="ScrollContainer" parent="."]
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Scroller" type="ScrollContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,22 +37,312 @@ grow_horizontal = 2
 grow_vertical = 2
 horizontal_scroll_mode = 0
 
-[node name="Gutter" type="MarginContainer" parent="Scroll"]
+[node name="Gutter" type="MarginContainer" parent="Scroller"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_left = 24
-theme_override_constants/margin_top = 24
+theme_override_constants/margin_top = 48
 theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 24
 
-[node name="Page" type="VBoxContainer" parent="Scroll/Gutter"]
+[node name="Body" type="VBoxContainer" parent="Scroller/Gutter"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 32
+theme_override_constants/separation = 24
 
-[node name="SectionHeader" parent="Scroll/Gutter/Page" instance=ExtResource("2_header")]
+[node name="GreetingBlock" type="VBoxContainer" parent="Scroller/Gutter/Body"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="GreetingLabel" type="Label" parent="Scroller/Gutter/Body/GreetingBlock"]
+layout_mode = 2
+theme_type_variation = &"H1"
+text = "Hey Workout"
+
+[node name="SubGreetingLabel" type="Label" parent="Scroller/Gutter/Body/GreetingBlock"]
+layout_mode = 2
+theme_type_variation = &"MutedLabel"
+autowrap_mode = 3
+
+[node name="StateHost" type="VBoxContainer" parent="Scroller/Gutter/Body"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="NoPlanCard" type="PanelContainer" parent="Scroller/Gutter/Body/StateHost"]
+layout_mode = 2
+theme_type_variation = &"Card"
+
+[node name="CardBody" type="VBoxContainer" parent="Scroller/Gutter/Body/StateHost/NoPlanCard"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="NoPlanTitle" type="Label" parent="Scroller/Gutter/Body/StateHost/NoPlanCard/CardBody"]
+layout_mode = 2
+theme_type_variation = &"H2"
+text = "No plan yet"
+
+[node name="NoPlanBody" type="Label" parent="Scroller/Gutter/Body/StateHost/NoPlanCard/CardBody"]
+layout_mode = 2
+theme_type_variation = &"MutedLabel"
+text = "Tell the app what you want to work on, and it builds your week — four days, forty minutes, or whatever you pick."
+autowrap_mode = 3
+
+[node name="NoPlanButton" parent="Scroller/Gutter/Body/StateHost/NoPlanCard/CardBody" instance=ExtResource("7_primary_button")]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+text = "Build my plan"
+
+[node name="TodayCard" type="PanelContainer" parent="Scroller/Gutter/Body/StateHost"]
+visible = false
+layout_mode = 2
+theme_type_variation = &"Card"
+
+[node name="CardBody" type="VBoxContainer" parent="Scroller/Gutter/Body/StateHost/TodayCard"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="CardTopRow" type="HBoxContainer" parent="Scroller/Gutter/Body/StateHost/TodayCard/CardBody"]
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="DayBadge" type="PanelContainer" parent="Scroller/Gutter/Body/StateHost/TodayCard/CardBody/CardTopRow"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_type_variation = &"Toast"
+
+[node name="BadgeLabel" type="Label" parent="Scroller/Gutter/Body/StateHost/TodayCard/CardBody/CardTopRow/DayBadge"]
+layout_mode = 2
+theme_type_variation = &"Caption"
+text = "TUESDAY"
+vertical_alignment = 1
+
+[node name="BadgeHost" type="Control" parent="Scroller/Gutter/Body/StateHost/TodayCard/CardBody/CardTopRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="BadgeRow" type="HBoxContainer" parent="Scroller/Gutter/Body/StateHost/TodayCard/CardBody/CardTopRow/BadgeHost"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SourceBadge" parent="Scroller/Gutter/Body/StateHost/TodayCard/CardBody/CardTopRow/BadgeHost/BadgeRow" instance=ExtResource("5_source_badge")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="SessionTitle" type="Label" parent="Scroller/Gutter/Body/StateHost/TodayCard/CardBody"]
+layout_mode = 2
+theme_type_variation = &"H2"
+autowrap_mode = 3
+
+[node name="FocusRow" type="HBoxContainer" parent="Scroller/Gutter/Body/StateHost/TodayCard/CardBody"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="MetaRow" type="Label" parent="Scroller/Gutter/Body/StateHost/TodayCard/CardBody"]
+layout_mode = 2
+theme_type_variation = &"MutedLabel"
+
+[node name="StartButton" parent="Scroller/Gutter/Body/StateHost/TodayCard/CardBody" instance=ExtResource("7_primary_button")]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+text = "Start workout"
+
+[node name="CardActions" type="HBoxContainer" parent="Scroller/Gutter/Body/StateHost/TodayCard/CardBody"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PreviewButton" type="Button" parent="Scroller/Gutter/Body/StateHost/TodayCard/CardBody/CardActions"]
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"GhostButton"
+text = "See the exercises"
+script = ExtResource("9_tappable")
+
+[node name="ChangePlanButton" type="Button" parent="Scroller/Gutter/Body/StateHost/TodayCard/CardBody/CardActions"]
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"GhostButton"
+text = "Change plan"
+script = ExtResource("9_tappable")
+
+[node name="DoneTodayCard" type="PanelContainer" parent="Scroller/Gutter/Body/StateHost"]
+visible = false
+layout_mode = 2
+theme_type_variation = &"Card"
+
+[node name="CardBody" type="VBoxContainer" parent="Scroller/Gutter/Body/StateHost/DoneTodayCard"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="DoneGlyph" parent="Scroller/Gutter/Body/StateHost/DoneTodayCard/CardBody" instance=ExtResource("6_glyph")]
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
+size_flags_horizontal = 4
+kind = &"check"
+
+[node name="DoneTitle" type="Label" parent="Scroller/Gutter/Body/StateHost/DoneTodayCard/CardBody"]
+layout_mode = 2
+theme_type_variation = &"H2"
+text = "Done for today."
+
+[node name="DoneBody" type="Label" parent="Scroller/Gutter/Body/StateHost/DoneTodayCard/CardBody"]
+layout_mode = 2
+theme_type_variation = &"MutedLabel"
+autowrap_mode = 3
+
+[node name="DoneActions" type="HBoxContainer" parent="Scroller/Gutter/Body/StateHost/DoneTodayCard/CardBody"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="EarlyButton" parent="Scroller/Gutter/Body/StateHost/DoneTodayCard/CardBody/DoneActions" instance=ExtResource("8_secondary_button")]
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Do Friday early"
+
+[node name="WeekButton" type="Button" parent="Scroller/Gutter/Body/StateHost/DoneTodayCard/CardBody/DoneActions"]
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"GhostButton"
+text = "See my week"
+script = ExtResource("9_tappable")
+
+[node name="DoneNote" type="Label" parent="Scroller/Gutter/Body/StateHost/DoneTodayCard/CardBody"]
+layout_mode = 2
+theme_type_variation = &"Caption"
+text = "Two sessions in one day is fine — this one just moves up."
+autowrap_mode = 3
+
+[node name="RestDayCard" type="PanelContainer" parent="Scroller/Gutter/Body/StateHost"]
+visible = false
+layout_mode = 2
+theme_type_variation = &"Card"
+
+[node name="CardBody" type="VBoxContainer" parent="Scroller/Gutter/Body/StateHost/RestDayCard"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="RestTitle" type="Label" parent="Scroller/Gutter/Body/StateHost/RestDayCard/CardBody"]
+layout_mode = 2
+theme_type_variation = &"H2"
+text = "Rest day."
+
+[node name="RestBody" type="Label" parent="Scroller/Gutter/Body/StateHost/RestDayCard/CardBody"]
+layout_mode = 2
+theme_type_variation = &"MutedLabel"
+autowrap_mode = 3
+
+[node name="RestActions" type="HBoxContainer" parent="Scroller/Gutter/Body/StateHost/RestDayCard/CardBody"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="EarlyButton" parent="Scroller/Gutter/Body/StateHost/RestDayCard/CardBody/RestActions" instance=ExtResource("8_secondary_button")]
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Do Thursday early"
+
+[node name="WeekButton" type="Button" parent="Scroller/Gutter/Body/StateHost/RestDayCard/CardBody/RestActions"]
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"GhostButton"
+text = "See my week"
+script = ExtResource("9_tappable")
+
+[node name="PlanFinishedCard" type="PanelContainer" parent="Scroller/Gutter/Body/StateHost"]
+visible = false
+layout_mode = 2
+theme_type_variation = &"Card"
+
+[node name="CardBody" type="VBoxContainer" parent="Scroller/Gutter/Body/StateHost/PlanFinishedCard"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="FinishedTitle" type="Label" parent="Scroller/Gutter/Body/StateHost/PlanFinishedCard/CardBody"]
+layout_mode = 2
+theme_type_variation = &"H2"
+text = "Plan complete."
+
+[node name="FinishedBody" type="Label" parent="Scroller/Gutter/Body/StateHost/PlanFinishedCard/CardBody"]
+layout_mode = 2
+theme_type_variation = &"MutedLabel"
+autowrap_mode = 3
+
+[node name="FinishedStats" type="Label" parent="Scroller/Gutter/Body/StateHost/PlanFinishedCard/CardBody"]
+layout_mode = 2
+theme_type_variation = &"BodySmall"
+
+[node name="FinishedActions" type="HBoxContainer" parent="Scroller/Gutter/Body/StateHost/PlanFinishedCard/CardBody"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="NewPlanButton" parent="Scroller/Gutter/Body/StateHost/PlanFinishedCard/CardBody/FinishedActions" instance=ExtResource("7_primary_button")]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Build a new plan"
+
+[node name="RepeatButton" parent="Scroller/Gutter/Body/StateHost/PlanFinishedCard/CardBody/FinishedActions" instance=ExtResource("8_secondary_button")]
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Repeat this plan"
+
+[node name="WeekStrip" parent="Scroller/Gutter/Body" instance=ExtResource("2_week_strip")]
 layout_mode = 2
 
-[node name="EmptyState" parent="Scroll/Gutter/Page" instance=ExtResource("3_empty")]
+[node name="StatsRow" type="HBoxContainer" parent="Scroller/Gutter/Body"]
 layout_mode = 2
-size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="StreakTile" parent="Scroller/Gutter/Body/StatsRow" instance=ExtResource("3_stat_tile")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="RingTile" parent="Scroller/Gutter/Body/StatsRow" instance=ExtResource("4_weekly_ring")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="NextUpCard" type="PanelContainer" parent="Scroller/Gutter/Body"]
+layout_mode = 2
+theme_type_variation = &"CardAlt"
+
+[node name="CardBody" type="VBoxContainer" parent="Scroller/Gutter/Body/NextUpCard"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="NextCaptionLabel" type="Label" parent="Scroller/Gutter/Body/NextUpCard/CardBody"]
+layout_mode = 2
+theme_type_variation = &"Caption"
+text = "NEXT UP"
+
+[node name="NextTitleLabel" type="Label" parent="Scroller/Gutter/Body/NextUpCard/CardBody"]
+layout_mode = 2
+theme_type_variation = &"H3"
+
+[node name="NextMetaLabel" type="Label" parent="Scroller/Gutter/Body/NextUpCard/CardBody"]
+layout_mode = 2
+theme_type_variation = &"BodySmall"
+
+[node name="DayRolloverTimer" type="Timer" parent="."]
+wait_time = 60.0
+autostart = true
+
+[node name="ToastAnchor" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 132.0
+grow_horizontal = 2
+mouse_filter = 2
