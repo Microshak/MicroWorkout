@@ -38,15 +38,33 @@ var _applying: bool = false
 func _ready() -> void:
 	custom_minimum_size.y = maxf(custom_minimum_size.y, MIN_HEIGHT)
 	_apply()
+	# Measured in 4.7.2: replacing the root `Window.theme` does **not** deliver
+	# `NOTIFICATION_THEME_CHANGED` to descendants (a probe counted zero on a plain and on an
+	# override-carrying panel). `App.set_theme_mode()` swaps the theme and then emits
+	# `theme_changed`, which is what every screen and every PRD-08 component re-renders from, so
+	# the pill listens to that as well. Without it a pill can keep its dark `surface_alt` fill
+	# under the light theme — its colours are tokens, not variations.
+	if not App.theme_changed.is_connected(_on_app_theme_changed):
+		App.theme_changed.connect(_on_app_theme_changed)
 
 
 func _notification(what: int) -> void:
-	# A runtime dark↔light switch must repaint the pill: every colour here is token-derived, so
-	# re-applying is all it takes.
+	# The notification still matters: this pill's own `add_theme_*_override()` calls notify its
+	# subtree, and a scene built before the theme was applied arrives through this path. The
+	# guard exists because that propagation re-enters.
 	if what == NOTIFICATION_THEME_CHANGED and not _applying:
-		_applying = true
-		_apply()
-		_applying = false
+		_repaint()
+
+
+## Dark↔light switch (and any other theme change the app announces).
+func _on_app_theme_changed(_mode: String) -> void:
+	_repaint()
+
+
+func _repaint() -> void:
+	_applying = true
+	_apply()
+	_applying = false
 
 
 # ------------------------------------------------------------------ API

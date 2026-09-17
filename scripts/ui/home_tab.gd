@@ -286,7 +286,21 @@ func _on_settings_changed(_key: String) -> void:
 
 
 func _on_theme_changed(_mode: String) -> void:
+	# `App.set_theme_mode()` swaps the theme resource and *then* emits this, which is the only
+	# trigger that reliably reaches a live screen: replacing `Window.theme` does not deliver
+	# `NOTIFICATION_THEME_CHANGED` to descendants in 4.7.2 (measured; see day_pill.gd). The
+	# background, the streak flame's accent and every chip are re-tokenised here, and the state
+	# is re-rendered directly rather than through [method refresh], whose unchanged-state
+	# short-circuit would skip the repaint entirely.
 	_apply_palette()
+	# The repaint runs under the same re-entrancy guard as the notification branch: the
+	# `add_theme_*_override()` calls below notify this node's subtree synchronously, and without
+	# the guard that cascade re-enters `_render` (measured: it recursion-checks out at 1024
+	# frames).
+	if not _state.is_empty() and not _repainting:
+		_repainting = true
+		_render(_state, {}, false)
+		_repainting = false
 	refresh_from("theme_changed")
 
 

@@ -32,13 +32,27 @@ var _applying: bool = false
 
 func _ready() -> void:
 	_apply_fill_color()
+	# Same measured gap as day_pill: a root-theme swap does not notify descendants in 4.7.2, so
+	# the composite also listens to the app's own signal (the pattern PRD-06's `area_chip` and
+	# PRD-08's `source_badge` ship).
+	if not App.theme_changed.is_connected(_on_app_theme_changed):
+		App.theme_changed.connect(_on_app_theme_changed)
 
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_THEME_CHANGED and not _applying:
-		_applying = true
-		_apply_fill_color()
-		_applying = false
+		_repaint()
+
+
+## Dark↔light switch.
+func _on_app_theme_changed(_mode: String) -> void:
+	_repaint()
+
+
+func _repaint() -> void:
+	_applying = true
+	_apply_fill_color()
+	_applying = false
 
 
 # ------------------------------------------------------------------ API (appendix §3.2)

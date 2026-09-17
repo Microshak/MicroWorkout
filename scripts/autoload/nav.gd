@@ -78,7 +78,40 @@ func has_shell() -> bool:
 
 # ---------------------------------------------------------------- public API
 
+## Appendix §1.5 **path rule**: an argument starting `res://` and ending `.tscn` is a
+## main-scene replacement via `change_scene_to_file()`, not a route lookup. This keeps
+## PRD-01's `Nav.goto(scene_path)` and PRD-06's path-style calls working. Without it those
+## calls fell through to the router and warned `unknown route`.
+func _is_scene_path(candidate: StringName) -> bool:
+	var text := String(candidate)
+	return text.begins_with("res://") and text.ends_with(".tscn")
+
+
+## Replaces the main scene with [param scene_path] (boot, shell and onboarding_flow only).
+func _replace_main_scene(scene_path: String, args: Dictionary) -> bool:
+	if not ResourceLoader.exists(scene_path):
+		push_error("[nav] scene not found: %s" % scene_path)
+		return false
+	# A registered route with this scene takes precedence, so the shell still goes through
+	# _load_shell and registers itself normally.
+	for route in Routes.TABLE:
+		if String(Routes.TABLE[route]) == scene_path:
+			if route == Routes.SHELL and not has_shell():
+				_load_shell(route, args)
+				return true
+	_pending_route = &""
+	_pending_args = {}
+	var err := get_tree().change_scene_to_file(scene_path)
+	if err != OK:
+		push_error("[nav] cannot load %s (error %d)" % [scene_path, err])
+		return false
+	print("[nav] goto scene=%s (main-scene replacement)" % scene_path)
+	return true
+
 func goto(route: StringName, args: Dictionary = {}) -> void:
+	if _is_scene_path(route):
+		_replace_main_scene(String(route), args)
+		return
 	if route == Routes.SHELL:
 		# The shell is the root frame: load it once, and never push it as a screen.
 		if has_shell():
@@ -93,6 +126,9 @@ func goto(route: StringName, args: Dictionary = {}) -> void:
 
 
 func push(route: StringName, args: Dictionary = {}) -> void:
+	if _is_scene_path(route):
+		push_scene(String(route))
+		return
 	if _transitioning:
 		push_warning("[nav] ignored during transition: %s" % route)
 		return
