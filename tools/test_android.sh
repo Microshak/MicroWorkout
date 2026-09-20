@@ -477,6 +477,55 @@ player_walk() {
   wait_log "\[home\] state=DONE_TODAY" "Home shows DONE_TODAY after Done (AC15)" 25
 }
 
+## AC7 + AC8 in one short run: pause must not move the clock, and `End workout` must write an honest
+## partial entry — no celebration, no streak — while the owner is told what was kept.
+flow_player_partial() {
+  local warm step paused resumed
+  read -r warm _ _ <<<"$(fixture_shape)"
+  home_entry_tap
+  wait_log "\[player\] start plan=" "player started from Home" 30
+  tap player_next 2
+  tap player_next 2
+  step="$warm"
+  wait_log "\[player\] step=${step} " "on the first working block" 25
+  tap "player_${step}_set_1" 2
+  wait_log "\[player\] set ex=[a-z0-9-]+ n=1 checked=1/" "one set checked" 25
+
+  # AC7: the active clock stops while paused. Ten seconds of wall clock, then compare the two lines.
+  tap player_pause 2
+  wait_log "\[player\] pause elapsed=" "pause logged" 25
+  sleep 10
+  tap player_resume 2
+  wait_log "\[player\] resume elapsed=" "resume logged" 25
+  paused="$(adb logcat -d 2>/dev/null | grep -oE '\[player\] pause elapsed=[0-9]+' | tail -1 | grep -oE '[0-9]+$')"
+  resumed="$(adb logcat -d 2>/dev/null | grep -oE '\[player\] resume elapsed=[0-9]+' | tail -1 | grep -oE '[0-9]+$')"
+  if [[ -n "$paused" && "$paused" == "$resumed" ]]; then
+    pass "10 s paused left elapsed_sec unchanged (pause=$paused resume=$resumed) — AC7"
+  else
+    fail "elapsed moved while paused (pause=$paused resume=$resumed) — AC7"
+  fi
+
+  # AC8: End workout writes the partial entry and does not celebrate.
+  tap player_pause 2
+  wait_log "\[player\] pause elapsed=" "paused again to end the session" 25
+  tap player_end 3
+  wait_log "\[player\] partial entry=" "partial entry written (AC8)" 30
+  wait_log "\[toast\] Saved" "the owner was told what was kept (AC8)" 20
+  if log_has "\[complete\] celebration start"; then
+    fail "a partial end ran the celebration — AC8 requires the sober variant"
+  else
+    pass "no celebration for a partial end (AC8)"
+  fi
+  wait_log "\[home\] refresh trigger=route_entered" "Home came back after End workout" 30
+  if log_has "streak=0"; then
+    pass "the partial entry did not extend the streak ([home] streak=0) — AC8"
+  else
+    fail "no [home] streak=0 line: cannot show the streak did not increment — AC8"
+  fi
+  shot "player-partial-home"
+  adb logcat -d 2>/dev/null | grep -oE "\[player\] partial entry=.*" | tail -1 | sed 's/^/      /'
+}
+
 flow_player_full() { player_walk noskip; }
 flow_player_skip() { player_walk skip; }
 
@@ -546,6 +595,7 @@ flow_player_quit() {
 run_flow() {
   case "$1" in
     player-full)   flow_player_full ;;
+    player-partial) flow_player_partial ;;
     player-skip)   flow_player_skip ;;
     player-resume) flow_player_resume ;;
     player-quit)   flow_player_quit ;;
@@ -559,6 +609,11 @@ if [[ -n "$FLOW" ]]; then
   seed_device_state
   relaunch_app || true
   run_flow "$FLOW" || true
+  # The standard section's logcat dump is written *before* the flow runs, so a flow keeps its own —
+  # otherwise the evidence for what the flow just did is gone by the next command.
+  FLOW_LOG="$BUILD_DIR/logcat-flow-${FLOW}-$(date +%Y%m%d-%H%M%S).txt"
+  adb logcat -d > "$FLOW_LOG" 2>&1 || true
+  echo "  flow logcat: ${FLOW_LOG#$ROOT/}"
 fi
 
 if (( FAILURES == 0 )); then
