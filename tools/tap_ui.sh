@@ -63,16 +63,43 @@ calibrate() {
   local nav_rect
   nav_rect="$(latest_rect bottom_nav)"
   if [[ -n "$nav_rect" ]]; then
-    local nav_out nav_y
+    local ny nh offset band band_h
+    ny="$(sed -E 's/.* y=([0-9]+).*/\1/' <<<"$nav_rect")"
+    nh="$(sed -E 's/.* h=([0-9]+).*/\1/' <<<"$nav_rect")"
+
+    # Measure the bar *band* itself (find_nav.py --nav-band) and accept it only when it is
+    # consistent with the rect the app reported: a pushed screen has no bottom nav at all, and a
+    # band found there (the illustration card's edge, the Next button) would silently recalibrate
+    # the offset. That is exactly how a 132 px offset became 125 and moved a tap from the middle of
+    # `Next` to one pixel above it.
+    band="$(python3 "$ROOT/tools/find_nav.py" "$shot" --nav-band --from-viewport-y "$ny" 2>/dev/null || true)"
+    offset="$(sed -n 's/.*offset_y=\(-*[0-9]*\).*/\1/p' <<<"$band")"
+    band_h="$(sed -n 's/.*nav_height=\([0-9]*\).*/\1/p' <<<"$band")"
+    if [[ "$offset" =~ ^-?[0-9]+$ && "$band_h" =~ ^[0-9]+$ ]] \
+        && (( band_h > nh - 20 && band_h < nh + 20 )); then
+      printf '%s' "$offset" > "$OFFSET_CACHE"
+      echo "$offset"
+      return
+    fi
+  fi
+
+  # A cached offset is device geometry, which does not change between screens — prefer it over a
+  # heuristic measured on a screen that may not even have a tab strip.
+  if [[ -s "$OFFSET_CACHE" ]]; then
+    cat "$OFFSET_CACHE"
+    return
+  fi
+
+  # Last resort: the tab-strip heuristic, for a first calibration on a screen with no measurable bar.
+  if [[ -n "$nav_rect" ]]; then
+    local nav_out nav_y nh2
     nav_out="$(python3 "$ROOT/tools/find_nav.py" "$shot" 2>/dev/null || true)"
     nav_y="${nav_out#nav_y=}"; nav_y="${nav_y%% *}"
     if [[ "$nav_y" =~ ^[0-9]+$ ]]; then
-      local ny nh
-      ny="$(sed -E 's/.* y=([0-9]+).*/\1/' <<<"$nav_rect")"
-      nh="$(sed -E 's/.* h=([0-9]+).*/\1/' <<<"$nav_rect")"
-      local offset=$(( nav_y - (ny + nh / 2) ))
-      printf '%s' "$offset" > "$OFFSET_CACHE"
-      echo "$offset"
+      nh2="$(sed -E 's/.* h=([0-9]+).*/\1/' <<<"$nav_rect")"
+      local offset2=$(( nav_y - (ny + nh2 / 2) ))
+      printf '%s' "$offset2" > "$OFFSET_CACHE"
+      echo "$offset2"
       return
     fi
   fi

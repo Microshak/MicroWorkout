@@ -31,6 +31,12 @@ func toast(text: String, kind: StringName = &"info") -> void:
 
 	dismiss_toast()
 
+	# Debug-only observability, like `UiProbe`'s rect lines: a toast is a user-visible outcome and
+	# AC9 asserts one ("Session discarded."), but a toast layer that exists leaves nothing in logcat
+	# to grep — and the banner is gone in 2.6 s, which is under two frames on the emulator.
+	if OS.is_debug_build():
+		print("[toast] %s (%s)" % [text, kind])
+
 	if not ResourceLoader.exists(TOAST_SCENE):
 		push_warning("[Feedback] toast scene missing: %s" % TOAST_SCENE)
 		return

@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "note": "PRD-10 R3's boundary fixture: 2 warm-up + 3 block + 2 cool-down = 7 steps, 11 sets. Every exercise id is a real record in data/exercise_library.json, so the fixture also exercises Library.name_of()/get_cues()/get_frames().",
+  "plan": {
+    "id": "fix-1",
+    "name": "Fixture Upper A",
+    "created_at": "2026-09-14T09:00:00Z",
+    "source": "builtin",
+    "provider": "",
+    "goal": "hypertrophy",
+    "days_per_week": 2,
+    "duration_min": 40,
+    "areas": ["chest", "back", "shoulders"],
+    "equipment": ["barbell", "machine", "cable", "dumbbell", "bodyweight"],
+    "notes": "",
+    "split_name": "Upper / Lower",
+    "sessions": [
+      {
+        "id": "s1",
+        "index": 0,
+        "title": "Upper A",
+        "focus": ["chest", "back", "shoulders"],
+        "est_minutes": 34,
+        "warmup": [
+          {"exercise_id": "arm-circles", "duration_sec": 60},
+          {"exercise_id": "cat-cow-stretch", "duration_sec": 60}
+        ],
+        "blocks": [
+          {"exercise_id": "incline-bench-press", "sets": 4, "reps": "8-10", "rest_seconds": 90},
+          {"exercise_id": "barbell-row", "sets": 4, "reps": "8-10", "rest_seconds": 90},
+          {"exercise_id": "seated-dumbbell-press", "sets": 3, "reps": "10-12", "rest_seconds": 75}
+        ],
+        "cooldown": [
+          {"exercise_id": "cross-body-shoulder-stretch", "duration_sec": 60},
+          {"exercise_id": "childs-pose", "duration_sec": 60}
+        ]
+      },
+      {
+        "id": "s2",
+        "index": 1,
+        "title": "Lower A",
+        "focus": ["legs", "core"],
+        "est_minutes": 34,
+        "warmup": [
+          {"exercise_id": "cat-cow-stretch", "duration_sec": 60}
+        ],
+        "blocks": [
+          {"exercise_id": "leg-press", "sets": 3, "reps": "10-12", "rest_seconds": 90}
+        ],
+        "cooldown": [
+          {"exercise_id": "childs-pose", "duration_sec": 60}
+        ]
+      }
+    ]
+  }
+}

@@ -423,6 +423,12 @@ func add_entry(entry: Dictionary) -> String:
 	doc["entries"] = Migrations.Schema.sort_entries(list)
 	_mark_dirty("history")
 	history_changed.emit()
+	# AC15 asks logcat to prove the Tracker/Home path, and `entry_added` is that path: it is emitted
+	# here, before the debounced write, so a reader sees the entry the moment it exists. Debug-only,
+	# so release logcat stays clean.
+	if OS.is_debug_build():
+		print("[store] entry_added id=%s completed=%s" % [
+			entry_id, str(bool(record.get("completed", false)))])
 	entry_added.emit(record)
 	return entry_id
 

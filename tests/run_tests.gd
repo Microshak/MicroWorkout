@@ -31,6 +31,8 @@ const SUITES: Array[Script] = [
 	preload("res://tests/suites/test_wizard_state.gd"),
 	preload("res://tests/suites/test_plan_schedule.gd"),
 	preload("res://tests/suites/test_home_state.gd"),
+	preload("res://tests/suites/test_session_run.gd"),
+	preload("res://tests/suites/test_progression.gd"),
 ]
 
 

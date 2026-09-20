@@ -1,0 +1,114 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/session_preview.gd" id="1_session_preview"]
+[ext_resource type="PackedScene" path="res://scenes/components/glyph.tscn" id="2_glyph"]
+[ext_resource type="PackedScene" path="res://scenes/components/source_badge.tscn" id="3_badge"]
+
+[node name="SessionPreview" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_session_preview")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="SafeArea" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="Layout" type="VBoxContainer" parent="SafeArea"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Header" type="HBoxContainer" parent="SafeArea/Layout"]
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="BackButton" type="Button" parent="SafeArea/Layout/Header"]
+custom_minimum_size = Vector2(88, 88)
+layout_mode = 2
+theme_type_variation = &"GhostButton"
+
+[node name="Center" type="CenterContainer" parent="SafeArea/Layout/Header/BackButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Glyph" parent="SafeArea/Layout/Header/BackButton/Center" instance=ExtResource("2_glyph")]
+custom_minimum_size = Vector2(44, 44)
+layout_mode = 2
+kind = &"chevron_left"
+
+[node name="SessionTitleLabel" type="Label" parent="SafeArea/Layout/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_type_variation = &"H3"
+text = ""
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="MetaLabel" type="Label" parent="SafeArea/Layout"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"MutedLabel"
+text = ""
+
+[node name="Scroller" type="ScrollContainer" parent="SafeArea/Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Lists" type="VBoxContainer" parent="SafeArea/Layout/Scroller"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="WarmupList" type="VBoxContainer" parent="SafeArea/Layout/Scroller/Lists"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="BlockList" type="VBoxContainer" parent="SafeArea/Layout/Scroller/Lists"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="CooldownList" type="VBoxContainer" parent="SafeArea/Layout/Scroller/Lists"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="SourceHost" type="Control" parent="SafeArea/Layout"]
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="SourceBadge" parent="SafeArea/Layout/SourceHost" instance=ExtResource("3_badge")]
+layout_mode = 0
+
+[node name="StartButton" type="Button" parent="SafeArea/Layout"]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+theme_type_variation = &"PrimaryButton"
+text = "Start workout"

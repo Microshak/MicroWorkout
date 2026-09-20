@@ -88,6 +88,20 @@ def main() -> int:
     parser.add_argument("--min-bg-coverage", type=float, default=0.10,
                         help="fraction of the sampled app region that must be the background token")
     parser.add_argument("--ascii", action="store_true", help="print a text-mode layout preview")
+    # PRD-10 additions: the player's acceptance run has to prove *what* rendered, not just that
+    # something did. These three assert colour and brightness inside a named region of the screen.
+    parser.add_argument("--region", action="append", default=[],
+                        metavar="NAME=FX0,FY0,FX1,FY1",
+                        help="a relative screen box to probe, e.g. illustration=0.1,0.2,0.9,0.6 "
+                             "(fractions of width/height; repeatable)")
+    parser.add_argument("--region-min-bright", action="append", default=[],
+                        metavar="NAME=FRACTION",
+                        help="fraction of the region's pixels that must be bright, e.g. "
+                             "illustration=0.01 (repeatable)")
+    parser.add_argument("--region-min-colour", action="append", default=[],
+                        metavar="NAME=HEX:COUNT",
+                        help="the region must contain at least COUNT pixels of HEX within "
+                             "tolerance 14, e.g. progress=35D08A:200 (repeatable)")
     args = parser.parse_args()
 
     path = Path(args.png)
@@ -161,6 +175,56 @@ def main() -> int:
     print("  ── top colours ──")
     for colour, count in histogram[:5]:
         print(f"     #{colour[0]:02X}{colour[1]:02X}{colour[2]:02X}  {count / len(pixels):6.2%}")
+
+    # 5. region probes (PRD-10 AC14): the numbers that stand in for looking at the picture.
+    if args.region:
+        regions: dict[str, tuple[int, int, int, int]] = {}
+        for spec in args.region:
+            name, _, box = spec.partition("=")
+            parts = [float(v) for v in box.split(",")]
+            if len(parts) != 4:
+                print(f"FATAL: --region {spec} needs four fractions", file=sys.stderr)
+                return 2
+            regions[name] = (
+                int(parts[0] * width), int(parts[1] * height),
+                int(parts[2] * width), int(parts[3] * height),
+            )
+
+        def crop(name: str):
+            box = regions.get(name)
+            if box is None:
+                return None
+            return image.crop(box)
+
+        for spec in args.region_min_bright:
+            name, _, value = spec.partition("=")
+            patch = crop(name)
+            if patch is None:
+                print(f"FATAL: --region-min-bright {spec} names no --region", file=sys.stderr)
+                return 2
+            wanted = float(value)
+            total = patch.width * patch.height
+            lit = sum(1 for p in patch.getdata() if luminance(p) > 140)
+            ratio = lit / total if total else 0.0
+            check(ratio >= wanted,
+                  f"region {name}: {lit} bright pixels ({ratio:.3%}) — content is drawn",
+                  f"region {name}: only {lit} bright pixels ({ratio:.3%}) — nothing drew there")
+
+        for spec in args.region_min_colour:
+            name, _, value = spec.partition("=")
+            patch = crop(name)
+            if patch is None:
+                print(f"FATAL: --region-min-colour {spec} names no --region", file=sys.stderr)
+                return 2
+            hex_value, _, count_text = value.partition(":")
+            wanted_rgb = hex_to_rgb(hex_value)
+            wanted_count = int(count_text)
+            total = patch.width * patch.height
+            hits = sum(1 for p in patch.getdata() if close(p, wanted_rgb, tol=14))
+            check(hits >= wanted_count,
+                  f"region {name}: {hits} px of #{hex_value.upper()} (need {wanted_count})",
+                  f"region {name}: only {hits} px of #{hex_value.upper()} (need {wanted_count} "
+                  f"of {total})")
 
     if args.ascii:
         print("  ── layout preview (dark = space, bright = @) ──")

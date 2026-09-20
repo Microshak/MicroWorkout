@@ -1,0 +1,181 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/completion_screen.gd" id="1_completion"]
+[ext_resource type="PackedScene" path="res://scenes/components/glyph.tscn" id="2_glyph"]
+[ext_resource type="PackedScene" path="res://scenes/components/stat_tile.tscn" id="3_stat"]
+[ext_resource type="PackedScene" path="res://scenes/components/weekly_ring.tscn" id="4_ring"]
+[ext_resource type="PackedScene" path="res://scenes/components/primary_button.tscn" id="5_primary"]
+
+[node name="CompletionScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_completion")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Confetti" type="CPUParticles2D" parent="."]
+position = Vector2(540, 560)
+emitting = false
+amount = 60
+lifetime = 1.4
+one_shot = true
+explosiveness = 0.95
+spread = 70.0
+gravity = Vector2(0, 480)
+initial_velocity_min = 400.0
+initial_velocity_max = 640.0
+scale_amount_min = 8.0
+scale_amount_max = 16.0
+
+[node name="SafeArea" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="Content" type="VBoxContainer" parent="SafeArea"]
+layout_mode = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="TopSpacer" type="Control" parent="SafeArea/Content"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+
+[node name="CheckMark" parent="SafeArea/Content" instance=ExtResource("2_glyph")]
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 2
+size_flags_horizontal = 4
+kind = &"check"
+stroke_width = 3.0
+
+[node name="TitleLabel" type="Label" parent="SafeArea/Content"]
+layout_mode = 2
+theme_type_variation = &"H1"
+text = "You finished."
+horizontal_alignment = 1
+
+[node name="SubtitleLabel" type="Label" parent="SafeArea/Content"]
+layout_mode = 2
+theme_type_variation = &"BodyLabel"
+text = ""
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="SummaryCard" type="PanelContainer" parent="SafeArea/Content"]
+layout_mode = 2
+theme_type_variation = &"Card"
+
+[node name="SummaryVBox" type="VBoxContainer" parent="SafeArea/Content/SummaryCard"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SummaryRow_Time" type="HBoxContainer" parent="SafeArea/Content/SummaryCard/SummaryVBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="NameLabel" type="Label" parent="SafeArea/Content/SummaryCard/SummaryVBox/SummaryRow_Time"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"MutedLabel"
+text = "Time"
+
+[node name="ValueLabel" type="Label" parent="SafeArea/Content/SummaryCard/SummaryVBox/SummaryRow_Time"]
+layout_mode = 2
+theme_type_variation = &"BodyLabel"
+text = "0:00"
+horizontal_alignment = 2
+
+[node name="SummaryRow_Exercises" type="HBoxContainer" parent="SafeArea/Content/SummaryCard/SummaryVBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="NameLabel" type="Label" parent="SafeArea/Content/SummaryCard/SummaryVBox/SummaryRow_Exercises"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"MutedLabel"
+text = "Exercises"
+
+[node name="ValueLabel" type="Label" parent="SafeArea/Content/SummaryCard/SummaryVBox/SummaryRow_Exercises"]
+layout_mode = 2
+theme_type_variation = &"BodyLabel"
+text = "0 of 0"
+horizontal_alignment = 2
+
+[node name="SummaryRow_Sets" type="HBoxContainer" parent="SafeArea/Content/SummaryCard/SummaryVBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="NameLabel" type="Label" parent="SafeArea/Content/SummaryCard/SummaryVBox/SummaryRow_Sets"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"MutedLabel"
+text = "Sets"
+
+[node name="ValueLabel" type="Label" parent="SafeArea/Content/SummaryCard/SummaryVBox/SummaryRow_Sets"]
+layout_mode = 2
+theme_type_variation = &"BodyLabel"
+text = "0 of 0"
+horizontal_alignment = 2
+
+[node name="StatsRow" type="HBoxContainer" parent="SafeArea/Content"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="StreakTile" parent="SafeArea/Content/StatsRow" instance=ExtResource("3_stat")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RingTile" parent="SafeArea/Content/StatsRow" instance=ExtResource("4_ring")]
+custom_minimum_size = Vector2(240, 240)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="AdviceCard" type="PanelContainer" parent="SafeArea/Content"]
+layout_mode = 2
+theme_type_variation = &"CardAlt"
+
+[node name="AdviceVBox" type="VBoxContainer" parent="SafeArea/Content/AdviceCard"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="AdviceTitleLabel" type="Label" parent="SafeArea/Content/AdviceCard/AdviceVBox"]
+layout_mode = 2
+theme_type_variation = &"Caption"
+text = "NEXT TIME"
+
+[node name="AdviceLabel" type="Label" parent="SafeArea/Content/AdviceCard/AdviceVBox"]
+layout_mode = 2
+theme_type_variation = &"MutedLabel"
+text = ""
+autowrap_mode = 3
+
+[node name="BottomSpacer" type="Control" parent="SafeArea/Content"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DoneButton" parent="SafeArea/Content" instance=ExtResource("5_primary")]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Done"
+
+[node name="SfxPlayer" type="AudioStreamPlayer" parent="."]

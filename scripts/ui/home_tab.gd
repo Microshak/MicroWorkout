@@ -178,6 +178,7 @@ func _refresh(reason: String, play_update_animations: bool) -> void:
 	_state = built
 	_render(built, previous, play_update_animations)
 	_log_state(built)
+	_publish_probe_rects.call_deferred()
 
 
 ## Everything [method HomeState.build] is not allowed to know: the streak, the ISO week, the
@@ -236,6 +237,30 @@ func on_route_entered(args: Dictionary) -> void:
 	if bool(args.get("returned_from_player", false)):
 		_on_returned_from_player()
 	refresh_from("route_entered")
+
+
+## Publishes the tap targets PRD-10's Android flow drives (debug builds only): the acceptance run
+## has to *start a session from Home*, and a hard-coded coordinate silently lands on padding when a
+## safe-area inset changes. `tools/tap_ui.sh home_start` is the only supported way in.
+## Only a control that is on screen gets a rect: Home swaps three whole cards in and out, and a
+## rect published for a hidden card is a tap that lands on nothing while looking like a success.
+func _publish_probe_rects() -> void:
+	UiProbe.log_rects_settled(get_tree(), _probe_rects())
+
+
+## Only a control that is on screen gets a rect: Home swaps three whole cards in and out, and a rect
+## published for a hidden card is a tap that lands on nothing while looking like a success.
+func _probe_rects() -> Dictionary:
+	var entries := {}
+	if _start_button.is_visible_in_tree():
+		entries["home_start"] = _start_button
+	if _preview_button.is_visible_in_tree():
+		entries["home_preview"] = _preview_button
+	if _done_early_button.is_visible_in_tree():
+		entries["home_early"] = _done_early_button
+	elif _rest_early_button.is_visible_in_tree():
+		entries["home_early"] = _rest_early_button
+	return entries
 
 
 ## PRD-10's defensive refresh (R14 #7): the completion screen may hand back before the debounced

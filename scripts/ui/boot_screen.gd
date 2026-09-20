@@ -9,7 +9,14 @@ extends Control
 ## otherwise the app goes straight to the shell. Nothing else in the app decides this, so
 ## "am I onboarded?" has exactly one answer and one code path.
 
+## PRD-10 R5's file list adds one thing here: the debug-only `--autostart=player-fixture` smoke run
+## needs the shell to exist before anything can be pushed into it, so it waits out the shell's own
+## load. `App` returns no request outside a debug build, so a release APK never reaches this.
+
 @onready var _status: Label = $Center/VBox/Status
+
+## How long the shell is given to come up before the autostart push.
+const AUTOSTART_DELAY_SEC := 1.2
 
 
 func _ready() -> void:
@@ -23,8 +30,17 @@ func _boot() -> void:
 	if is_instance_valid(_status):
 		_status.text = "Ready"
 	var first_run := not onboarding_complete()
+	var autostart := App.autostart_request()
+	# The flag implies the shell: the owner is already onboarded on the machine that runs it, and a
+	# smoke run that lands in the wizard would prove nothing about the player.
 	var target := Routes.ONBOARDING if first_run else Routes.SHELL
+	if not autostart.is_empty():
+		target = Routes.SHELL
 	print("[boot] onboarding_complete=%s goto=%s" % [str(not first_run), target])
+	if not autostart.is_empty():
+		# Scheduled **before** the scene swap: `Nav.goto(SHELL)` frees this screen, so a timer awaited
+		# on it would die with it (`get_tree()` on a freed node is a null call). `App` owns the wait.
+		App.schedule_autostart(AUTOSTART_DELAY_SEC)
 	_goto_main_scene(target)
 
 

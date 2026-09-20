@@ -1,0 +1,339 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/workout_player.gd" id="1_player"]
+[ext_resource type="PackedScene" path="res://scenes/components/glyph.tscn" id="2_glyph"]
+[ext_resource type="PackedScene" path="res://scenes/components/exercise_thumbnail.tscn" id="3_thumb"]
+[ext_resource type="PackedScene" path="res://scenes/components/progress_ring.tscn" id="4_ring"]
+[ext_resource type="PackedScene" path="res://scenes/components/secondary_button.tscn" id="5_secondary"]
+[ext_resource type="PackedScene" path="res://scenes/components/primary_button.tscn" id="6_primary"]
+[ext_resource type="PackedScene" path="res://scenes/components/rest_sheet.tscn" id="7_rest"]
+[ext_resource type="PackedScene" path="res://scenes/components/exercise_zoom.tscn" id="8_zoom"]
+
+[node name="WorkoutPlayer" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_player")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="SafeArea" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="Layout" type="VBoxContainer" parent="SafeArea"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="TopBar" type="HBoxContainer" parent="SafeArea/Layout"]
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PauseButton" type="Button" parent="SafeArea/Layout/TopBar"]
+custom_minimum_size = Vector2(88, 88)
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+theme_type_variation = &"GhostButton"
+
+[node name="Center" type="CenterContainer" parent="SafeArea/Layout/TopBar/PauseButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Glyph" parent="SafeArea/Layout/TopBar/PauseButton/Center" instance=ExtResource("2_glyph")]
+custom_minimum_size = Vector2(44, 44)
+layout_mode = 2
+kind = &"pause"
+
+[node name="TopCenter" type="VBoxContainer" parent="SafeArea/Layout/TopBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_constants/separation = 2
+
+[node name="BlockCounterLabel" type="Label" parent="SafeArea/Layout/TopBar/TopCenter"]
+layout_mode = 2
+theme_type_variation = &"MutedLabel"
+text = ""
+horizontal_alignment = 1
+
+[node name="SessionTitleLabel" type="Label" parent="SafeArea/Layout/TopBar/TopCenter"]
+layout_mode = 2
+theme_type_variation = &"H3"
+text = ""
+horizontal_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="ElapsedLabel" type="Label" parent="SafeArea/Layout/TopBar"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"MutedLabel"
+text = "0:00"
+horizontal_alignment = 2
+
+[node name="SessionProgress" type="HBoxContainer" parent="SafeArea/Layout"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="IllustrationSlot" type="AspectRatioContainer" parent="SafeArea/Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+ratio = 1.0
+
+[node name="IllustrationButton" type="Button" parent="SafeArea/Layout/IllustrationSlot"]
+layout_mode = 2
+focus_mode = 0
+flat = true
+
+[node name="Illustration" parent="SafeArea/Layout/IllustrationSlot/IllustrationButton" instance=ExtResource("3_thumb")]
+custom_minimum_size = Vector2(640, 640)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="NameLabel" type="Label" parent="SafeArea/Layout"]
+layout_mode = 2
+theme_type_variation = &"H1"
+text = ""
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="SetsRepsLabel" type="Label" parent="SafeArea/Layout"]
+layout_mode = 2
+theme_type_variation = &"H2"
+text = ""
+horizontal_alignment = 1
+
+[node name="RestLabel" type="Label" parent="SafeArea/Layout"]
+layout_mode = 2
+theme_type_variation = &"MutedLabel"
+text = ""
+horizontal_alignment = 1
+
+[node name="CuesBox" type="VBoxContainer" parent="SafeArea/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="CuesTitleLabel" type="Label" parent="SafeArea/Layout/CuesBox"]
+layout_mode = 2
+theme_type_variation = &"Caption"
+text = "FORM TIPS"
+
+[node name="CueLabel_0" type="Label" parent="SafeArea/Layout/CuesBox"]
+layout_mode = 2
+theme_type_variation = &"MutedLabel"
+text = ""
+autowrap_mode = 3
+
+[node name="CueLabel_1" type="Label" parent="SafeArea/Layout/CuesBox"]
+layout_mode = 2
+theme_type_variation = &"MutedLabel"
+text = ""
+autowrap_mode = 3
+
+[node name="CueLabel_2" type="Label" parent="SafeArea/Layout/CuesBox"]
+layout_mode = 2
+theme_type_variation = &"MutedLabel"
+text = ""
+autowrap_mode = 3
+
+[node name="SetGroup" type="VBoxContainer" parent="SafeArea/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SetCounterRow" type="HBoxContainer" parent="SafeArea/Layout/SetGroup"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="SetCounterLabel" type="Label" parent="SafeArea/Layout/SetGroup/SetCounterRow"]
+layout_mode = 2
+theme_type_variation = &"MutedLabel"
+text = ""
+vertical_alignment = 1
+
+[node name="BlockDoneChip" type="PanelContainer" parent="SafeArea/Layout/SetGroup/SetCounterRow"]
+visible = false
+layout_mode = 2
+theme_type_variation = &"CardAlt"
+
+[node name="ChipLabel" type="Label" parent="SafeArea/Layout/SetGroup/SetCounterRow/BlockDoneChip"]
+layout_mode = 2
+theme_type_variation = &"Caption"
+text = "Block done"
+
+[node name="SetRow" type="HBoxContainer" parent="SafeArea/Layout/SetGroup"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="TimerRow" type="VBoxContainer" parent="SafeArea/Layout"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TimerCenter" type="CenterContainer" parent="SafeArea/Layout/TimerRow"]
+layout_mode = 2
+
+[node name="TimerRing" parent="SafeArea/Layout/TimerRow/TimerCenter" instance=ExtResource("4_ring")]
+custom_minimum_size = Vector2(240, 240)
+layout_mode = 2
+thickness = 20.0
+show_caption = false
+
+[node name="TimerLabel" type="Label" parent="SafeArea/Layout/TimerRow"]
+layout_mode = 2
+theme_type_variation = &"DisplayLabel"
+text = ""
+horizontal_alignment = 1
+
+[node name="NavRow" type="HBoxContainer" parent="SafeArea/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="PreviousButton" parent="SafeArea/Layout/NavRow" instance=ExtResource("5_secondary")]
+custom_minimum_size = Vector2(240, 96)
+layout_mode = 2
+text = "Previous"
+
+[node name="NextButton" parent="SafeArea/Layout/NavRow" instance=ExtResource("6_primary")]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Next"
+
+[node name="RestSheet" parent="." instance=ExtResource("7_rest")]
+visible = false
+layout_mode = 1
+
+[node name="PauseSheet" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PauseDim" type="ColorRect" parent="PauseSheet"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0588235, 0.0666667, 0.0862745, 0.9)
+
+[node name="PauseCenter" type="CenterContainer" parent="PauseSheet"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PauseCard" type="PanelContainer" parent="PauseSheet/PauseCenter"]
+custom_minimum_size = Vector2(900, 0)
+layout_mode = 2
+theme_type_variation = &"Sheet"
+
+[node name="PauseVBox" type="VBoxContainer" parent="PauseSheet/PauseCenter/PauseCard"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="PauseTitleLabel" type="Label" parent="PauseSheet/PauseCenter/PauseCard/PauseVBox"]
+layout_mode = 2
+theme_type_variation = &"H2"
+text = "Paused"
+horizontal_alignment = 1
+
+[node name="PauseStatsLabel" type="Label" parent="PauseSheet/PauseCenter/PauseCard/PauseVBox"]
+layout_mode = 2
+theme_type_variation = &"MutedLabel"
+text = ""
+horizontal_alignment = 1
+
+[node name="PausedNote" type="Label" parent="PauseSheet/PauseCenter/PauseCard/PauseVBox"]
+visible = false
+layout_mode = 2
+theme_type_variation = &"MutedLabel"
+text = "Been away a while — resume when you're ready."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="ResumeButton" parent="PauseSheet/PauseCenter/PauseCard/PauseVBox" instance=ExtResource("6_primary")]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+text = "Resume"
+
+[node name="RestartExerciseButton" parent="PauseSheet/PauseCenter/PauseCard/PauseVBox" instance=ExtResource("5_secondary")]
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 2
+text = "Restart exercise"
+
+[node name="EndWorkoutButton" type="Button" parent="PauseSheet/PauseCenter/PauseCard/PauseVBox"]
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 2
+theme_type_variation = &"DangerButton"
+text = "End workout"
+
+[node name="QuitButton" type="Button" parent="PauseSheet/PauseCenter/PauseCard/PauseVBox"]
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 2
+theme_type_variation = &"GhostButton"
+text = "Quit without saving"
+
+[node name="ConfirmQuitDialog" type="ConfirmationDialog" parent="."]
+title = "Quit without saving?"
+size = Vector2i(640, 240)
+ok_button_text = "Quit"
+dialog_text = "Your sets from this session will be lost."
+dialog_autowrap = true
+cancel_button_text = "Keep going"
+
+[node name="ExerciseZoom" parent="." instance=ExtResource("8_zoom")]
+visible = false
+layout_mode = 1
+
+[node name="AutoSaveTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="ToastAnchor" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="SfxPlayer" type="AudioStreamPlayer" parent="."]

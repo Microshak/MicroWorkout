@@ -9,6 +9,10 @@ extends RefCounted
 ##
 ## PRD-08 adds the two the New Workout wizard needs: the six-step wizard and the generated-plan
 ## preview. Both are PUSH routes, so they cover the bottom nav until the flow ends (PRD-08 R1/R12).
+##
+## PRD-10 adds the three the workout flow needs: the session preview Home links to, the player
+## itself, and the completion celebration (PRD-10 R1). All three are PUSH routes; the completion
+## screen is reached with `Nav.replace`, so the player it replaces can never be backed into.
 
 const SHELL := &"shell"
 const BOOT := &"boot"
@@ -21,6 +25,9 @@ const ATTRIBUTION := &"attribution"
 const GALLERY := &"gallery"
 const NEW_WORKOUT_WIZARD := &"new_workout_wizard"
 const PLAN_PREVIEW := &"plan_preview"
+const SESSION_PREVIEW := &"session_preview"
+const WORKOUT_PLAYER := &"workout_player"
+const COMPLETION := &"completion"
 
 ## Tab routes, in bottom-nav order. Index in this array == nav tab index.
 const TAB_ROUTES: PackedStringArray = [HOME, PLAN, TRACKER, SETTINGS]
@@ -39,6 +46,9 @@ const TABLE := {
 	ATTRIBUTION: "res://scenes/ui/attribution_screen.tscn",
 	NEW_WORKOUT_WIZARD: "res://scenes/ui/new_workout_wizard.tscn",
 	PLAN_PREVIEW: "res://scenes/ui/plan_preview.tscn",
+	SESSION_PREVIEW: "res://scenes/ui/session_preview.tscn",
+	WORKOUT_PLAYER: "res://scenes/ui/workout_player.tscn",
+	COMPLETION: "res://scenes/ui/completion_screen.tscn",
 }
 
 const TAB_SCENES := {

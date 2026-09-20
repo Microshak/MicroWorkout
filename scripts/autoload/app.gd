@@ -11,6 +11,11 @@ extends Node
 ## running UI **before** the signal fires, so a slot that re-renders a weight reads the new
 ## unit. `Store` remains the single source of truth; `settings` here is only the mirror used
 ## before `Store` finishes loading and by [method units] / [method theme_mode].
+##
+## PRD-10 adds the debug-only autostart seam ([method autostart_request] / [method run_autostart]):
+## the desktop smoke run needs to land in the workout player without walking onboarding, Home and a
+## plan first, and there is no other honest way to drive that path from a shell. It is honoured
+## **only** inside `OS.is_debug_build()`, so a release APK has no code path that can run it.
 
 signal units_changed(units: String)
 signal theme_changed(mode: String)
@@ -306,3 +311,78 @@ func _mirror_set(path: String, value: Variant) -> void:
 			return
 		cursor = next
 	cursor[segments[segments.size() - 1]] = value
+
+
+# ------------------------------------------------------------------ debug-only autostart (PRD-10)
+
+## The fixture the `--autostart=player-fixture` smoke run loads.
+const AUTOSTART_PLAYER_FIXTURE := "res://tests/fixtures/sessions/upper_a.json"
+const AUTOSTART_PLAYER := "player-fixture"
+
+## The requested autostart action, or `""`. **Always `""` in a release build** — the flag is a test
+## seam, and a shipped APK must not have a path that reads it.
+func autostart_request() -> String:
+	if not OS.is_debug_build():
+		return ""
+	for source in [OS.get_cmdline_args(), OS.get_cmdline_user_args()]:
+		for argument in source:
+			var text := String(argument)
+			if text.begins_with("--autostart="):
+				return text.substr("--autostart=".length())
+	return ""
+
+
+## Waits [param delay_sec], then runs the autostart request. Owned by `App` rather than by the boot
+## screen because the boot screen is freed the moment the shell replaces it, and awaiting a timer on
+## a freed node raises "Cannot call method 'create_timer' on a null value" — which is exactly how the
+## first version of this seam failed.
+func schedule_autostart(delay_sec: float) -> void:
+	if autostart_request().is_empty():
+		return
+	if delay_sec > 0.0:
+		await get_tree().create_timer(delay_sec).timeout
+	var _ran := run_autostart()
+
+
+## Runs the requested autostart action. `false` when there is nothing to do (a release build, no
+## flag, an unreadable fixture) — the caller keeps the normal flow in that case.
+##
+## The fixture is loaded into the **real** `Store` as a normal plan and pushed through the **real**
+## `Nav` route, so what the smoke run exercises is the shipped path: same player, same plan shape,
+## same history writes.
+func run_autostart() -> bool:
+	var request := autostart_request()
+	if request.is_empty():
+		return false
+	if request != AUTOSTART_PLAYER:
+		push_warning("[app] unknown autostart request '%s'" % request)
+		return false
+	if not FileAccess.file_exists(AUTOSTART_PLAYER_FIXTURE):
+		push_warning("[app] autostart fixture missing: %s" % AUTOSTART_PLAYER_FIXTURE)
+		return false
+	var parsed: Variant = JSON.parse_string(
+		FileAccess.get_file_as_string(AUTOSTART_PLAYER_FIXTURE))
+	if not (parsed is Dictionary):
+		push_warning("[app] autostart fixture is not a JSON object")
+		return false
+	var doc: Dictionary = parsed
+	var plan: Variant = doc.get("plan", null)
+	if not (plan is Dictionary):
+		push_warning("[app] autostart fixture has no plan object")
+		return false
+
+	# A fresh session every run: a leftover cursor would make the smoke run resume instead of start.
+	var _cleared := Store.clear_session_progress()
+	var _saved := Store.upsert_plan(plan)
+	var _active := Store.set_active_plan(String((plan as Dictionary).get("id", "")))
+	var sessions: Array = (plan as Dictionary).get("sessions", [])
+	var session_id := ""
+	if not sessions.is_empty() and sessions[0] is Dictionary:
+		session_id = String((sessions[0] as Dictionary).get("id", ""))
+	print("[app] autostart=%s plan=%s session=%s" % [
+		request, String((plan as Dictionary).get("id", "")), session_id])
+	Nav.push(Routes.WORKOUT_PLAYER, {
+		"plan_id": String((plan as Dictionary).get("id", "")),
+		"session_id": session_id,
+	})
+	return true
