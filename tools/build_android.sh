@@ -75,11 +75,11 @@ for line in lines:
         in_release = line.strip() == "[preset.1.options]"
     if in_release:
         if line.startswith("keystore/release="):
-            line = f'keystore/release="{ks}"\n'; continue
-        if line.startswith("keystore/release_user="):
-            line = f'keystore/release_user="{alias}"\n'; continue
-        if line.startswith("keystore/release_password="):
-            line = f'keystore/release_password="{pw}"\n'; continue
+            line = f'keystore/release="{ks}"\n'
+        elif line.startswith("keystore/release_user="):
+            line = f'keystore/release_user="{alias}"\n'
+        elif line.startswith("keystore/release_password="):
+            line = f'keystore/release_password="{pw}"\n'
     out.append(line)
 with open(path, "w") as fh:
     fh.writelines(out)
@@ -102,9 +102,25 @@ set +e
 STATUS="${PIPESTATUS[0]}"
 set -e
 
-if [[ ! -f "$OUT" ]]; then
-  echo "[build] FAILED — no APK produced (exit $STATUS). See $BUILD_DIR/export.log" >&2
+if [[ "$STATUS" -ne 0 || ! -f "$OUT" ]]; then
+  echo "[build] FAILED — export exit=$STATUS, APK $([[ -f "$OUT" ]] && echo present || echo missing). See $BUILD_DIR/export.log" >&2
   exit 1
+fi
+
+# A release APK is only useful when it is actually signed. Godot's exporter once
+# finished with a signing warning and still left an unsigned file behind, so the
+# release build verifies the signature before declaring success (PRD-13 R4).
+if [[ "$MODE" == "release" ]]; then
+  APKSIGNER="$(ls -d "$ANDROID_HOME"/build-tools/*/apksigner 2>/dev/null | sort -V | tail -1 || true)"
+  if [[ -z "$APKSIGNER" ]]; then
+    echo "[build] FAILED — apksigner not found under $ANDROID_HOME/build-tools" >&2
+    exit 1
+  fi
+  if ! "$APKSIGNER" verify "$OUT" >/dev/null 2>&1; then
+    echo "[build] FAILED — $OUT is NOT signed. See $BUILD_DIR/export.log" >&2
+    exit 1
+  fi
+  echo "[build] signature verified"
 fi
 
 SIZE_BYTES="$(stat -c%s "$OUT")"
