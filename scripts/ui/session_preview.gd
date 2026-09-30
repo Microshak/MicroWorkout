@@ -37,6 +37,10 @@ const ROUTE_FALLBACKS := {
 ## R1's copy, verbatim.
 const GONE_TOAST := "That session is gone — pick one from your plan."
 const START_LABEL := "Start workout"
+## PRD-12 R8 — the empty variant's exact copy. Its action returns to the Plan screen, which is
+## where Regenerate lives (the preview never mutates the plan).
+const EMPTY_TITLE := "This session has nothing to show."
+const EMPTY_ACTION := "Regenerate plan"
 
 ## The three section captions. Warm-up and cool-down are named exactly as the player's own
 ## sub-flows are, so the two screens read as one flow.
@@ -177,10 +181,12 @@ func _render() -> void:
 
 func _render_empty() -> void:
 	_run = null
-	_title_label.text = ""
+	# PRD-12 R8: a resolved session that has no work blocks says so instead of showing a blank
+	# screen, and the action lands on the screen that owns regeneration.
+	_title_label.text = EMPTY_TITLE
 	_meta_label.text = ""
-	_start_button.text = START_LABEL
-	_start_button.disabled = true
+	_start_button.text = EMPTY_ACTION
+	_start_button.disabled = false
 	_clear_list(_warmup_list)
 	_clear_list(_block_list)
 	_clear_list(_cooldown_list)
@@ -322,6 +328,11 @@ func _on_back_pressed() -> void:
 ## R1: the player gets the same two ids that resolved this screen, so what was previewed is
 ## exactly what is played.
 func _on_start_pressed() -> void:
+	# PRD-12 R8: in the empty variant the same button reads "Regenerate plan" and returns to the
+	# screen that owns regeneration instead of starting nothing.
+	if _run == null:
+		Nav.pop_to_root()
+		return
 	if _plan_id.is_empty() or _session_id.is_empty():
 		return
 	Nav.push(_route_player, {

@@ -13,9 +13,12 @@ func _ready() -> void:
 	var back := back_button()
 	if back != null and not back.pressed.is_connected(_on_back_pressed):
 		back.pressed.connect(_on_back_pressed)
+	A11y.label(back, "Back")
 	var action := action_button()
 	if action != null and not action.pressed.is_connected(_on_action_pressed):
 		action.pressed.connect(_on_action_pressed)
+	if action != null and not action.text.is_empty():
+		A11y.label(action, action.text)
 
 
 func set_title(t: String) -> void:
@@ -31,6 +34,8 @@ func set_action(text: String) -> void:
 		return
 	action.text = text
 	action.visible = not text.is_empty()
+	if not text.is_empty():
+		A11y.label(action, text)
 
 
 func back_button() -> Button:

@@ -18,9 +18,8 @@ extends Control
 ## * **`Nav` owns navigation.** Every exit goes through `Nav`, and `set_back_handling(false)` is set
 ##   while the player owns back and restored on **every** exit path, including an early
 ##   `queue_free` — leaving it false would silently break back everywhere else in the app (R14).
-## * **`Feedback` owns toasts only.** Sound is optional by construction: `_sfx()` returns silently
-##   when PRD-12's asset does not exist, so every interaction has to land on visuals and haptics
-##   alone today (R7, AC14).
+## * **`Feedback` owns toasts and cues.** `_sfx()` maps PRD-10's fine-grained names onto
+##   PRD-12's five cues, so every interaction lands on a sound and a haptic (R7, AC14).
 ##
 ## Three things about this screen are easy to get wrong and are therefore stated once, here:
 ##
@@ -94,9 +93,6 @@ const KIND_WARMUP := SessionRun.KIND_WARMUP
 
 const GLYPH_SCENE := preload("res://scenes/components/glyph.tscn")
 
-## `_sfx()` streams, resolved once per path (a miss is cached as `null` so the check is not repeated).
-static var _stream_cache: Dictionary = {}
-
 # ===========================================================================
 # Nodes (R2)
 # ===========================================================================
@@ -137,7 +133,6 @@ static var _stream_cache: Dictionary = {}
 @onready var _quit_button: Button = $PauseSheet/PauseCenter/PauseCard/PauseVBox/QuitButton
 @onready var _confirm_dialog: ConfirmationDialog = $ConfirmQuitDialog
 @onready var _auto_save_timer: Timer = $AutoSaveTimer
-@onready var _sfx_player: AudioStreamPlayer = $SfxPlayer
 
 # ===========================================================================
 # State
@@ -531,6 +526,7 @@ func _make_set_chip(index: int) -> Button:
 	chip.focus_mode = Control.FOCUS_NONE
 	chip.theme_type_variation = &"ChipToggle"
 	chip.text = str(index + 1)
+	A11y.label(chip, "Set %d" % (index + 1), "Check off this set")
 
 	# Per-chip duplicated styleboxes, so the fill can be tweened between `surface_alt` and `success`
 	# without touching the shared theme (R7's "fill tweens to success").
@@ -1049,6 +1045,9 @@ func _complete(partial_requested: bool) -> void:
 		print("[player] partial entry=%s duration=%d exercises=%d/%d sets=%d/%d" % [
 			entry_id, _run.elapsed_sec, _run.blocks_completed(), _run.block_count(),
 			_run.sets_completed(), _run.total_sets()])
+		# R10 (P5): the flipbook window ends here too — an ended-early session measures the
+		# same frames as a finished one.
+		Perf.end_session()
 		_leave_when_ready()
 		Feedback.toast(TOAST_SAVED_PARTIAL % [
 			int(entry.get("exercises_completed", 0)), int(entry.get("exercises_total", 0))], &"info")
@@ -1058,6 +1057,8 @@ func _complete(partial_requested: bool) -> void:
 		entry_id, _run.elapsed_sec, _run.blocks_completed(), _run.block_count(),
 		_run.sets_completed(), _run.total_sets()])
 	_set_state(STATE_FINISHED)
+	# R10 (P5): the flipbook window ends with the session.
+	Perf.end_session()
 	# `replace` clears the stack, so the finished player is gone and the celebration cannot be
 	# backed into (R12).
 	Nav.replace(Routes.COMPLETION, {"entry": entry, "partial": false})
@@ -1310,23 +1311,17 @@ func _save_progress(force: bool) -> void:
 # Sound (R7)
 # ===========================================================================
 
-## Plays `res://assets/audio/sfx/<name>.ogg` **only if it exists**: PRD-12 ships the assets, so until
-## then every call is a silent no-op and the pop, the fill, the check glyph and the haptic carry the
-## interaction on their own (AC14).
+## PRD-12 R2: the cue set is five sounds owned by `Feedback`; PRD-10's finer-grained names are
+## mapped onto it here, so every existing call site keeps reading as the intent it names
+## (`set_ok`, `block_done`, `timer_done`) instead of as an index into a sound table.
 func _sfx(sound_name: StringName) -> void:
-	var path := "res://assets/audio/sfx/%s.ogg" % sound_name
-	if not ResourceLoader.exists(path):
-		return
-	var stream: AudioStream = null
-	if _stream_cache.has(path):
-		stream = _stream_cache[path]
-	else:
-		stream = ResourceLoader.load(path) as AudioStream
-		_stream_cache[path] = stream
-	if stream == null:
-		return
-	_sfx_player.stream = stream
-	_sfx_player.play()
+	match String(sound_name):
+		"set_ok":
+			Feedback.select()
+		"block_done", "rest_done", "timer_done":
+			Feedback.success()
+		_:
+			Feedback.tap()
 
 
 # ===========================================================================
@@ -1402,6 +1397,9 @@ func _style_dialog(dialog: ConfirmationDialog) -> void:
 ## Counts a full ping-pong: the component's `[0, 1, 2, 1]` sequence comes back to index 0 once per
 ## cycle, which is what makes the 1.818 s period measurable from logcat alone (AC3).
 func _on_frame_changed(index: int) -> void:
+	# R10 (P5): the frame that renders a flipbook advance is the one the budget cares about, so
+	# the engine's own process-time monitor is sampled at every advance.
+	Perf.note_frame_ms(Performance.get_monitor(Performance.TIME_PROCESS) * 1000.0)
 	if index != 0:
 		_frame_off_start = true
 		return

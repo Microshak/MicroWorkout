@@ -35,6 +35,8 @@ func _ready() -> void:
 		var icon := tab.get_node_or_null(^"Stack/Icon")
 		if icon != null:
 			icon.set(&"kind", TAB_GLYPHS[i])
+		# PRD-12 R5: the required copy for the four tab buttons.
+		A11y.label(tab, "%s tab, %d of %d" % [TAB_CAPTIONS[i], i + 1, TAB_COUNT])
 		if not tab.toggled.is_connected(_on_tab_toggled):
 			tab.toggled.connect(_on_tab_toggled.bind(i))
 	set_active(0)

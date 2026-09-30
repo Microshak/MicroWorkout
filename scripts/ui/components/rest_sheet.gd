@@ -325,7 +325,7 @@ func _cache_nodes() -> void:
 		_skip_button = get_node_or_null(^"RestVBox/RestButtons/SkipRestButton") as Button
 
 
-## `Nav` exposes only `set_reduce_motion()`, so the setting is read the way every other component
-## reads it (`weekly_ring`, `day_pill`, `day_card`).
+## `Nav` exposes only `set_reduce_motion()`, so the setting is read through `Motion`, the one
+## accessor every component shares (PRD-12 R1).
 func _reduce_motion() -> bool:
-	return bool(App.get_setting("ui.reduce_motion", false))
+	return not Motion.decorative_enabled()

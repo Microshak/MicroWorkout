@@ -228,6 +228,7 @@ func _build() -> void:
 		_picker.add_item(LLMProviders.label_for(key))
 		_picker.set_item_metadata(_picker.item_count - 1, key)
 	_picker.item_selected.connect(_on_provider_selected)
+	A11y.label(_picker, Strings.PROVIDER_LABEL)
 	provider_row.add_child(_picker)
 	provider_row.add_child(_error_label("ProviderError"))
 
@@ -237,6 +238,7 @@ func _build() -> void:
 	_base_url_field = _line_edit("BaseUrlField")
 	_base_url_field.placeholder_text = "https://api.example.com/v1"
 	_base_url_field.text_changed.connect(_on_text_changed)
+	A11y.label(_base_url_field, Strings.BASE_URL_LABEL)
 	base_row.add_child(_base_url_field)
 	_base_url_hint = _caption(base_row, Strings.BASE_URL_FIXED_HINT)
 	_base_url_hint.visible = false
@@ -249,6 +251,7 @@ func _build() -> void:
 	_model_field = _line_edit("ModelField")
 	_model_field.placeholder_text = "model-name"
 	_model_field.text_changed.connect(_on_text_changed)
+	A11y.label(_model_field, Strings.MODEL_LABEL)
 	model_row.add_child(_model_field)
 	_model_error = _error_label("ModelError")
 	model_row.add_child(_model_error)
@@ -264,6 +267,7 @@ func _build() -> void:
 	_key_field.placeholder_text = "sk-…"
 	_key_field.text_changed.connect(_on_key_changed)
 	_key_field.focus_exited.connect(_remask_key)
+	A11y.label(_key_field, Strings.API_KEY_LABEL)
 	key_row.add_child(_key_field)
 
 	var key_buttons := HBoxContainer.new()
@@ -278,6 +282,7 @@ func _build() -> void:
 	_show_key_button.theme_type_variation = &"SecondaryButton"
 	TouchTargets.enforce(_show_key_button)
 	_show_key_button.toggled.connect(_on_show_key_toggled)
+	A11y.label(_show_key_button, Strings.SHOW_KEY)
 	key_buttons.add_child(_show_key_button)
 
 	_help_button = Button.new()
@@ -286,6 +291,7 @@ func _build() -> void:
 	_help_button.theme_type_variation = &"SecondaryButton"
 	TouchTargets.enforce(_help_button)
 	_help_button.pressed.connect(_on_help_pressed)
+	A11y.label(_help_button, Strings.HELP_BUTTON)
 	key_buttons.add_child(_help_button)
 
 	_key_error = _error_label("ApiKeyError")
@@ -336,6 +342,7 @@ func _build() -> void:
 	_test_button.theme_type_variation = &"SecondaryButton"
 	TouchTargets.enforce(_test_button)
 	_test_button.pressed.connect(_on_test_pressed)
+	A11y.label(_test_button, Strings.TEST_BUTTON)
 	_actions_row.add_child(_test_button)
 
 	_save_button = Button.new()
@@ -344,6 +351,7 @@ func _build() -> void:
 	_save_button.theme_type_variation = &"PrimaryButton"
 	TouchTargets.enforce(_save_button)
 	_save_button.pressed.connect(_on_save_pressed)
+	A11y.label(_save_button, Strings.SAVE_AI_BUTTON)
 	_actions_row.add_child(_save_button)
 
 	_dirty_marker = Label.new()
@@ -373,6 +381,7 @@ func _build() -> void:
 	_info_button.theme_type_variation = &"GhostButton"
 	TouchTargets.enforce(_info_button)
 	_info_button.pressed.connect(_on_info_pressed)
+	A11y.label(_info_button, "Privacy", "What leaves this device")
 	privacy_row.add_child(_info_button)
 
 	_privacy_note = Label.new()
@@ -425,6 +434,7 @@ func _check(check_name: String, text: String) -> CheckButton:
 	check.text = text
 	check.theme_type_variation = &"SettingToggle"
 	TouchTargets.enforce(check)
+	A11y.label(check, text)
 	check.toggled.connect(_on_check_toggled)
 	return check
 

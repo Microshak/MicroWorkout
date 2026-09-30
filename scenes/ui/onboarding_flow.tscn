@@ -124,3 +124,5 @@ theme_override_constants/separation = 8
 [node name="ContinueButton" parent="Gutter/Layout/Footer" instance=ExtResource("3_primary")]
 layout_mode = 2
 text = "Get started"
+accessibility_name = "Get started"
+tooltip_text = "Get started"

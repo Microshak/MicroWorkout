@@ -46,7 +46,15 @@ static func log_rects_settled(tree: SceneTree, entries: Dictionary,
 
 static func _log_rects_settled(entries: Dictionary) -> void:
 	for name in entries:
-		log_rect(String(name), entries[name] as Control, true)
+		# The scene can be gone by now: an audit SubViewport is freed as soon as it is measured,
+		# and a screen may be popped inside the 1.5 s settle window. `is_instance_valid()` must
+		# come first — `x is Control` on a freed instance is itself an error. A stale rect is not
+		# worth a `SCRIPT ERROR` line in a log PRD-14 greps for errors.
+		var control: Variant = entries[name]
+		if not is_instance_valid(control):
+			continue
+		if control is Control:
+			log_rect(String(name), control, true)
 
 
 ## Logs several controls in one deferred call.

@@ -262,6 +262,7 @@ func _stepper_button(parent: Node, button_name: String, text: String) -> Button:
 	button.text = text
 	button.theme_type_variation = &"SecondaryButton"
 	TouchTargets.enforce(button)
+	A11y.label(button, text)
 	parent.add_child(button)
 	return button
 

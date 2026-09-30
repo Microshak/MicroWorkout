@@ -58,6 +58,8 @@ const PHASE_FALLBACK_SEC := 45
 ## R10's toasts, verbatim.
 const CANCELLED_TOAST := "Cancelled — nothing was saved."
 const BUSY_TOAST := "Still working on the last one — give it a second."
+## PRD-12 R8's exact no-key copy, shown as the generating overlay's sub-text.
+const NO_KEY_NOTE := "No API key saved. The built-in generator will make your plan."
 ## Only reached when the built-in generator itself cannot run (no library, no areas) — a state
 ## PRD-07 has no copy for, because it means the app is broken rather than unconfigured.
 const BUILTIN_FAILED_TOAST := "Couldn't build a plan on this device just now."
@@ -270,6 +272,7 @@ func _build_notes_step() -> void:
 	_notes_edit.wrap_mode = TextEdit.LINE_WRAPPING_BOUNDARY
 	_notes_edit.placeholder_text = NOTES_PLACEHOLDER
 	_notes_edit.virtual_keyboard_show_on_focus = true
+	A11y.label(_notes_edit, "Notes for this plan", NOTES_PLACEHOLDER)
 	body.add_child(_notes_edit)
 	_notes_edit.text_changed.connect(_on_notes_changed)
 
@@ -429,6 +432,7 @@ func _build_review_step() -> void:
 	reset.text = "Start over"
 	reset.custom_minimum_size = Vector2(0.0, REVIEW_ROW_HEIGHT)
 	reset.pressed.connect(_on_reset_pressed)
+	A11y.label(reset, "Start over")
 	body.add_child(reset)
 
 
@@ -464,6 +468,7 @@ func _build_review_row(index: int) -> HBoxContainer:
 	edit.text = "Edit"
 	edit.custom_minimum_size = Vector2(REVIEW_ROW_HEIGHT, REVIEW_ROW_HEIGHT)
 	edit.pressed.connect(_on_review_edit.bind(REVIEW_TARGETS[index]))
+	A11y.label(edit, "Edit %s" % REVIEW_LABELS[index])
 	row.add_child(edit)
 	return row
 
@@ -921,6 +926,13 @@ func _generate() -> void:
 		Feedback.toast(message if not message.is_empty() else BUILTIN_FAILED_TOAST, &"warning")
 		return
 
+	# PRD-12 R8: a fallback still saves a plan, and the owner is told which one and why. The
+	# wording is PRD-07's `user_message` — R8 forbids inventing copy here.
+	if source == "builtin" and not reason.is_empty():
+		var fallback_message := PlanModel.as_text(result.get("user_message"), "")
+		if not fallback_message.is_empty():
+			Feedback.toast(fallback_message, &"warning")
+
 	var sessions := WizardState.plain_list((plan as Dictionary).get("sessions", []))
 	print("[wizard] preview sessions=%d" % sessions.size())
 	Nav.push(Routes.PLAN_PREVIEW, {
@@ -943,6 +955,10 @@ func _begin_generation() -> void:
 		root.modulate.a = 0.0
 	_overlay.start(_phase_title(0))
 	_overlay.set_sub_text(_phase_sub(0))
+	# PRD-12 R8's no-key row: the wizard still generates (the built-in generator needs nothing),
+	# and the owner is told what is about to happen instead of wondering why it is instant.
+	if String(App.get_setting("llm.api_key", "")).is_empty():
+		_overlay.set_sub_text(NO_KEY_NOTE)
 	_gen_timer.start()
 	if root == null:
 		return

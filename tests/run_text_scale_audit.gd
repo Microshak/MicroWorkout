@@ -9,6 +9,9 @@ extends SceneTree
 ##
 ## `boot_screen` is excluded by the wrapper (it navigates away on a timer) and the debug gallery
 ## because it does not ship. The audit says nothing about looks; it measures geometry.
+##
+## The measurements themselves live in `tests/audit_geometry.gd`, shared with
+## `tests/run_layout_audit.gd` (PRD-12 R3/R5) so the two audits cannot diverge.
 
 const VIEWPORT_SIZE := Vector2i(1080, 1920)
 ## Entry transitions run `MOTION.screen_ms` (180 ms) plus slack, so the layout is settled before
@@ -87,7 +90,7 @@ func _audit(path: String) -> void:
 	await create_timer(SETTLE_SEC).timeout
 	await process_frame
 
-	var found := _findings(node, vp)
+	var found := AuditGeometry.geometry_findings(node, vp, VIEWPORT_SIZE)
 	if found.is_empty():
 		print("[fit] PASS %s" % path)
 	else:
@@ -104,7 +107,7 @@ func _report_rects(root_node: Node, vp: SubViewport, path: String) -> void:
 	# nodes are included for `*` too (prefixed `hidden:`) because a container that still
 	# reserves space for an invisible child is exactly the kind of thing this finds.
 	var all := _rect_names.has("*")
-	for node in _walk(root_node):
+	for node in AuditGeometry.walk(root_node):
 		if not (node is Control) or (node as Control).get_viewport() != vp:
 			continue
 		if not all and not _rect_names.has(String(node.name)):
@@ -117,86 +120,3 @@ func _report_rects(root_node: Node, vp: SubViewport, path: String) -> void:
 		print("[fit] rect %s %s (%.0f, %.0f, %.0f, %.0f)" % [
 			path.get_file(), name_text, rect.position.x, rect.position.y,
 			rect.size.x, rect.size.y])
-
-
-func _findings(root_node: Node, vp: SubViewport) -> PackedStringArray:
-	var out := PackedStringArray()
-	for node in _walk(root_node):
-		if not (node is Control):
-			continue
-		var control: Control = node
-		if not control.is_visible_in_tree() or control.get_viewport() != vp:
-			# Invisible, or inside an embedded Window (a dialog) — not this viewport's layout.
-			continue
-
-		if control is Label or control is RichTextLabel:
-			var minimum := control.get_combined_minimum_size().y
-			if control.size.y + EPSILON < minimum:
-				out.append("clip %s (%.0f < %.0f)" % [
-					control.get_path(), control.size.y, minimum])
-
-		if control is ScrollContainer:
-			var scroll: ScrollContainer = control
-			if scroll.horizontal_scroll_mode != ScrollContainer.SCROLL_MODE_DISABLED:
-				var bar := scroll.get_h_scroll_bar()
-				if bar != null and bar.max_value > bar.page + 0.5:
-					out.append("xscroll %s (max=%.0f page=%.0f)" % [
-						control.get_path(), bar.max_value, bar.page])
-			# R6's reachability rule: when the content fits (nothing to scroll), a child drawn
-			# outside the scroller's rect can never be brought into view — it is simply lost.
-			# This is how Home kept ghost gaps: the body's content was 938 px while the week
-			# strip was staged at y≈5 700, invisible and unreachable, with no scroll range that
-			# could ever reveal it.
-			var vbar := scroll.get_v_scroll_bar()
-			var scrollable := vbar != null and vbar.max_value > vbar.page + 0.5
-			if not scrollable:
-				var bounds := scroll.get_global_rect()
-				for inner in _walk(scroll):
-					if not (inner is Control) or inner == scroll:
-						continue
-					var ic: Control = inner
-					if not ic.is_visible_in_tree() or ic.get_viewport() != vp \
-							or _nearest_scroll(ic) != scroll:
-						continue
-					var irect := ic.get_global_rect()
-					if irect.end.y > bounds.end.y + EPSILON \
-							or irect.position.y < bounds.position.y - EPSILON:
-						out.append("unreachable %s (y %.0f..%.0f, scroller %.0f..%.0f)" % [
-							ic.get_path(), irect.position.y, irect.end.y,
-							bounds.position.y, bounds.end.y])
-
-		if not _inside_scroll(control):
-			var rect := control.get_global_rect()
-			if rect.end.y > VIEWPORT_SIZE.y + EPSILON or rect.position.y < -EPSILON \
-					or rect.end.x > VIEWPORT_SIZE.x + EPSILON or rect.position.x < -EPSILON:
-				out.append("overflow %s rect=(%.0f, %.0f, %.0f, %.0f)" % [
-					control.get_path(), rect.position.x, rect.position.y,
-					rect.size.x, rect.size.y])
-	return out
-
-
-func _walk(node: Node) -> Array[Node]:
-	var out: Array[Node] = [node]
-	for child in node.get_children():
-		out.append_array(_walk(child))
-	return out
-
-
-func _inside_scroll(control: Control) -> bool:
-	var parent := control.get_parent()
-	while parent != null:
-		if parent is ScrollContainer:
-			return true
-		parent = parent.get_parent()
-	return false
-
-
-## The nearest ScrollContainer ancestor, or null. Used to attribute a losing child to the scroll
-## container whose viewport it should be visible in.
-func _nearest_scroll(control: Control) -> ScrollContainer:
-	var parent := control.get_parent()
-	while parent != null:
-		if parent is ScrollContainer:
-			return parent
-		parent = parent.get_parent()
-	return null

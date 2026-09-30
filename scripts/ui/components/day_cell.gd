@@ -91,6 +91,9 @@ func set_day(iso: String, day_kind: String, in_displayed_month: bool, today: boo
 	_in_month = in_displayed_month
 	_is_today = today
 	tooltip_text = _tooltip()
+	# PRD-12 R5: a calendar cell is a real control — it is tappable and it must be spoken as
+	# "Tuesday 15 September, completed", never as a bare number.
+	A11y.make_interactive(self, _tooltip())
 	queue_redraw()
 
 

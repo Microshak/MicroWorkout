@@ -43,6 +43,9 @@ const SUITES: PackedStringArray = [
 	"res://tests/suites/test_month_grid.gd",
 	"res://tests/suites/test_area_balance.gd",
 	"res://tests/suites/test_tracker_screen.gd",
+	"res://tests/suites/test_motion.gd",
+	"res://tests/suites/test_feedback.gd",
+	"res://tests/suites/test_perf_budgets.gd",
 ]
 
 
@@ -67,6 +70,15 @@ func _run_all() -> void:
 
 	for path in SUITES:
 		var suite_script: Script = load(path)
+		# A suite that does not compile must not take the run down with it. `load()` still returns a
+		# GDScript object for a file with parse errors — only `can_instantiate()` is false — and
+		# without this guard the failed `.new()` errored and the SceneTree never quit: a hung runner
+		# instead of an actionable "this suite does not compile" line.
+		if suite_script == null or not suite_script.can_instantiate():
+			print("  ✘ %s — does not compile" % path)
+			suite_failures += 1
+			total_failures += 1
+			continue
 		var suite: TestSuite = suite_script.new()
 		suite.run()
 		total_assertions += suite.total_assertions

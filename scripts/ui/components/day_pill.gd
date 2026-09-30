@@ -103,7 +103,7 @@ func marker_visible() -> String:
 func pulse() -> void:
 	if not is_inside_tree():
 		return
-	if bool(App.get_setting("ui.reduce_motion", false)):
+	if not Motion.decorative_enabled():
 		return
 	pivot_offset = size * 0.5
 	var half := float(PULSE_MS) / 2000.0

@@ -50,6 +50,8 @@ theme_override_constants/separation = 8
 custom_minimum_size = Vector2(88, 88)
 layout_mode = 2
 theme_type_variation = &"GhostButton"
+accessibility_name = "Back"
+tooltip_text = "Back"
 
 [node name="Center" type="CenterContainer" parent="SafeArea/Layout/Header/BackButton"]
 layout_mode = 1
@@ -130,11 +132,15 @@ theme_override_constants/separation = 8
 custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
 text = "Save plan"
+accessibility_name = "Save plan"
+tooltip_text = "Save plan"
 
 [node name="RegenerateButton" parent="SafeArea/Layout/Actions" instance=ExtResource("3_secondary")]
 custom_minimum_size = Vector2(0, 88)
 layout_mode = 2
 text = "Regenerate"
+accessibility_name = "Regenerate"
+tooltip_text = "Regenerate"
 
 [node name="KeepPreviousButton" type="Button" parent="SafeArea/Layout/Actions"]
 visible = false
@@ -148,6 +154,8 @@ custom_minimum_size = Vector2(0, 88)
 layout_mode = 2
 theme_type_variation = &"GhostButton"
 text = "Edit answers"
+accessibility_name = "Edit answers"
+tooltip_text = "Edit answers"
 
 [node name="GeneratingOverlay" parent="." instance=ExtResource("6_overlay")]
 

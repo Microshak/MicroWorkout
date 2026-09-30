@@ -15,6 +15,8 @@ extends Control
 ## R12's copy.
 const TITLE_FULL := "You finished."
 const TITLE_PARTIAL := "Session logged."
+## PRD-12 R8: shown when the history entry is gone (a reset between the save and this screen).
+const SAVED_FALLBACK := "Session saved."
 const ADVICE_TITLE := "NEXT TIME"
 
 ## R12: when PRD-05's `Progression.advise()` is missing or returns nothing.
@@ -56,7 +58,6 @@ const CHECK_SIZE := 160.0
 @onready var _advice_card: PanelContainer = $SafeArea/Content/AdviceCard
 @onready var _advice_label: Label = $SafeArea/Content/AdviceCard/AdviceVBox/AdviceLabel
 @onready var _done_button: Button = $SafeArea/Content/DoneButton
-@onready var _sfx_player: AudioStreamPlayer = $SfxPlayer
 
 var _entry: Dictionary = {}
 var _partial: bool = false
@@ -74,7 +75,7 @@ var _ring_after: float = 0.0
 var _ring_target: int = 0
 var _row_nodes: Array[Control] = []
 
-static var _stream_cache: Dictionary = {}
+## The five cues live in `Feedback` (PRD-12 R2); this screen owns no audio node of its own.
 
 
 # ===========================================================================
@@ -130,13 +131,16 @@ func _fill_content() -> void:
 	var total := int(_entry.get("exercises_total", 0))
 	var sets_done := int(_entry.get("sets_completed", 0))
 	var sets_total := int(_entry.get("sets_total", 0))
-	var title := TITLE_PARTIAL if _partial else TITLE_FULL
+	# PRD-12 R8: a missing history entry degrades to one honest sentence rather than a screen of
+	# zeroes with no explanation.
+	var missing_entry := _entry.is_empty()
+	var title := SAVED_FALLBACK if missing_entry else (TITLE_PARTIAL if _partial else TITLE_FULL)
 
 	_title.text = title
 	_subtitle.text = String(_entry.get("session_title", ""))
-	_time_value.text = Dates.format_clock(duration)
-	_exercises_value.text = "%d of %d" % [completed, total]
-	_sets_value.text = "%d of %d" % [sets_done, sets_total]
+	_time_value.text = "—" if missing_entry else Dates.format_clock(duration)
+	_exercises_value.text = "—" if missing_entry else "%d of %d" % [completed, total]
+	_sets_value.text = "—" if missing_entry else "%d of %d" % [sets_done, sets_total]
 
 	var check_token := "warning" if _partial else "success"
 	_check.add_theme_color_override(&"color", DesignTokens.color(App.theme_mode, check_token))
@@ -234,7 +238,7 @@ func _play_celebration() -> void:
 		fade.kill()
 		_celebration_running = false
 		_apply_final_state()
-		_sfx(&"celebration")
+		Feedback.success()
 		return
 
 	_confetti.emitting = true
@@ -497,16 +501,10 @@ func _confetti_ramp() -> Gradient:
 
 
 func _sfx(sound_name: StringName) -> void:
-	var path := "res://assets/audio/sfx/%s.ogg" % sound_name
-	if not ResourceLoader.exists(path):
-		return
-	var stream: AudioStream = null
-	if _stream_cache.has(path):
-		stream = _stream_cache[path]
-	else:
-		stream = ResourceLoader.load(path) as AudioStream
-		_stream_cache[path] = stream
-	if stream == null:
-		return
-	_sfx_player.stream = stream
-	_sfx_player.play()
+	# PRD-12 R2 — the celebration sequence and its haptic pattern start together; the audio
+	# comes from `Feedback`'s generated cues, never from a loose asset in this screen.
+	match String(sound_name):
+		"celebration":
+			Feedback.celebrate()
+		_:
+			Feedback.success()

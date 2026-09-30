@@ -9,9 +9,10 @@ extends SceneTree
 ## `tests/suites/test_theme_drift.gd` fails the suite when they drift from the tokens.
 ##
 ## This is a plain SceneTree script (no @tool, no scene access) so it also runs on a machine
-## with no display. It prints exactly two lines (R1):
+## with no display. It prints exactly three lines (R1 + PRD-12 R4):
 ##   [themes] wrote theme_dark.tres (N items)
 ##   [themes] wrote theme_light.tres (N items)
+##   [tokens] wrote tokens.json (N bytes)
 ## N counts the items set through Theme's four item setters (set_color/set_stylebox/
 ## set_font_size/set_constant) — 126 for the R3 table. The root `default_font_size` and the
 ## `set_type_variation()` declarations are not items: they are what the remaining 30 property
@@ -33,6 +34,9 @@ extends SceneTree
 const Tokens := preload("res://scripts/core/design_tokens.gd")
 
 const THEMES_DIR := "res://resources/themes"
+## PRD-12 R4/AC3 — the machine-readable mirror written beside the themes, measured by
+## `tools/check_contrast.py` and cross-checked against the loaded themes by the suite.
+const TOKENS_JSON := "res://resources/themes/tokens.json"
 ## Sentinel for "this stylebox sets no content margins" (StyleBoxFlat's own default is -1).
 const NO_MARGINS := Vector4(-1.0, -1.0, -1.0, -1.0)
 const TRANSPARENT := Color(0, 0, 0, 0)
@@ -99,7 +103,66 @@ func _initialize() -> void:
 			quit(1)
 			return
 		print("[themes] wrote %s (%d items)" % [path.get_file(), _items])
+
+	var json_err := _write_tokens_json()
+	if json_err != OK:
+		push_error("[tokens] failed to write %s (error %d)" % [TOKENS_JSON, json_err])
+		quit(1)
+		return
 	quit(0)
+
+
+#region tokens.json (PRD-12 R4/AC3)
+
+## Writes [constant TOKENS_JSON], the machine-readable mirror of `DesignTokens`, from the same
+## source the two themes are built from — so the palette in the JSON, the palette in the
+## `.tres` files and the constants can never disagree without `tools/build_themes.sh` failing
+## its `git diff --exit-code` gate.
+##
+## The JSON is the input `tools/check_contrast.py` measures (it must not import GDScript) and
+## the artefact `tests/suites/test_design_tokens.gd` cross-checks against the loaded themes.
+## `JSON.stringify(data, indent, sort_keys = true)` gives byte-identical output for identical
+## tokens: keys are sorted at every level and the value formatting is fixed.
+func _write_tokens_json() -> Error:
+	var palettes: Dictionary = {}
+	for mode in Tokens.MODES:
+		var mode_name: String = mode
+		var resolved: Dictionary = {}
+		for token in Tokens.palette(mode_name):
+			resolved[token] = Tokens.palette(mode_name)[token]
+		palettes[mode_name] = resolved
+
+	var pairs: Array = []
+	for pair in Tokens.contrast_pairs():
+		pairs.append([String(pair[0]), String(pair[1])])
+
+	var data := {
+		"palettes": palettes,
+		"type": Tokens.TYPE.duplicate(),
+		"space": Tokens.SPACE.duplicate(),
+		"radius": Tokens.RADIUS.duplicate(),
+		"motion": Tokens.MOTION.duplicate(),
+		"contrast_pairs": pairs,
+		"touch_min": Tokens.TOUCH_MIN,
+		"gutter": Tokens.GUTTER,
+		"nav_bar_height": Tokens.NAV_BAR_HEIGHT,
+		"top_bar_height": Tokens.TOP_BAR_HEIGHT,
+		"safe_fallback": [
+			Tokens.SAFE_FALLBACK.x, Tokens.SAFE_FALLBACK.y,
+			Tokens.SAFE_FALLBACK.z, Tokens.SAFE_FALLBACK.w,
+		],
+	}
+
+	var file := FileAccess.open(TOKENS_JSON, FileAccess.WRITE)
+	if file == null:
+		return FileAccess.get_open_error()
+	file.store_string(JSON.stringify(data, "  ", true) + "\n")
+	file.close()
+	print("[tokens] wrote %s (%d bytes)" % [TOKENS_JSON.get_file(), FileAccess.get_file_as_string(TOKENS_JSON).length()])
+	return OK
+
+
+#endregion
 
 
 #region Theme construction

@@ -53,6 +53,8 @@ layout_mode = 2
 size_flags_vertical = 4
 focus_mode = 0
 theme_type_variation = &"GhostButton"
+accessibility_name = "Pause workout"
+tooltip_text = "Pause workout"
 
 [node name="Center" type="CenterContainer" parent="SafeArea/Layout/TopBar/PauseButton"]
 layout_mode = 1
@@ -324,5 +326,3 @@ anchors_preset = 10
 anchor_right = 1.0
 grow_horizontal = 2
 mouse_filter = 2
-
-[node name="SfxPlayer" type="AudioStreamPlayer" parent="."]

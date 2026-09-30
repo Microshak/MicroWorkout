@@ -121,9 +121,26 @@ func _ready() -> void:
 	_connect_signals()
 	_apply_palette()
 	_flame_node.resized.connect(_on_flame_resized)
+	_label_buttons()
 	refresh()
+	# R10 (P1/P7): Home's first frame is the cold-start finish line; the node count is a property
+	# of the heaviest tab, so it is measured here.
+	Perf.end_boot()
+	Perf.report_nodes()
 	_play_entrance.call_deferred()
 	print("[home] ready states=5 strip=7")
+
+
+## PRD-12 R5: the five state cards build their actions in the scene, so each button reads its
+## own visible label. Buttons whose text changes later (the CTA, the early-day actions) are
+## relabelled where the new text is written.
+func _label_buttons(node: Node = self) -> void:
+	if node is Button:
+		var button: Button = node
+		if not button.text.is_empty():
+			A11y.label(button, button.text)
+	for child in node.get_children():
+		_label_buttons(child)
 
 
 func _notification(what: int) -> void:
@@ -407,8 +424,10 @@ func _render_today(built: Dictionary) -> void:
 		var counts := _progress_counts(progress)
 		meta += " · %d of %d done" % [counts.x, counts.y]
 		_start_button.text = "Resume workout"
+		A11y.label(_start_button, "Resume today's session")
 	else:
 		_start_button.text = "Start workout"
+		A11y.label(_start_button, "Start today's session")
 	_meta_row.text = meta
 	_start_breathe()
 
@@ -449,6 +468,7 @@ func _render_done(built: Dictionary) -> void:
 	_done_body.text = "You finished %s in %d min." % [title, int(built.get("done_minutes", 0))]
 	var label := String(built.get("early_label", ""))
 	_done_early_button.text = label
+	A11y.label(_done_early_button, label if not label.is_empty() else "Start early")
 	_done_early_button.visible = bool(built.get("early_available", false)) and not label.is_empty()
 
 
@@ -459,6 +479,7 @@ func _render_rest(built: Dictionary) -> void:
 		built.get("next_weekday_name", ""))
 	var label := String(built.get("early_label", ""))
 	_rest_early_button.text = label
+	A11y.label(_rest_early_button, label if not label.is_empty() else "Start early")
 	_rest_early_button.visible = bool(built.get("early_available", false)) and not label.is_empty()
 
 

@@ -31,6 +31,9 @@ var _entry: Dictionary = {}
 
 
 func _ready() -> void:
+	# PRD-12 R5: the disabled chip is a status read-out, not a dead control. `_render_status()`
+	# relabels it with the real outcome once an entry resolves.
+	A11y.label(_status, _status.text if not _status.text.is_empty() else "Session status")
 	_background.color = DesignTokens.color(App.theme_mode, "bg")
 	if _top_bar.has_method(&"set_title"):
 		_top_bar.call(&"set_title", "Session")
@@ -107,6 +110,7 @@ func _render_status(completed: int, total: int) -> void:
 	var done := bool(_entry.get("completed", false))
 	_status.disabled = true
 	_status.text = "Completed" if done else "Partial — %d of %d" % [completed, total]
+	A11y.label(_status, _status.text)
 	_status.add_theme_color_override(&"font_disabled_color",
 		DesignTokens.accent_text(App.theme_mode, "success" if done else "warning"))
 

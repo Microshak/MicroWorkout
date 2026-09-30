@@ -52,6 +52,11 @@ var _rest_slider: HSlider = null
 var _rest_value_label: Label = null
 var _rest_vibrate: CheckButton = null
 var _rest_sound: CheckButton = null
+## PRD-12 R2 — Sections/Feedback switches.
+var _sound_check: CheckButton = null
+var _haptics_check: CheckButton = null
+var _reduce_motion_check: CheckButton = null
+var _feedback_caption: Label = null
 var _provider_block: ProviderConfigBlock = null
 var _plan_button: Button = null
 var _plan_status: Label = null
@@ -293,6 +298,7 @@ func _build_rest_timer() -> void:
 	_rest_slider.custom_minimum_size.y = float(DesignTokens.TOUCH_MIN)
 	_rest_slider.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_rest_slider.value_changed.connect(_on_rest_changed)
+	A11y.label(_rest_slider, Strings.REST_TIMER_SECTION, "Seconds between sets")
 	items.add_child(_rest_slider)
 
 	_rest_value_label = _caption(items, "")
@@ -337,6 +343,36 @@ func _build_feedback() -> void:
 	_refresh_text_size()
 
 	_caption(items, Strings.TEXT_SIZE_HINT)
+
+	# PRD-12 R2 — one switch per sense plus the reduced-motion flag PRD-02's transitions and
+	# PRD-12 R1's decorative effects both honour.
+	_sound_check = _check(items, "SoundEffectsCheck", Strings.SOUND_LABEL, "ui.sound_enabled")
+	_haptics_check = _check(items, "HapticsCheck", Strings.HAPTICS_LABEL, "ui.haptics_enabled")
+	# `_check` defaults an unset key to `true`; reduced motion ships off, so it is created
+	# directly with the schema's default.
+	_reduce_motion_check = CheckButton.new()
+	_reduce_motion_check.name = "ReduceMotionCheck"
+	_reduce_motion_check.text = Strings.REDUCE_MOTION_LABEL
+	_reduce_motion_check.theme_type_variation = &"SettingToggle"
+	_reduce_motion_check.button_pressed = bool(App.get_setting("ui.reduce_motion", false))
+	TouchTargets.enforce(_reduce_motion_check)
+	A11y.label(_reduce_motion_check, Strings.REDUCE_MOTION_LABEL)
+	_reduce_motion_check.toggled.connect(_on_check_toggled.bind("ui.reduce_motion"))
+	items.add_child(_reduce_motion_check)
+
+	_feedback_caption = _caption(items, "")
+	_refresh_feedback_caption()
+
+
+## R2's precedence rule is a statement about the off case, so the caption is only shown while a
+## global switch is off — the rest-timer flags apply only while sound and haptics are on.
+func _refresh_feedback_caption() -> void:
+	if _feedback_caption == null:
+		return
+	var sound := bool(App.get_setting("ui.sound_enabled", true))
+	var haptics := bool(App.get_setting("ui.haptics_enabled", true))
+	_feedback_caption.text = Strings.FEEDBACK_PRECEDENCE
+	_feedback_caption.visible = not (sound and haptics)
 
 
 ## R6: a real setting — `App.set_setting` validates it, persists it and rebuilds the root
@@ -758,6 +794,7 @@ func _button(parent: Node, button_name: String, text: String, variation: StringN
 	button.text = text
 	button.theme_type_variation = variation
 	TouchTargets.enforce(button)
+	A11y.label(button, text)
 	parent.add_child(button)
 	return button
 
@@ -769,6 +806,7 @@ func _check(parent: Node, check_name: String, text: String, path: String) -> Che
 	check.theme_type_variation = &"SettingToggle"
 	check.button_pressed = bool(App.get_setting(path, true))
 	TouchTargets.enforce(check)
+	A11y.label(check, text)
 	check.toggled.connect(_on_check_toggled.bind(path))
 	parent.add_child(check)
 	return check
@@ -780,6 +818,7 @@ func _on_check_toggled(pressed: bool, path: String) -> void:
 		_reject(path, message)
 		return
 	var _written := App.set_setting(path, pressed)
+	_refresh_feedback_caption()
 
 
 func _reject(path: String, message: String) -> void:

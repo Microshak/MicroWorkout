@@ -17,16 +17,128 @@ extends Control
 
 ## How long the shell is given to come up before the autostart push.
 const AUTOSTART_DELAY_SEC := 1.2
+## PRD-12 R8 — the exact copy for the three boot states.
+const LOADING_COPY := "Loading…"
+const SLOW_COPY := "Still loading — first-time setup can take a few seconds."
+const ERROR_COPY := "Something went wrong starting up."
+## After this long, "Loading…" becomes the slow variant.
+const SLOW_HINT_SEC := 4.0
+
+var _slow_hint: Timer = null
+## PRD-12 R8 — the boot error state's destructive escape hatch (see `_show_error()`).
+var _reset_dialog: ConfirmationDialog = null
+var _reset_field: LineEdit = null
 
 
 func _ready() -> void:
 	print("[boot] %s %s ready" % [AppInfo.NAME, AppInfo.VERSION])
 	print("[boot] platform=%s" % OS.get_name())
+	if is_instance_valid(_status):
+		_status.text = LOADING_COPY
+	_slow_hint = Timer.new()
+	_slow_hint.name = "SlowHint"
+	_slow_hint.wait_time = SLOW_HINT_SEC
+	_slow_hint.one_shot = true
+	_slow_hint.timeout.connect(_on_slow_hint)
+	add_child(_slow_hint)
+	_slow_hint.start()
 	_boot()
+
+
+func _on_slow_hint() -> void:
+	# Only while still on this screen: once the shell owns the window the hint is meaningless.
+	if is_instance_valid(_status) and _status.text == LOADING_COPY:
+		_status.text = SLOW_COPY
+
+
+## PRD-12 R8's boot failure state: the copy, a working retry, and a destructive way out that
+## reuses PRD-06's type-the-word guard (`Strings.RESET_WORD`, the same constant Settings uses).
+func _show_error() -> void:
+	if is_instance_valid(_status):
+		_status.text = ERROR_COPY
+	print("[boot] error — store not loaded (%s)" % Store.last_error())
+	var box := _status.get_parent() as VBoxContainer if is_instance_valid(_status) else null
+	if box == null:
+		return
+	if box.has_node(^"RetryButton"):
+		return
+	var retry := Button.new()
+	retry.name = "RetryButton"
+	retry.text = "Try again"
+	retry.theme_type_variation = &"PrimaryButton"
+	TouchTargets.enforce(retry)
+	A11y.label(retry, "Try again")
+	retry.pressed.connect(_on_retry_pressed)
+	box.add_child(retry)
+
+	var reset := Button.new()
+	reset.name = "ResetAppDataButton"
+	reset.text = "Reset app data"
+	reset.theme_type_variation = &"DangerButton"
+	TouchTargets.enforce(reset)
+	A11y.label(reset, "Reset all app data, cannot be undone")
+	reset.pressed.connect(_on_reset_pressed)
+	box.add_child(reset)
+
+	_reset_dialog = ConfirmationDialog.new()
+	_reset_dialog.name = "ResetConfirm"
+	_reset_dialog.title = Strings.RESET_TITLE
+	_reset_dialog.dialog_text = Strings.RESET_BODY + "\n\n" + Strings.RESET_WARNING
+	_reset_dialog.ok_button_text = Strings.RESET_OK
+	_reset_dialog.cancel_button_text = Strings.RESET_CANCEL
+	_reset_dialog.exclusive = true
+	add_child(_reset_dialog)
+	_reset_field = LineEdit.new()
+	_reset_field.name = "TypeReset"
+	_reset_field.theme_type_variation = &"Input"
+	_reset_field.placeholder_text = Strings.RESET_WORD
+	TouchTargets.enforce(_reset_field)
+	A11y.label(_reset_field, "Type %s to confirm" % Strings.RESET_WORD)
+	_reset_dialog.add_child(_reset_field)
+	_reset_dialog.about_to_popup.connect(_update_reset_guard)
+	_reset_field.text_changed.connect(func(_text: String) -> void: _update_reset_guard())
+	_reset_dialog.confirmed.connect(_on_reset_confirmed)
+
+
+func _on_retry_pressed() -> void:
+	Store.load_all()
+	if is_instance_valid(_status):
+		_status.text = LOADING_COPY
+	if is_instance_valid(_slow_hint):
+		_slow_hint.start()
+	_boot()
+
+
+func _on_reset_pressed() -> void:
+	_reset_field.text = ""
+	_update_reset_guard()
+	_reset_dialog.popup_centered()
+
+
+func _update_reset_guard() -> void:
+	if _reset_dialog == null or _reset_field == null:
+		return
+	_reset_dialog.get_ok_button().disabled = \
+		_reset_field.text.rstrip(" \t\r\n") != Strings.RESET_WORD
+
+
+func _on_reset_confirmed() -> void:
+	if _reset_field.text.rstrip(" \t\r\n") != Strings.RESET_WORD:
+		return
+	var _wiped: bool = Store.reset_all()
+	print("[boot] reset_all done; restarting")
+	# Back through boot, exactly like Settings' Danger section does (R12).
+	var _err := get_tree().change_scene_to_file(Routes.scene_for(Routes.BOOT))
 
 
 func _boot() -> void:
 	await get_tree().create_timer(AppInfo.MIN_SPLASH_SECONDS).timeout
+	# PRD-12 R8: a store that never loaded is the one boot failure this screen can see, and it is
+	# the one the owner can act on — retry, or wipe what is broken (PRD-00 §6's quarantine has
+	# already kept a backup).
+	if is_instance_valid(Store) and not Store.is_loaded():
+		_show_error()
+		return
 	if is_instance_valid(_status):
 		_status.text = "Ready"
 	var first_run := not onboarding_complete()

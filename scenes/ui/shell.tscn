@@ -71,3 +71,9 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0.058824, 0.066667, 0.086275, 1)
+
+[node name="LiveRegion" type="Label" parent="."]
+visible = false
+accessibility_live = 1
+mouse_filter = 2
+text = ""

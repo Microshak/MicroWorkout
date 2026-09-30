@@ -27,6 +27,13 @@ func _ready() -> void:
 	resized.connect(_on_resized)
 	button_down.connect(_on_button_down)
 	button_up.connect(_on_button_up)
+	# PRD-12 R2: every button built on this component acknowledges the press.
+	if not pressed.is_connected(_on_pressed):
+		pressed.connect(_on_pressed)
+
+
+func _on_pressed() -> void:
+	Feedback.tap()
 
 
 func _on_resized() -> void:

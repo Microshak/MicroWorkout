@@ -20,6 +20,10 @@ const PLACEHOLDER_KIND := &"dumbbell"
 
 ## Decoded frames per exercise id, shared by every instance.
 static var _texture_cache: Dictionary = {}
+## Exercise ids in least-recently-used order (PRD-12 R10's P6 ceiling).
+static var _cache_order: Array[String] = []
+## Exercise ids whose declared art failed to load — one warning each (PRD-12 R8).
+static var _missing_reported: Dictionary = {}
 
 var _exercise_id: String = ""
 var _sequence: PackedInt32Array = PackedInt32Array([0])
@@ -118,8 +122,16 @@ static func _build_sequence(count: int) -> PackedInt32Array:
 	return out
 
 
+## PRD-12 R10 (P6): at most twelve decoded frames stay resident — four exercises' worth. The
+## cache is shared by every instance, so the ceiling is a property of the app, not of a screen.
+const MAX_CACHED_TEXTURES := 12
+
+
 func _resolve_textures() -> Array:
+	if _exercise_id.is_empty():
+		return _texture_cache.get("", [])
 	if _texture_cache.has(_exercise_id):
+		_mark_used(_exercise_id)
 		return _texture_cache[_exercise_id]
 	var loaded: Array = []
 	for path in frames:
@@ -128,8 +140,39 @@ func _resolve_textures() -> Array:
 		var resource := ResourceLoader.load(path)
 		if resource is Texture2D:
 			loaded.append(resource)
+	# PRD-12 R8: declared art that did not load is worth a warning once per exercise — the
+	# placeholder is the designed path when a library has no art at all.
+	if loaded.is_empty() and not frames.is_empty() and not _missing_reported.has(_exercise_id):
+		_missing_reported[_exercise_id] = true
+		Feedback.toast("Illustration missing for %s." % Library.name_of(_exercise_id), &"warning")
 	_texture_cache[_exercise_id] = loaded
+	_mark_used(_exercise_id)
+	_evict()
+	Perf.report_textures(_resident_textures())
 	return loaded
+
+
+## Least-recently-used bookkeeping: `_cache_order` holds exercise ids, oldest first.
+static func _mark_used(new_id: String) -> void:
+	_cache_order.erase(new_id)
+	_cache_order.append(new_id)
+
+
+## Drops whole exercises (never individual frames) until the ceiling holds. A evicted frames'
+## resource is released by the engine once the last reference goes; the placeholder path stays
+## correct because `_textures` on a live instance keeps its own reference.
+static func _evict() -> void:
+	while _resident_textures() > MAX_CACHED_TEXTURES and not _cache_order.is_empty():
+		var oldest: String = _cache_order.pop_front()
+		_texture_cache.erase(oldest)
+
+
+static func _resident_textures() -> int:
+	var total := 0
+	for key in _texture_cache:
+		var frames_in_cache: Array = _texture_cache[key]
+		total += frames_in_cache.size()
+	return total
 
 
 func _apply_frame() -> void:

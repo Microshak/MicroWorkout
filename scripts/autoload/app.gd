@@ -87,9 +87,13 @@ var _scaled_themes: Dictionary = {}
 var theme_mode: String = THEME_DARK
 var _layout_class: int = LayoutUtil.Class.NORMAL
 var _insets: Vector4 = Vector4.ZERO
+## PRD-12 R9 — the day the app believes it is, so a resume across midnight can notice.
+var _today_iso: String = Dates.today_iso()
 
 
 func _ready() -> void:
+	# PRD-12 R10 (P1): the cold-start clock starts at the first line of app code.
+	Perf.begin_boot()
 	theme_mode = String(settings.get("theme", THEME_DARK))
 	_apply_theme()
 	var root := get_tree().root
@@ -99,6 +103,50 @@ func _ready() -> void:
 	_recompute_layout()
 	print("[App] ready — %s %s (%s)" % [AppInfo.NAME, AppInfo.VERSION, OS.get_name()])
 	_boot.call_deferred()
+
+
+## PRD-12 R9 — lifecycle hardening.
+##
+## The engine reports these to every autoload; App owns the ones that are about the app as a
+## whole. `PRD-02` owns back routing and `PRD-10` owns the in-session contract, so nothing here
+## touches navigation.
+func _notification(what: int) -> void:
+	match what:
+		NOTIFICATION_APPLICATION_PAUSED:
+			# R9: forced, bypassing PRD-03's 400 ms debounce — Android may kill us next.
+			if is_instance_valid(Store):
+				Store.flush()
+				print("[store] flushed on pause")
+		NOTIFICATION_APPLICATION_RESUMED:
+			# R9: a phone can spend the night in a pocket; the day may have changed.
+			var today := Dates.today_iso()
+			if today != _today_iso:
+				print("[app] date rollover %s -> %s" % [_today_iso, today])
+				_today_iso = today
+				data_changed.emit()
+				settings_changed.emit("")
+			if is_instance_valid(Feedback):
+				Feedback.set_enabled(bool(_mirror_get("ui.sound_enabled", true)),
+					bool(_mirror_get("ui.haptics_enabled", true)))
+		NOTIFICATION_WM_SIZE_CHANGED:
+			# R9: rotation is locked to portrait, but multi-window and the audit SubViewport
+			# resize the root. Containers re-sort on their own; the shell needs telling once.
+			if is_instance_valid(Nav):
+				var shell: Node = Nav.shell()
+				if shell is Control:
+					(shell as Control).queue_sort()
+
+
+## PRD-12 R2 — the `UI` bus exists once and is muted by `ui.sound_enabled`. Nothing ducks;
+## `UI` sends straight to `Master`.
+func _apply_ui_bus() -> void:
+	var index := AudioServer.get_bus_index("UI")
+	if index < 0:
+		AudioServer.add_bus()
+		index = AudioServer.bus_count - 1
+		AudioServer.set_bus_name(index, "UI")
+		AudioServer.set_bus_send(index, "Master")
+	AudioServer.set_bus_mute(index, not bool(_mirror_get("ui.sound_enabled", true)))
 
 
 func _boot() -> void:
@@ -131,8 +179,9 @@ func _adopt_stored_settings() -> void:
 	theme_mode = mode if DesignTokens.MODES.has(mode) else THEME_DARK
 	Nav.set_reduce_motion(bool(_mirror_get("ui.reduce_motion", false)))
 	if is_instance_valid(Feedback):
-		Feedback.haptics_enabled = bool(_mirror_get("ui.haptics_enabled", true))
-		Feedback.sfx_enabled = bool(_mirror_get("ui.sound_enabled", true))
+		Feedback.set_enabled(bool(_mirror_get("ui.sound_enabled", true)),
+			bool(_mirror_get("ui.haptics_enabled", true)))
+	_apply_ui_bus()
 
 
 # ------------------------------------------------------------------ theme
@@ -302,6 +351,13 @@ func set_setting(path: String, value: Variant) -> bool:
 			print("[theme] text_scale=%.2f applied" % text_scale())
 		"ui.reduce_motion":
 			Nav.set_reduce_motion(bool(value))
+		"ui.sound_enabled", "ui.haptics_enabled":
+			# PRD-12 R2: both senses are owned by `Feedback`; the bus mute is the audible half.
+			if is_instance_valid(Feedback):
+				Feedback.set_enabled(
+					bool(_mirror_get("ui.sound_enabled", true)),
+					bool(_mirror_get("ui.haptics_enabled", true)))
+			_apply_ui_bus()
 	settings_changed.emit(path)
 	return true
 

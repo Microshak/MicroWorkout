@@ -177,5 +177,5 @@ custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Done"
-
-[node name="SfxPlayer" type="AudioStreamPlayer" parent="."]
+accessibility_name = "Done"
+tooltip_text = "Done"

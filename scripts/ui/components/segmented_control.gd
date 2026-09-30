@@ -132,6 +132,10 @@ func _rebuild() -> void:
 		var chip: Button = _chips[i]
 		chip.text = _labels[i]
 		chip.toggle_mode = true
+		# PRD-12 R5: each chip is a real control a screen reader lands on, and the row reads
+		# in visual order.
+		A11y.label(chip, _labels[i], "Option %d of %d" % [i + 1, _labels.size()])
+	A11y.chain_focus(_chips, true)
 	_apply_selection()
 
 

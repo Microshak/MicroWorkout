@@ -127,3 +127,23 @@ SIZE_BYTES="$(stat -c%s "$OUT")"
 SIZE_MB="$(awk -v b="$SIZE_BYTES" 'BEGIN{printf "%.2f", b/1048576}')"
 echo "[build] OK  $(basename "$OUT")  ${SIZE_MB} MB (${SIZE_BYTES} bytes)"
 echo "$SIZE_MB" > "$BUILD_DIR/last_apk_size_mb.txt"
+echo "APK size: ${SIZE_MB} MB"
+
+# PRD-12 R11 — the size gate. The release APK's budget is ≤ 60 MB target and ≤ 75 MB hard
+# ceiling; AC12 requires this script to fail above the ceiling rather than report a number
+# nobody checks. ALLOW_OVERSIZE=1 is the documented escape hatch (and the perf report's P8 row
+# reads the same number out of this output).
+if [[ "$MODE" == "release" ]]; then
+  if awk -v size="$SIZE_MB" 'BEGIN { exit !(size > 75.0) }'; then
+    if [[ "${ALLOW_OVERSIZE:-0}" == "1" ]]; then
+      echo "[build] WARNING — ${SIZE_MB} MB exceeds the 75 MB ceiling (ALLOW_OVERSIZE=1)" >&2
+    else
+      echo "[build] FAILED — ${SIZE_MB} MB exceeds the 75 MB ceiling (PRD-12 R11)." >&2
+      echo "[build]   Levers, in order: drop an ABI, PNG compress/mode=1, PRD-04's art ladder," >&2
+      echo "[build]   WebP q80 (ADR), or a 'lite' preset. ALLOW_OVERSIZE=1 overrides." >&2
+      exit 1
+    fi
+  elif awk -v size="$SIZE_MB" 'BEGIN { exit !(size > 60.0) }'; then
+    echo "[build] NOTE — ${SIZE_MB} MB is over the 60 MB target but under the 75 MB ceiling"
+  fi
+fi

@@ -70,6 +70,12 @@ const REST_VIBRATE_LABEL := "Vibrate when rest ends"
 const REST_SOUND_LABEL := "Beep when rest ends"
 const TEXT_SIZE_LABEL := "Text size"
 const TEXT_SIZE_HINT := "Applies to every screen right away."
+const SOUND_LABEL := "Sound effects"
+const HAPTICS_LABEL := "Haptics"
+const REDUCE_MOTION_LABEL := "Reduce motion"
+## PRD-12 R2 — the precedence rule, shown only while a global switch is off (it is a
+## statement about the off case; on-screen noise otherwise).
+const FEEDBACK_PRECEDENCE := "Sound and haptics are off everywhere. Your rest-timer preferences still apply when they're on."
 const PLAN_REGENERATE_BUTTON := "Regenerate default plan"
 const PLAN_REGENERATE_CONFIRM := "Replace your current default plan with a freshly generated \
 one? Your workout history is not touched."

@@ -26,6 +26,9 @@ const THEME_PATHS := {
 	"light": "res://resources/themes/theme_light.tres",
 }
 
+## PRD-12 R4/AC3 — the machine-readable mirror written by `scripts/dev/build_themes.gd`.
+const TOKENS_JSON := "res://resources/themes/tokens.json"
+
 ## Items set through Theme's four item setters, counted from the resource itself.
 const EXPECTED_ITEMS := 126
 
@@ -93,6 +96,7 @@ func run() -> void:
 	_check_variations(dark, light)
 	_check_structural_parity(dark, light)
 	_check_stylebox_shape(dark, light)
+	_check_tokens_json(dark, light)
 
 	for mode in Tokens.MODES:
 		var mode_name: String = mode
@@ -112,6 +116,81 @@ func run() -> void:
 
 
 #region Structure
+
+
+## PRD-12 R4/AC3 — `resources/themes/tokens.json` is a true mirror: every palette entry, type,
+## space, radius and motion value equals `DesignTokens`, and the values it publishes are the
+## ones the loaded Theme resources actually render with. That closes the triangle
+## tokens.json ⟷ DesignTokens ⟷ .tres without duplicating the 126-item mapping: the theme-side
+## agreement is asserted here on the three kinds of item the JSON carries (colour, font size,
+## panel fill), and `_check_tokens()` proves the rest against the same constants.
+func _check_tokens_json(dark: Theme, light: Theme) -> void:
+	begin("tokens.json mirrors the tokens and the themes")
+	var text := FileAccess.get_file_as_string(TOKENS_JSON)
+	assert_true(not text.is_empty(), "%s exists and is not empty" % TOKENS_JSON)
+	var parsed: Variant = JSON.parse_string(text)
+	assert_true(parsed is Dictionary, "%s parses as a JSON object" % TOKENS_JSON)
+	if not (parsed is Dictionary):
+		return
+	var data: Dictionary = parsed
+
+	for key in ["palettes", "type", "space", "radius", "motion", "contrast_pairs"]:
+		assert_has_key(data, key, "tokens.json has '%s'" % key)
+	if not data.has("palettes"):
+		return
+
+	var palettes: Dictionary = data["palettes"]
+	for mode in Tokens.MODES:
+		var mode_name: String = mode
+		assert_has_key(palettes, mode_name, "tokens.json has the %s palette" % mode_name)
+		if not palettes.has(mode_name):
+			continue
+		var json_palette: Dictionary = palettes[mode_name]
+		var tokens_palette: Dictionary = Tokens.palette(mode_name)
+		assert_eq(json_palette.size(), tokens_palette.size(),
+			"%s palette has every token" % mode_name)
+		for token in tokens_palette:
+			assert_eq(json_palette.get(token, "<missing>"), tokens_palette[token],
+				"%s.%s matches DesignTokens" % [mode_name, token])
+
+	for dict_key in ["type", "space", "radius", "motion"]:
+		var source: Dictionary = _design_tokens_dict(dict_key)
+		var mirror: Dictionary = data[dict_key]
+		assert_eq(mirror.size(), source.size(), "tokens.json '%s' size" % dict_key)
+		for key in source:
+			assert_eq(mirror.get(key, "<missing>"), source[key],
+				"%s.%s matches DesignTokens" % [dict_key, key])
+
+	# tokens.json ⟷ theme: one item of each kind, in each mode, must be identical.
+	for mode in Tokens.MODES:
+		var mode_name: String = mode
+		var theme: Theme = dark if mode_name == "dark" else light
+		var json_palette: Dictionary = palettes[mode_name]
+		assert_eq(theme.get_color(&"font_color", &"BodyLabel"),
+			Tokens.hex_to_color(json_palette["text"]),
+			"%s BodyLabel font_color equals the mirrored 'text' token" % mode_name)
+		assert_eq(theme.get_font_size(&"font_size", &"H2"),
+			int(data["type"]["h2"]),
+			"%s H2 font_size equals the mirrored 'h2' step" % mode_name)
+		var card := theme.get_stylebox(&"panel", &"Card") as StyleBoxFlat
+		assert_true(card != null, "%s Card panel is a StyleBoxFlat" % mode_name)
+		if card != null:
+			assert_eq(card.bg_color, Tokens.hex_to_color(json_palette["surface"]),
+				"%s Card fill equals the mirrored 'surface' token" % mode_name)
+
+	var pairs: Array = data["contrast_pairs"]
+	assert_eq(pairs.size(), Tokens.contrast_pairs().size(),
+		"tokens.json publishes every contrast pair")
+
+
+## The four mirrored dictionaries live in typed constants on DesignTokens; a Dictionary lookup
+## keeps this loop static (Godot has no reflection over const dictionaries).
+func _design_tokens_dict(key: String) -> Dictionary:
+	match key:
+		"type": return Tokens.TYPE
+		"space": return Tokens.SPACE
+		"radius": return Tokens.RADIUS
+		_: return Tokens.MOTION
 
 
 func _check_variations(dark: Theme, light: Theme) -> void:

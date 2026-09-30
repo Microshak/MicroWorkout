@@ -90,7 +90,7 @@ autowrap_mode = 3
 [node name="NoPlanButton" parent="Scroller/Gutter/Body/StateHost/NoPlanCard/CardBody" instance=ExtResource("7_primary_button")]
 custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
-text = "Build my plan"
+text = "Create a plan"
 
 [node name="TodayCard" type="PanelContainer" parent="Scroller/Gutter/Body/StateHost"]
 visible = false
@@ -164,6 +164,8 @@ size_flags_horizontal = 3
 theme_type_variation = &"GhostButton"
 text = "See the exercises"
 script = ExtResource("9_tappable")
+accessibility_name = "See the exercises"
+tooltip_text = "See the exercises"
 
 [node name="ChangePlanButton" type="Button" parent="Scroller/Gutter/Body/StateHost/TodayCard/CardBody/CardActions"]
 custom_minimum_size = Vector2(0, 88)
@@ -172,6 +174,8 @@ size_flags_horizontal = 3
 theme_type_variation = &"GhostButton"
 text = "Change plan"
 script = ExtResource("9_tappable")
+accessibility_name = "Change plan"
+tooltip_text = "Change plan"
 
 [node name="DoneTodayCard" type="PanelContainer" parent="Scroller/Gutter/Body/StateHost"]
 visible = false

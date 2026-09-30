@@ -14,6 +14,7 @@ extends Control
 @onready var _screen_host: Control = $SafeAreaHost/ScreenHost
 @onready var _toast_layer: Control = $ToastLayer
 @onready var _veil: ColorRect = $TransitionVeil
+@onready var _live_region: Label = $LiveRegion
 
 var _tab_roots: Array[Control] = []
 
@@ -37,6 +38,8 @@ func _ready() -> void:
 
 	_check_touch_targets.call_deferred()
 	_log_probe_rects.call_deferred()
+	# PRD-12 R10 (P3/P4): the steady-state fps window, one timer, no per-frame cost.
+	Perf.attach(self)
 	print("[ui] shell ready tabs=%d" % _tab_roots.size())
 
 
@@ -54,6 +57,12 @@ func screen_host() -> Control:
 
 func toast_layer() -> Control:
 	return _toast_layer
+
+
+## PRD-12 R5 — the polite live region screen readers watch. A `Feedback.toast()` writes
+## its text here through `A11y.announce()`, so a toast is spoken as well as shown.
+func live_region() -> Label:
+	return _live_region
 
 
 func veil() -> ColorRect:

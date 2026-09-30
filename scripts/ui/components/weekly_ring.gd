@@ -25,6 +25,11 @@ var _target: int = 0
 var _fraction: float = 0.0
 var _tween: Tween = null
 var _drawn_once: bool = false
+## PRD-12 R2: the cue fires on *reaching* the goal, not on seeing it — the first paint of an
+## already-complete week stays silent, and the two live instances (Home and Tracker) speak once
+## per ISO week because the week id is remembered process-wide.
+var _was_at_goal: bool = true
+static var _celebrated_week: String = ""
 
 ## See day_pill: a colour override set from inside the theme notification re-enters it.
 var _applying: bool = false
@@ -65,6 +70,7 @@ func set_week(completed: int, target: int, fraction: float, bits: PackedByteArra
 	_completed = maxi(completed, 0)
 	_target = maxi(target, 0)
 	_fraction = clampf(fraction, 0.0, 1.0)
+	_announce_goal_if_reached()
 
 	var ring := ring_node()
 	if ring == null:
@@ -87,6 +93,18 @@ func set_week(completed: int, target: int, fraction: float, bits: PackedByteArra
 ## every device build until PRD-11 found it.
 func ring_node() -> Control:
 	return get_node_or_null(^"Card/CardBody/Ring") as Control
+
+
+## PRD-12 R2 — a below-target ring that becomes a complete one plays `success()` exactly once
+## per ISO week, whichever of the two instances notices it first.
+func _announce_goal_if_reached() -> void:
+	var at_goal := _target > 0 and _completed >= _target
+	if at_goal and not _was_at_goal:
+		var week := Dates.iso_week_id(Dates.today_iso())
+		if not week.is_empty() and week != _celebrated_week:
+			_celebrated_week = week
+			Feedback.success()
+	_was_at_goal = at_goal
 
 
 ## The value label's verbatim text — what the AC8 screenshot and probe check reads.
@@ -147,6 +165,6 @@ func _sweep_to(value: float) -> void:
 	_drawn_once = true
 
 
-## Decorative motion is skipped under `ui.reduce_motion` (appendix §4.4's motion rules).
+## Decorative motion is skipped under `ui.reduce_motion` (PRD-12 R1).
 func _reduce_motion() -> bool:
-	return bool(App.get_setting("ui.reduce_motion", false))
+	return not Motion.decorative_enabled()

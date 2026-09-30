@@ -29,6 +29,8 @@ func set_state(icon: StringName, title: String, body: String, action_text: Strin
 	if action != null:
 		action.text = action_text
 		action.visible = not action_text.is_empty()
+		if not action_text.is_empty():
+			A11y.label(action, action_text, title)
 
 
 func action_button() -> Button:
