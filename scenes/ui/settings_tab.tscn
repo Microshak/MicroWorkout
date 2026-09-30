@@ -66,3 +66,6 @@ layout_mode = 2
 
 [node name="Danger" parent="Scroll/Gutter/Sections" instance=ExtResource("2_card")]
 layout_mode = 2
+
+[node name="Support" parent="Scroll/Gutter/Sections" instance=ExtResource("2_card")]
+layout_mode = 2

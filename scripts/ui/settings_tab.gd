@@ -57,6 +57,7 @@ var _plan_button: Button = null
 var _plan_status: Label = null
 var _storage_label: Label = null
 var _attribution_button: Button = null
+var _sponsor_button: Button = null
 var _gallery_button: Button = null
 var _reset_button: Button = null
 var _reset_dialog: ConfirmationDialog = null
@@ -83,6 +84,7 @@ func _ready() -> void:
 	_build_attribution()
 	_build_about()
 	_build_danger()
+	_build_support()
 
 	App.units_changed.connect(_on_units_changed)
 	App.theme_changed.connect(_on_theme_changed)
@@ -609,6 +611,24 @@ func _build_about() -> void:
 		_gallery_button.pressed.connect(_on_gallery_pressed)
 
 
+# ------------------------------------------------------------------ 9b. support (owner request)
+
+## The last card on the page: a line to the sponsorship page (ADR-23). `OS.shell_open()` hands
+## the URL to the system browser — the app itself never visits it, and no extra permission is
+## needed for that.
+func _build_support() -> void:
+	var items := _items("Support")
+	_card_title(items, Strings.SUPPORT_SECTION)
+	_sponsor_button = _button(items, "SponsorButton", Strings.SPONSOR_BUTTON, &"SecondaryButton")
+	_sponsor_button.pressed.connect(_on_sponsor_pressed)
+	_caption(items, Strings.SPONSOR_HINT)
+
+
+func _on_sponsor_pressed() -> void:
+	var _opened := OS.shell_open(Strings.SPONSOR_URL)
+	print("[settings] sponsor link opened")
+
+
 # ------------------------------------------------------------------ 10. danger (R12)
 
 func _build_danger() -> void:
@@ -807,6 +827,7 @@ func _publish_probe_rects() -> void:
 		UiProbe.log_rect("text_size_control", _text_size_control)
 	UiProbe.log_rect("regenerate_default_plan_button", _plan_button)
 	UiProbe.log_rect("attribution_button", _attribution_button)
+	UiProbe.log_rect("sponsor_button", _sponsor_button)
 	UiProbe.log_rect("reset_all_data_button", _reset_button)
 	UiProbe.log_rect("gallery_button", _gallery_button)
 	UiProbe.log_rect("rest_slider", _rest_slider)

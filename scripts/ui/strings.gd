@@ -49,6 +49,11 @@ const STORAGE_SECTION := "Storage"
 const ATTRIBUTION_SECTION := "Attribution"
 const ABOUT_SECTION := "About"
 const DANGER_SECTION := "Danger zone"
+## The owner-requested sponsor card at the very bottom of Settings (ADR-23).
+const SUPPORT_SECTION := "Support"
+const SPONSOR_BUTTON := "Sponsor MicroWorkout on GitHub"
+const SPONSOR_HINT := "Opens github.com in your browser."
+const SPONSOR_URL := "https://github.com/sponsors/Microshak"
 const STORAGE_HINT := "Files live in this app's private storage; they are removed when you \
 uninstall."
 const MEDICAL_DISCLAIMER := "Form tips are general guidance, not medical advice."
