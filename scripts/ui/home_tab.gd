@@ -362,6 +362,10 @@ func _render(built: Dictionary, previous: Dictionary, play: bool) -> void:
 	_render_week_strip(built, previous, play)
 	_render_stats(built, previous, play)
 	_render_next_up(built)
+	# The state swap changes which cards are visible, and a card's own height changes when its
+	# text or theme does. Re-run the sort explicitly so the layout always matches the current
+	# minimums (the entrance animation below uses the same call at its end, for the same reason).
+	_body.queue_sort()
 
 
 func _render_greeting(built: Dictionary) -> void:
@@ -647,6 +651,14 @@ func _animated_blocks() -> Array[Control]:
 
 ## R15: the first open of the tab this session fades and rises each block, staggered 40 ms.
 ## Skipped entirely under `ui.reduce_motion` (decorative motion is skipped, not shortened).
+##
+## The rise writes `position` on container-managed children, so two rules keep it from breaking
+## the layout. Measured on the desktop run (ADR-24): capturing `base_y` before the first sort
+## settled froze boot-time slots — the body reported 938 px of content while its children were
+## staged from y=1492 to 5826, so the week strip and the stats sat outside the scroll viewport
+## (unreachable: the content fits, so there is nothing to scroll) and the CTA drifted under the
+## bottom nav at XXL. The fix: capture after the sort has run, and hand positioning back to the
+## container when the animation ends.
 func _play_entrance() -> void:
 	if _entrance_played or not is_visible_in_tree() or not is_inside_tree():
 		return
@@ -655,6 +667,10 @@ func _play_entrance() -> void:
 	if not _motion_enabled():
 		for block in blocks:
 			block.modulate.a = 1.0
+		return
+	await get_tree().process_frame
+	await get_tree().process_frame
+	if not is_inside_tree():
 		return
 	var stagger := float(DesignTokens.MOTION["stagger_ms"]) / 1000.0
 	var duration := float(ENTRANCE_MS) / 1000.0
@@ -669,6 +685,10 @@ func _play_entrance() -> void:
 		tween.tween_interval(stagger * float(index))
 		tween.tween_property(block, "modulate:a", 1.0, duration)
 		tween.parallel().tween_property(block, "position:y", base_y, duration)
+	await get_tree().create_timer(stagger * float(blocks.size()) + duration + 0.05).timeout
+	if not is_inside_tree():
+		return
+	_body.queue_sort()
 
 
 ## R15's Start-button breathe, only while `TRAINING` and only before the session starts. Tappable
