@@ -247,7 +247,8 @@ func _on_theme_changed(_mode: String) -> void:
 ## Re-anchors the sheet's bottom edge, in the same units as `offset_bottom`.
 ##
 ## The player calls this so the sheet *ends where the set chips begin*. R2 fixes `offset_bottom =
-## -136` to keep `NavRow` tappable, and measured on the device that put the sheet's own `+15s` /
+## -136` to keep the footer row tappable (`NavRow` when this was written; the swipe hint row
+## since ADR-22), and measured on the device that put the sheet's own `+15s` /
 ## `Skip rest` buttons exactly over the chips (`SetRow` at viewport y 1933–2021, sheet at 1797–2069):
 ## tapping the next set hit `+15s` instead, i.e. the rest timer *did* gate another set check — the
 ## one thing R10 forbids. The height is measured per layout, so this works on any screen.
