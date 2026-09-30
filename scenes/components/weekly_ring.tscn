@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/components/weekly_ring.gd" id="1_weekly_ring"]
-[ext_resource type="PackedScene" path="res://scenes/components/card.tscn" id="2_card"]
 [ext_resource type="PackedScene" path="res://scenes/components/progress_ring.tscn" id="3_progress_ring"]
 
 [node name="weekly_ring" type="Control"]
@@ -9,15 +8,20 @@ custom_minimum_size = Vector2(200, 200)
 mouse_filter = 2
 script = ExtResource("1_weekly_ring")
 
-[node name="Card" parent="." instance=ExtResource("2_card")]
+[node name="Card" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_type_variation = &"Card"
 
-[node name="Ring" parent="Card/Body/Items" instance=ExtResource("3_progress_ring")]
+[node name="CardBody" type="VBoxContainer" parent="Card"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Ring" parent="Card/CardBody" instance=ExtResource("3_progress_ring")]
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 size_flags_horizontal = 4

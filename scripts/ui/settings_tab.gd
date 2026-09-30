@@ -342,12 +342,12 @@ func _build_feedback() -> void:
 ## R6: a real setting — `App.set_setting` validates it, persists it and rebuilds the root
 ## theme, so the whole app re-lays out the moment the chip is tapped.
 func _on_text_size_selected(index: int) -> void:
-	var scale: float = StoreSchema.TEXT_SCALES[index]
-	var message := StoreSchema.validate_text_scale(scale)
+	var step: float = StoreSchema.TEXT_SCALES[index]
+	var message := StoreSchema.validate_text_scale(step)
 	if not message.is_empty():
 		_reject("ui.text_scale", message)
 		return
-	var _written := App.set_setting("ui.text_scale", scale)
+	var _written := App.set_setting("ui.text_scale", step)
 
 
 ## Selects the chip matching the stored value. An unrecognised value leaves the selection where

@@ -7,37 +7,55 @@ extends SceneTree
 ##
 ## Exits 0 when every suite passes, 1 otherwise, so it can gate a PRD.
 
-const SUITES: Array[Script] = [
-	preload("res://tests/suites/test_boot.gd"),
-	preload("res://tests/suites/test_design_tokens.gd"),
-	preload("res://tests/suites/test_theme_scale.gd"),
-	preload("res://tests/suites/test_router.gd"),
-	preload("res://tests/suites/test_layout_util.gd"),
-	preload("res://tests/suites/test_store.gd"),
-	preload("res://tests/suites/test_streak.gd"),
-	preload("res://tests/suites/test_library.gd"),
-	preload("res://tests/suites/test_library_data.gd"),
-	preload("res://tests/suites/test_plan_model.gd"),
-	preload("res://tests/suites/test_generator.gd"),
-	preload("res://tests/suites/test_units.gd"),
-	preload("res://tests/suites/test_settings_validation.gd"),
-	preload("res://tests/suites/test_redaction.gd"),
-	preload("res://tests/suites/test_llm_providers.gd"),
-	preload("res://tests/suites/test_llm_request_build.gd"),
-	preload("res://tests/suites/test_plan_prompt.gd"),
-	preload("res://tests/suites/test_plan_validator.gd"),
-	preload("res://tests/suites/test_llm_envelope.gd"),
-	preload("res://tests/suites/test_llm_ladder.gd"),
-	preload("res://tests/suites/test_key_never_logged.gd"),
-	preload("res://tests/suites/test_wizard_state.gd"),
-	preload("res://tests/suites/test_plan_schedule.gd"),
-	preload("res://tests/suites/test_home_state.gd"),
-	preload("res://tests/suites/test_session_run.gd"),
-	preload("res://tests/suites/test_progression.gd"),
+## Suite paths, **loaded lazily** inside [method _run_all] instead of `preload()`ed.
+##
+## Why: at the moment this script is parsed the autoloads are not registered yet, so a suite that
+## names an autoload (`Store`, `Library`) fails to compile there — measured as
+## `Identifier not found: Library` when PRD-11's screen suite was preloaded. `load()` runs once
+## the tree is live, where the identifiers resolve; `run_suite.gd` has always taken this route.
+const SUITES: PackedStringArray = [
+	"res://tests/suites/test_boot.gd",
+	"res://tests/suites/test_design_tokens.gd",
+	"res://tests/suites/test_theme_scale.gd",
+	"res://tests/suites/test_router.gd",
+	"res://tests/suites/test_layout_util.gd",
+	"res://tests/suites/test_store.gd",
+	"res://tests/suites/test_streak.gd",
+	"res://tests/suites/test_library.gd",
+	"res://tests/suites/test_library_data.gd",
+	"res://tests/suites/test_plan_model.gd",
+	"res://tests/suites/test_generator.gd",
+	"res://tests/suites/test_units.gd",
+	"res://tests/suites/test_settings_validation.gd",
+	"res://tests/suites/test_redaction.gd",
+	"res://tests/suites/test_llm_providers.gd",
+	"res://tests/suites/test_llm_request_build.gd",
+	"res://tests/suites/test_plan_prompt.gd",
+	"res://tests/suites/test_plan_validator.gd",
+	"res://tests/suites/test_llm_envelope.gd",
+	"res://tests/suites/test_llm_ladder.gd",
+	"res://tests/suites/test_key_never_logged.gd",
+	"res://tests/suites/test_wizard_state.gd",
+	"res://tests/suites/test_plan_schedule.gd",
+	"res://tests/suites/test_home_state.gd",
+	"res://tests/suites/test_session_run.gd",
+	"res://tests/suites/test_progression.gd",
+	"res://tests/suites/test_month_grid.gd",
+	"res://tests/suites/test_area_balance.gd",
+	"res://tests/suites/test_tracker_screen.gd",
 ]
 
 
 func _initialize() -> void:
+	# Suites run from a deferred call, not from `_initialize()` itself: while `_initialize()`
+	# runs, the root Window is not inside the tree yet, so a node added there never receives
+	# `_ready` (measured). A screen-level suite — PRD-11's `test_tracker_screen.gd` instantiates
+	# the Tracker into a `SubViewport` — needs a live tree, and every pure suite behaves
+	# identically one frame later.
+	_run_all.call_deferred()
+
+
+func _run_all() -> void:
 	print("")
 	print("══════════════════════════════════════════════════════════════")
 	print("  MicroWorkout — headless test suite")
@@ -47,7 +65,8 @@ func _initialize() -> void:
 	var total_failures := 0
 	var suite_failures := 0
 
-	for suite_script in SUITES:
+	for path in SUITES:
+		var suite_script: Script = load(path)
 		var suite: TestSuite = suite_script.new()
 		suite.run()
 		total_assertions += suite.total_assertions

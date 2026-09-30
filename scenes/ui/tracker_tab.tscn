@@ -1,8 +1,13 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/tracker_tab.gd" id="1_tab"]
 [ext_resource type="PackedScene" path="res://scenes/components/section_header.tscn" id="2_header"]
 [ext_resource type="PackedScene" path="res://scenes/components/empty_state.tscn" id="3_empty"]
+[ext_resource type="PackedScene" path="res://scenes/components/secondary_button.tscn" id="4_secondary"]
+[ext_resource type="PackedScene" path="res://scenes/components/weekly_ring.tscn" id="5_ring"]
+[ext_resource type="PackedScene" path="res://scenes/components/stat_tile.tscn" id="6_stat"]
+[ext_resource type="PackedScene" path="res://scenes/components/chip_toggle.tscn" id="7_chip"]
+[ext_resource type="PackedScene" path="res://scenes/components/glyph.tscn" id="9_glyph"]
 
 [node name="TrackerTab" type="Control"]
 layout_mode = 3
@@ -13,31 +18,238 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_tab")
 
-[node name="Scroll" type="ScrollContainer" parent="."]
+[node name="Gutter" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-horizontal_scroll_mode = 0
-
-[node name="Gutter" type="MarginContainer" parent="Scroll"]
-layout_mode = 2
-size_flags_horizontal = 3
 theme_override_constants/margin_left = 24
 theme_override_constants/margin_top = 24
 theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 24
 
-[node name="Page" type="VBoxContainer" parent="Scroll/Gutter"]
+[node name="Layout" type="VBoxContainer" parent="Gutter"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="SectionHeader" parent="Gutter/Layout" instance=ExtResource("2_header")]
+layout_mode = 2
+
+[node name="MonthRow" type="HBoxContainer" parent="Gutter/Layout"]
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PrevMonthButton" parent="Gutter/Layout/MonthRow" instance=ExtResource("4_secondary")]
+custom_minimum_size = Vector2(88, 88)
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"GhostButton"
+text = "‹"
+
+[node name="MonthLabel" type="Label" parent="Gutter/Layout/MonthRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_type_variation = &"H3"
+text = ""
+horizontal_alignment = 1
+
+[node name="NextMonthButton" parent="Gutter/Layout/MonthRow" instance=ExtResource("4_secondary")]
+custom_minimum_size = Vector2(88, 88)
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"GhostButton"
+text = "›"
+
+[node name="EmptyState" parent="Gutter/Layout" instance=ExtResource("3_empty")]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Scroll" type="ScrollContainer" parent="Gutter/Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+clip_contents = true
+horizontal_scroll_mode = 0
+
+[node name="Column" type="VBoxContainer" parent="Gutter/Layout/Scroll"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 32
 
-[node name="SectionHeader" parent="Scroll/Gutter/Page" instance=ExtResource("2_header")]
+[node name="RingTile" parent="Gutter/Layout/Scroll/Column" instance=ExtResource("5_ring")]
 layout_mode = 2
 
-[node name="EmptyState" parent="Scroll/Gutter/Page" instance=ExtResource("3_empty")]
+[node name="StatsRow" type="HBoxContainer" parent="Gutter/Layout/Scroll/Column"]
 layout_mode = 2
-size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="StreakTile" parent="Gutter/Layout/Scroll/Column/StatsRow" instance=ExtResource("6_stat")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BestTile" parent="Gutter/Layout/Scroll/Column/StatsRow" instance=ExtResource("6_stat")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ProgressOver" parent="Gutter/Layout/Scroll/Column" instance=ExtResource("7_chip")]
+visible = false
+layout_mode = 2
+disabled = true
+text = "+1 over goal"
+
+[node name="RiskChip" parent="Gutter/Layout/Scroll/Column" instance=ExtResource("7_chip")]
+visible = false
+layout_mode = 2
+disabled = true
+text = "Streak at risk"
+
+[node name="CalendarCard" type="PanelContainer" parent="Gutter/Layout/Scroll/Column"]
+layout_mode = 2
+theme_type_variation = &"Card"
+
+[node name="CardBody" type="VBoxContainer" parent="Gutter/Layout/Scroll/Column/CalendarCard"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="WeekdayHeader" type="GridContainer" parent="Gutter/Layout/Scroll/Column/CalendarCard/CardBody"]
+layout_mode = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 4
+columns = 7
+
+[node name="CalendarGrid" type="GridContainer" parent="Gutter/Layout/Scroll/Column/CalendarCard/CardBody"]
+layout_mode = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 7
+
+[node name="CalendarLegend" type="HBoxContainer" parent="Gutter/Layout/Scroll/Column/CalendarCard/CardBody"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="LegendDoneGlyph" parent="Gutter/Layout/Scroll/Column/CalendarCard/CardBody/CalendarLegend" instance=ExtResource("9_glyph")]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+kind = &"check"
+
+[node name="LegendDoneLabel" type="Label" parent="Gutter/Layout/Scroll/Column/CalendarCard/CardBody/CalendarLegend"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"Caption"
+text = "Done"
+
+[node name="LegendMissedGlyph" parent="Gutter/Layout/Scroll/Column/CalendarCard/CardBody/CalendarLegend" instance=ExtResource("9_glyph")]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+kind = &"close"
+
+[node name="LegendMissedLabel" type="Label" parent="Gutter/Layout/Scroll/Column/CalendarCard/CardBody/CalendarLegend"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"Caption"
+text = "Missed"
+
+[node name="LegendPlannedGlyph" parent="Gutter/Layout/Scroll/Column/CalendarCard/CardBody/CalendarLegend" instance=ExtResource("9_glyph")]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+kind = &"dot"
+
+[node name="LegendPlannedLabel" type="Label" parent="Gutter/Layout/Scroll/Column/CalendarCard/CardBody/CalendarLegend"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"Caption"
+text = "Planned"
+
+[node name="LegendRestSpacer" type="Control" parent="Gutter/Layout/Scroll/Column/CalendarCard/CardBody/CalendarLegend"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="LegendRestLabel" type="Label" parent="Gutter/Layout/Scroll/Column/CalendarCard/CardBody/CalendarLegend"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"Caption"
+text = "Rest"
+
+[node name="NoPlanBanner" type="PanelContainer" parent="Gutter/Layout/Scroll/Column/CalendarCard/CardBody"]
+visible = false
+layout_mode = 2
+theme_type_variation = &"CardAlt"
+
+[node name="NoPlanLabel" type="Label" parent="Gutter/Layout/Scroll/Column/CalendarCard/CardBody/NoPlanBanner"]
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"MutedLabel"
+text = ""
+autowrap_mode = 3
+
+[node name="AreaCard" type="PanelContainer" parent="Gutter/Layout/Scroll/Column"]
+layout_mode = 2
+theme_type_variation = &"Card"
+
+[node name="CardBody" type="VBoxContainer" parent="Gutter/Layout/Scroll/Column/AreaCard"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="AreaTitle" type="Label" parent="Gutter/Layout/Scroll/Column/AreaCard/CardBody"]
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"H3"
+text = "Body-area balance"
+
+[node name="AreaSubtitle" type="Label" parent="Gutter/Layout/Scroll/Column/AreaCard/CardBody"]
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"MutedLabel"
+text = ""
+
+[node name="AreaList" type="VBoxContainer" parent="Gutter/Layout/Scroll/Column/AreaCard/CardBody"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="AreaFootnote" type="Label" parent="Gutter/Layout/Scroll/Column/AreaCard/CardBody"]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"Caption"
+text = ""
+autowrap_mode = 3
+
+[node name="RecentCard" type="PanelContainer" parent="Gutter/Layout/Scroll/Column"]
+layout_mode = 2
+theme_type_variation = &"Card"
+
+[node name="CardBody" type="VBoxContainer" parent="Gutter/Layout/Scroll/Column/RecentCard"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="RecentTitle" type="Label" parent="Gutter/Layout/Scroll/Column/RecentCard/CardBody"]
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"H3"
+text = "Recent sessions"
+
+[node name="RecentList" type="VBoxContainer" parent="Gutter/Layout/Scroll/Column/RecentCard/CardBody"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="RecentEmpty" type="Label" parent="Gutter/Layout/Scroll/Column/RecentCard/CardBody"]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"MutedLabel"
+text = ""
+
+[node name="BottomSpacer" type="Control" parent="Gutter/Layout/Scroll/Column"]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+mouse_filter = 2

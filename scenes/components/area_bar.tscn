@@ -1,0 +1,48 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/components/area_bar.gd" id="1_area_bar"]
+[ext_resource type="PackedScene" path="res://scenes/components/glyph.tscn" id="2_glyph"]
+
+[node name="area_bar" type="HBoxContainer"]
+custom_minimum_size = Vector2(0, 48)
+mouse_filter = 2
+theme_override_constants/separation = 8
+script = ExtResource("1_area_bar")
+
+[node name="AreaLabel" type="Label" parent="."]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_type_variation = &"BodyLabel"
+text = ""
+
+[node name="Bar" type="Control" parent="."]
+custom_minimum_size = Vector2(240, 18)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="AlertGlyph" parent="." instance=ExtResource("2_glyph")]
+visible = false
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_vertical = 4
+kind = &"alert"
+
+[node name="CountLabel" type="Label" parent="."]
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_type_variation = &"BodySmall"
+text = "0"
+
+[node name="RecencyLabel" type="Label" parent="."]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_type_variation = &"Caption"
+text = "never"
+horizontal_alignment = 2

@@ -3,11 +3,13 @@ extends RefCounted
 ## Minimal headless test framework.
 ##
 ## Design notes (important for every later PRD):
-## - Suites are plain [RefCounted] classes. They must NOT depend on autoload
-##   singletons or on a live scene tree, because the runner is executed with
-##   `godot --headless --script res://tests/run_tests.gd`, where autoloads are not
-##   guaranteed to exist. This is exactly why master plan §13 requires pure logic
-##   to live in scripts/core/ as standalone classes.
+## - Suites are plain [RefCounted] classes. Pure-logic suites must NOT depend on autoload
+##   singletons or on a live scene tree — master plan §13 puts pure logic in `scripts/core/`
+##   exactly so it can run standalone.
+## - The runners (`tests/run_tests.gd`, `tests/run_suite.gd`) execute suites from a **deferred
+##   call**, once the SceneTree is live: during `SceneTree._initialize()` the root is not yet
+##   inside the tree and a node added there never gets `_ready` (measured). This is what lets
+##   PRD-11's `test_tracker_screen.gd` instantiate a screen — and its `_ready` — for real.
 ## - Subclasses set [member suite_name] and override [method run].
 
 var suite_name: String = "unnamed"

@@ -13,6 +13,9 @@ extends RefCounted
 ## PRD-10 adds the three the workout flow needs: the session preview Home links to, the player
 ## itself, and the completion celebration (PRD-10 R1). All three are PUSH routes; the completion
 ## screen is reached with `Nav.replace`, so the player it replaces can never be backed into.
+##
+## PRD-11 adds the pushed day detail the Tracker calendar and recent list open
+## (`TRACKER_DAY_DETAIL`, appendix §2/R57).
 
 const SHELL := &"shell"
 const BOOT := &"boot"
@@ -28,6 +31,7 @@ const PLAN_PREVIEW := &"plan_preview"
 const SESSION_PREVIEW := &"session_preview"
 const WORKOUT_PLAYER := &"workout_player"
 const COMPLETION := &"completion"
+const TRACKER_DAY_DETAIL := &"tracker_day_detail"
 
 ## Tab routes, in bottom-nav order. Index in this array == nav tab index.
 const TAB_ROUTES: PackedStringArray = [HOME, PLAN, TRACKER, SETTINGS]
@@ -49,6 +53,7 @@ const TABLE := {
 	SESSION_PREVIEW: "res://scenes/ui/session_preview.tscn",
 	WORKOUT_PLAYER: "res://scenes/ui/workout_player.tscn",
 	COMPLETION: "res://scenes/ui/completion_screen.tscn",
+	TRACKER_DAY_DETAIL: "res://scenes/ui/tracker_day_detail.tscn",
 }
 
 const TAB_SCENES := {

@@ -33,10 +33,19 @@ const SUITES: PackedStringArray = [
 	"test_home_state",
 	"test_session_run",
 	"test_progression",
+	"test_month_grid",
+	"test_area_balance",
+	"test_tracker_screen",
 ]
 
 
 func _initialize() -> void:
+	# See `run_tests.gd`: suites run once the tree is live, so a scene-level suite can
+	# instantiate a screen and have its `_ready` run.
+	_run_all.call_deferred()
+
+
+func _run_all() -> void:
 	var wanted := ""
 	for argument in OS.get_cmdline_user_args():
 		var text := String(argument)

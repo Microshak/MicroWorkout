@@ -99,6 +99,33 @@ def nav_band(image: Image.Image, bg: tuple[int, int, int],
     return min(candidates, key=lambda b: b[0])
 
 
+def nav_window(image: Image.Image, black_tol: int = 14,
+               window_height: int = 240) -> tuple[int, int] | None:
+    """A (top, bottom) search window for the app's own nav bar, anchored to the system nav bar.
+
+    `nav_band()` cannot see the app's bar when a screen's content scrolls flush against it — the
+    content and the bar form one unbroken non-background run (measured on the Settings tab,
+    2026-09-30). The system navigation bar below the app is a solid black strip at the very
+    bottom of the frame, so this scans up from the bottom for the first mostly-black row and
+    returns the 240 px above it. The user-visible bar is 132 px tall, so every tab icon and
+    caption sits inside this window, and nothing above the window can be mistaken for it.
+    """
+    width, height = image.size
+    xs = list(range(6, width - 6, 12))
+    system_top = None
+    for y in range(height - 1, int(height * 0.9), -1):
+        dark = sum(1 for x in xs if close(image.getpixel((x, y)), (0, 0, 0), tol=black_tol))
+        if dark >= len(xs) * 0.9:
+            system_top = y
+            continue
+        # The strip ends as soon as a row is not black; keep the topmost black row seen.
+        break
+    if system_top is None:
+        return None
+    bottom = max(system_top - 20, 0)
+    return max(bottom - window_height, 0), bottom
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("png")
@@ -117,6 +144,13 @@ def main() -> int:
     ap.add_argument("--from-viewport-y", type=int, default=None,
                     help="with --nav-band, also print offset_y = measured_nav_top - this value")
     ap.add_argument("--bg", default="0F1116", help="app background token, for --nav-band")
+    # PRD-11 addition. The default clustering scans the whole bottom third, which the Settings tab
+    # breaks: its own primary controls (a selected segmented chip, PrimaryButtons) are bigger
+    # accent clusters than the tinted nav icon, so the check reported a non-existent "/tab 1 at
+    # x=535" and failed a perfectly good screenshot (measured 2026-09-30). With this flag the
+    # accent pixels are only counted *inside* the measured nav band, where the tint actually is.
+    ap.add_argument("--in-nav-band", action="store_true",
+                    help="restrict the active-tab search to the measured navigation-bar band")
     args = ap.parse_args()
 
     path = Path(args.png)
@@ -140,11 +174,20 @@ def main() -> int:
         print(line)
         return 0
 
-    # Search only the bottom third: that is the only place the tab strip can be.
-    top = int(height * 0.66)
+    # Search only the bottom third (or, with --in-nav-band, only the nav window above the system
+    # navigation bar): the tab strip is the only place the active-tab tint can legitimately be.
+    if args.in_nav_band:
+        band = nav_window(image)
+        if band is None:
+            print("FATAL: could not locate the system navigation bar at the bottom of the frame",
+                  file=sys.stderr)
+            return 1
+        top, bottom = band
+    else:
+        top, bottom = int(height * 0.66), height - 1
     accent_pts: list[tuple[int, int]] = []
     muted_pts: list[tuple[int, int]] = []
-    for y in range(top, height, 2):
+    for y in range(top, bottom + 1, 2):
         for x in range(0, width, 2):
             pixel = image.getpixel((x, y))
             if close(pixel, accent):
@@ -153,21 +196,40 @@ def main() -> int:
                 muted_pts.append((x, y))
 
     if not accent_pts:
-        print("FATAL: no primary-tinted pixels found in the bottom third — "
+        print("FATAL: no primary-tinted pixels found in the search band — "
               "is the bottom nav rendered?", file=sys.stderr)
         return 1
 
-    clusters = cluster_xs([x for x, _ in accent_pts], gap=int(width / (TAB_COUNT * 2)))
-    # The icon and the caption are separate vertical clusters at the same x; merge by x.
-    best = max(clusters, key=lambda c: c[1] - c[0])
-    active_x = (best[0] + best[1]) // 2
+    # With --in-nav-band the tint is scored per tab slot instead of by biggest cluster, because a
+    # screen can tint far more primary pixels than the nav icon (a full-width PrimaryButton right
+    # above the bar — Settings and Home both do). Each slot is scored only where its icon and
+    # caption live, so content elsewhere cannot win.
+    if args.in_nav_band:
+        pitch = width // TAB_COUNT
+        best_index, best_pts = 0, []
+        for index in range(TAB_COUNT):
+            centre = int((index + 0.5) * pitch)
+            pts = [(x, y) for x, y in accent_pts if abs(x - centre) <= pitch * 0.34]
+            if len(pts) > len(best_pts):
+                best_index, best_pts = index, pts
+        if not best_pts:
+            print("FATAL: no tinted tab inside the nav window", file=sys.stderr)
+            return 1
+        active_x = sum(x for x, _ in best_pts) // len(best_pts)
+        nav_y = sum(y for _, y in best_pts) // len(best_pts)
+        active_index = best_index
+    else:
+        clusters = cluster_xs([x for x, _ in accent_pts], gap=int(width / (TAB_COUNT * 2)))
+        # The icon and the caption are separate vertical clusters at the same x; merge by x.
+        best = max(clusters, key=lambda c: c[1] - c[0])
+        active_x = (best[0] + best[1]) // 2
 
-    ys = [y for x, y in accent_pts if best[0] - 8 <= x <= best[1] + 8]
-    nav_y = sum(ys) // len(ys)
+        ys = [y for x, y in accent_pts if best[0] - 8 <= x <= best[1] + 8]
+        nav_y = sum(ys) // len(ys)
 
-    pitch = width // TAB_COUNT
-    active_index = int(round((active_x - pitch // 2) / pitch))
-    active_index = max(0, min(TAB_COUNT - 1, active_index))
+        pitch = width // TAB_COUNT
+        active_index = int(round((active_x - pitch // 2) / pitch))
+        active_index = max(0, min(TAB_COUNT - 1, active_index))
 
     print(f"nav_y={nav_y} active_x={active_x} active_index={active_index} "
           f"tab_pitch={pitch} tabs={TAB_COUNT} "

@@ -13,9 +13,9 @@ extends CanvasLayer
 ##
 ## [b]Why the source banner is a `status_chip` and not a coloured label.[/b] R9 asks for a
 ## "success colour" / "warning colour" banner. The generated theme has no success/warning *label*
-## variation, `theme_override_colors` is banned (appendix §4.3 rule 8) and colour-only state is
-## banned as well (rule 6). PRD-06's `status_chip` is this codebase's answer — a glyph *and* a
-## word — so `Written by <P>` renders as `verified` (check) and `Built on-device` as
+## variation, per-node colour/font overrides are banned (appendix §4.3 rule 8) and colour-only
+## state is banned as well (rule 6). PRD-06's `status_chip` is this codebase's answer — a glyph
+## *and* a word — so `Written by <P>` renders as `verified` (check) and `Built on-device` as
 ## `unreachable` (alert), exactly like every other status in the app.
 ##
 ## [b]Autoloads are looked up, never referenced by identifier.[/b] Same reason as

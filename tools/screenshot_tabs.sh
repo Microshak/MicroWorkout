@@ -53,15 +53,23 @@ capture_and_verify() {
     return
   fi
 
+  # Give the emulator time to render the new tab before capturing. Under software GL it can run
+  # well below 1 fps, and a screencap taken immediately after the tap can still be the previous
+  # tab's frame — which the tint check below then (correctly) rejects as a wrong tab. Measured
+  # 2026-09-30: settings failed once without this wait and passed consistently with it.
+  sleep 2
   adb exec-out screencap -p > "$path"
 
-  if python3 "$ROOT/tools/find_nav.py" "$path" --expect-index "$index" >/dev/null 2>&1; then
+  # `--in-nav-band`: look for the tinted tab only inside the measured nav bar. Without it the
+  # Settings screen's own primary controls out-number the nav tint and the check fails a good
+  # screenshot (measured 2026-09-30).
+  if python3 "$ROOT/tools/find_nav.py" "$path" --expect-index "$index" --in-nav-band >/dev/null 2>&1; then
     local info
-    info="$(python3 "$ROOT/tools/find_nav.py" "$path")"
+    info="$(python3 "$ROOT/tools/find_nav.py" "$path" --in-nav-band)"
     echo "  ✔ tab $index ($name)  $(stat -c%s "$path") bytes  [$info]"
   else
     echo "  ✘ tab $index ($name): the screenshot does not show tab $index as active"
-    python3 "$ROOT/tools/find_nav.py" "$path" 2>&1 | sed 's/^/      /' || true
+    python3 "$ROOT/tools/find_nav.py" "$path" --in-nav-band 2>&1 | sed 's/^/      /' || true
     FAILURES=$((FAILURES + 1))
   fi
 }

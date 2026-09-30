@@ -1,0 +1,53 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/components/session_row.gd" id="1_session_row"]
+[ext_resource type="PackedScene" path="res://scenes/components/glyph.tscn" id="2_glyph"]
+
+[node name="session_row" type="Button"]
+custom_minimum_size = Vector2(0, 96)
+theme_type_variation = &"GhostButton"
+script = ExtResource("1_session_row")
+
+[node name="Row" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="Texts" type="VBoxContainer" parent="Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="TitleLabel" type="Label" parent="Row/Texts"]
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"BodyLabel"
+text = ""
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="MetaLabel" type="Label" parent="Row/Texts"]
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"MutedLabel"
+text = ""
+
+[node name="PartialGlyph" parent="Row" instance=ExtResource("2_glyph")]
+visible = false
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_vertical = 4
+kind = &"alert"
+
+[node name="Chevron" parent="Row" instance=ExtResource("2_glyph")]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_vertical = 4
+kind = &"chevron_right"

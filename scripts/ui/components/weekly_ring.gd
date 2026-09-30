@@ -80,9 +80,13 @@ func set_week(completed: int, target: int, fraction: float, bits: PackedByteArra
 	_sweep_to(_fraction)
 
 
-## The ring instance this composite drives.
+## The ring instance this composite drives. `Card` is a plain `PanelContainer` carrying the
+## `Card` variation with its own `CardBody` — **not** an instance of `card.tscn`: a node attached
+## under an instanced scene's internal nodes is silently dropped by the .tscn → .scn conversion
+## the Android export uses (measured 2026-09-30; see ADR-26), which left this ring undrawn in
+## every device build until PRD-11 found it.
 func ring_node() -> Control:
-	return get_node_or_null(^"Card/Body/Items/Ring") as Control
+	return get_node_or_null(^"Card/CardBody/Ring") as Control
 
 
 ## The value label's verbatim text — what the AC8 screenshot and probe check reads.
