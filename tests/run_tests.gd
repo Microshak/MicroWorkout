@@ -10,6 +10,7 @@ extends SceneTree
 const SUITES: Array[Script] = [
 	preload("res://tests/suites/test_boot.gd"),
 	preload("res://tests/suites/test_design_tokens.gd"),
+	preload("res://tests/suites/test_theme_scale.gd"),
 	preload("res://tests/suites/test_router.gd"),
 	preload("res://tests/suites/test_layout_util.gd"),
 	preload("res://tests/suites/test_store.gd"),

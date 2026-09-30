@@ -331,6 +331,28 @@ tap() {
   fi
 }
 
+## Swipes a named control through `tools/tap_ui.sh --swipe` (ADR-24: the player changes steps by
+## a horizontal swipe — the old `tap player_next` target no longer exists). Same wait-for-rect
+## discipline as `tap()`: a rect that has not been settled means the screen is not ready.
+swipe() {
+  local name="$1"
+  local direction="${2:-left}"
+  local settle="${3:-2}"
+  local wait="${4:-25}"
+  local waited=0
+  local out
+  while (( waited < wait )); do
+    if log_has "rect name=${name} .*settled=1"; then break; fi
+    sleep 1; waited=$((waited + 1))
+  done
+  if out="$(MW_PKG="$PKG" "$ROOT/tools/tap_ui.sh" "$name" --swipe "$direction" --settle "$settle" 2>&1)"; then
+    echo "        $(grep -oE '\[tap\] .*' <<<"$out" | tail -1)"
+  else
+    fail "swipe '$name' failed"
+    tail -2 <<<"$out" | sed 's/^/        /'
+  fi
+}
+
 ## Home offers `Start workout` on a training day and `Do the next session early` on a rest day, and
 ## only the one that is on screen logs a rect — so the flow taps whichever the screen offers. Both
 ## push the same player; the rest-day path is R1's `early: true` argument.
@@ -391,15 +413,15 @@ player_walk() {
   adb shell input keyevent KEYCODE_BACK >/dev/null 2>&1 || true
   wait_log "\[player\] back -> ZOOMED" "back while zoomed closed the zoom (AC12)" 25
 
-  # Warm-ups: Next through each, waiting for the next step to be reported.
+  # Warm-ups: swipe through each, waiting for the next step to be reported.
   step=0
   while (( step < warm )); do
-    tap player_next 2
+    swipe player_swipe left 2
     step=$((step + 1))
     wait_log "\[player\] step=${step} " "advanced to step $step" 25
   done
 
-  # Working blocks: tick every set of every block, then Next.
+  # Working blocks: tick every set of every block, then swipe on.
   shot_index=1
   for n in $sets; do
     k=1
@@ -422,7 +444,7 @@ player_walk() {
       tap player_resume 2
       wait_log "\[player\] resume elapsed=" "resume logged" 25
     fi
-    tap player_next 2
+    swipe player_swipe left 2
     step=$((step + 1))
     shot_index=$((shot_index + 1))
     wait_log "\[player\] step=${step} " "advanced to step $step" 25
@@ -436,10 +458,10 @@ player_walk() {
     fail "no \"Start sets\" label in the walk (AC4)"
   fi
 
-  # Cool-downs: the last Next is "I'm done for the day".
+  # Cool-downs: the last swipe is "I'm done for the day".
   index=0
   while (( index < cooldowns )); do
-    tap player_next 2
+    swipe player_swipe left 2
     index=$((index + 1))
     step=$((step + 1))
     if (( index < cooldowns )); then
@@ -484,8 +506,8 @@ flow_player_partial() {
   read -r warm _ _ <<<"$(fixture_shape)"
   home_entry_tap
   wait_log "\[player\] start plan=" "player started from Home" 30
-  tap player_next 2
-  tap player_next 2
+  swipe player_swipe left 2
+  swipe player_swipe left 2
   step="$warm"
   wait_log "\[player\] step=${step} " "on the first working block" 25
   tap "player_${step}_set_1" 2
@@ -535,8 +557,8 @@ flow_player_resume() {
   read -r warm _ _ <<<"$(fixture_shape)"
   home_entry_tap
   wait_log "\[player\] start plan=" "player started from Home" 30
-  tap player_next 2
-  tap player_next 2
+  swipe player_swipe left 2
+  swipe player_swipe left 2
   step="$warm"
   wait_log "\[player\] step=${step} " "on the first working block" 25
   tap "player_${step}_set_1" 2
@@ -561,7 +583,7 @@ flow_player_quit() {
   local before_history after_history
   home_entry_tap
   wait_log "\[player\] start plan=" "player started from Home" 30
-  tap player_next 2
+  swipe player_swipe left 2
   sleep 3   # let a progress write land, so clearing it is real work
   before_history="$(adb shell run-as "$PKG" cat files/data/history.json 2>/dev/null | tr -d '\r')"
   tap player_pause 2

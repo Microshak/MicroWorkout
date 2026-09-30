@@ -218,20 +218,15 @@ theme_type_variation = &"DisplayLabel"
 text = ""
 horizontal_alignment = 1
 
-[node name="NavRow" type="HBoxContainer" parent="SafeArea/Layout"]
+[node name="SwipeRow" type="VBoxContainer" parent="SafeArea/Layout"]
 layout_mode = 2
-theme_override_constants/separation = 12
 
-[node name="PreviousButton" parent="SafeArea/Layout/NavRow" instance=ExtResource("5_secondary")]
-custom_minimum_size = Vector2(240, 96)
+[node name="SwipeHint" type="Label" parent="SafeArea/Layout/SwipeRow"]
 layout_mode = 2
-text = "Previous"
-
-[node name="NextButton" parent="SafeArea/Layout/NavRow" instance=ExtResource("6_primary")]
-custom_minimum_size = Vector2(0, 96)
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Next"
+theme_type_variation = &"Caption"
+text = "Swipe left or right to change exercise"
+horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="RestSheet" parent="." instance=ExtResource("7_rest")]
 visible = false

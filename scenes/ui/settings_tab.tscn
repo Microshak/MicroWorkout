@@ -46,6 +46,9 @@ layout_mode = 2
 [node name="RestTimer" parent="Scroll/Gutter/Sections" instance=ExtResource("2_card")]
 layout_mode = 2
 
+[node name="Feedback" parent="Scroll/Gutter/Sections" instance=ExtResource("2_card")]
+layout_mode = 2
+
 [node name="AIProvider" parent="Scroll/Gutter/Sections" instance=ExtResource("2_card")]
 layout_mode = 2
 

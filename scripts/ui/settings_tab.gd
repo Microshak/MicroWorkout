@@ -33,12 +33,16 @@ const EXAMPLE_LB := 135.0
 const UNITS_OPTIONS: PackedStringArray = [Units.LB, Units.KG]
 const THEME_OPTIONS: PackedStringArray = ["Dark", "Light"]
 const THEME_VALUES: PackedStringArray = ["dark", "light"]
+## PRD-12 R6 — five dynamic-type steps. Shape-based labels (S…XXL) stay readable at every step;
+## the actual values come from `StoreSchema.TEXT_SCALES`, the list `Store` validates against.
+const TEXT_SIZE_OPTIONS: PackedStringArray = ["S", "M", "L", "XL", "XXL"]
 
 @onready var _sections: VBoxContainer = $Scroll/Gutter/Sections
 
 var _units_control: SegmentedControl = null
 var _units_example: Label = null
 var _theme_control: SegmentedControl = null
+var _text_size_control: SegmentedControl = null
 var _goal_value: Label = null
 var _goal_hint: Label = null
 var _goal_decrease: Button = null
@@ -72,6 +76,7 @@ func _ready() -> void:
 	_build_theme()
 	_build_weekly_goal()
 	_build_rest_timer()
+	_build_feedback()
 	_build_ai_provider()
 	_build_plan()
 	_build_storage()
@@ -313,6 +318,46 @@ func _refresh_rest_label() -> void:
 	if _rest_value_label == null:
 		return
 	_rest_value_label.text = "Rest %d s between sets" % int(round(_rest_slider.value))
+
+
+# ------------------------------------------------------------------ 4b. feedback (PRD-12 R2/R6)
+
+func _build_feedback() -> void:
+	var items := _items("Feedback")
+	_card_title(items, Strings.FEEDBACK_SECTION)
+
+	_body_label(items, Strings.TEXT_SIZE_LABEL)
+	_text_size_control = SEGMENTED_SCENE.instantiate()
+	_text_size_control.name = "TextSizeControl"
+	items.add_child(_text_size_control)
+	_text_size_control.set_options(TEXT_SIZE_OPTIONS)
+	_text_size_control.selected_changed.connect(_on_text_size_selected)
+	_refresh_text_size()
+
+	_caption(items, Strings.TEXT_SIZE_HINT)
+
+
+## R6: a real setting — `App.set_setting` validates it, persists it and rebuilds the root
+## theme, so the whole app re-lays out the moment the chip is tapped.
+func _on_text_size_selected(index: int) -> void:
+	var scale: float = StoreSchema.TEXT_SCALES[index]
+	var message := StoreSchema.validate_text_scale(scale)
+	if not message.is_empty():
+		_reject("ui.text_scale", message)
+		return
+	var _written := App.set_setting("ui.text_scale", scale)
+
+
+## Selects the chip matching the stored value. An unrecognised value leaves the selection where
+## it is — the same step the theme resolver falls back to.
+func _refresh_text_size() -> void:
+	if _text_size_control == null:
+		return
+	var current := float(App.get_setting("ui.text_scale", 1.0))
+	for i in StoreSchema.TEXT_SCALES.size():
+		if is_equal_approx(current, StoreSchema.TEXT_SCALES[i]):
+			_text_size_control.set_selected(i)
+			return
 
 
 # ------------------------------------------------------------------ 5. AI provider (R10)
@@ -758,6 +803,8 @@ func _publish_probe_rects() -> void:
 	if _units_control != null:
 		UiProbe.log_rect("units_lb", _units_control.option_control(0))
 		UiProbe.log_rect("units_kg", _units_control.option_control(1))
+	if _text_size_control != null:
+		UiProbe.log_rect("text_size_control", _text_size_control)
 	UiProbe.log_rect("regenerate_default_plan_button", _plan_button)
 	UiProbe.log_rect("attribution_button", _attribution_button)
 	UiProbe.log_rect("reset_all_data_button", _reset_button)

@@ -3,6 +3,7 @@
 #
 #   tools/tap_ui.sh theme_button
 #   tools/tap_ui.sh gallery_button --settle 2
+#   tools/tap_ui.sh player_swipe --swipe left
 #
 # How it works:
 #   1. Read the control's viewport rect from logcat (the app logs it in debug builds).
@@ -25,15 +26,17 @@ TMP="$ROOT/build/tmp"
 NAME="${1:-}"
 shift || true
 SETTLE=1
+SWIPE=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --settle) SETTLE="${2:-1}"; shift 2 ;;
-    *) echo "usage: $0 NAME [--settle SECONDS]" >&2; exit 2 ;;
+    --swipe) SWIPE="${2:-left}"; shift 2 ;;
+    *) echo "usage: $0 NAME [--settle SECONDS] [--swipe left|right]" >&2; exit 2 ;;
   esac
 done
 
 if [[ -z "$NAME" ]]; then
-  echo "usage: $0 NAME [--settle SECONDS]" >&2
+  echo "usage: $0 NAME [--settle SECONDS] [--swipe left|right]" >&2
   exit 2
 fi
 
@@ -130,9 +133,25 @@ Y="$(sed -E 's/.* y=([0-9]+).*/\1/' <<<"$RECT")"
 W="$(sed -E 's/.* w=([0-9]+).*/\1/' <<<"$RECT")"
 H="$(sed -E 's/.* h=([0-9]+).*/\1/' <<<"$RECT")"
 
-TAP_X=$(( X + W / 2 ))
-TAP_Y=$(( Y + H / 2 + OFFSET_Y ))
+Y_MID=$(( Y + H / 2 + OFFSET_Y ))
 
-echo "[tap] $NAME viewport=($X,$Y ${W}x${H}) -> screen=($TAP_X,$TAP_Y)"
-adb shell input tap "$TAP_X" "$TAP_Y"
+if [[ -n "$SWIPE" ]]; then
+  # ADR-24: the player's step change is a horizontal swipe, not a button tap. Swipe inside the
+  # control's own rect (an eighth in from each edge) at its vertical centre, so the gesture runs
+  # across the surface the app actually listens to, whatever the device geometry is.
+  INSET=$(( W / 8 ))
+  if [[ "$SWIPE" == "right" ]]; then
+    X_FROM=$(( X + INSET )); X_TO=$(( X + W - INSET ))
+  else
+    X_FROM=$(( X + W - INSET )); X_TO=$(( X + INSET ))
+  fi
+  echo "[tap] swipe-$SWIPE $NAME viewport=($X,$Y ${W}x${H}) -> screen=($X_FROM,$Y_MID)->($X_TO,$Y_MID)"
+  adb shell input swipe "$X_FROM" "$Y_MID" "$X_TO" "$Y_MID" 140
+  sleep "$SETTLE"
+  exit 0
+fi
+
+TAP_X=$(( X + W / 2 ))
+echo "[tap] $NAME viewport=($X,$Y ${W}x${H}) -> screen=($TAP_X,$Y_MID)"
+adb shell input tap "$TAP_X" "$Y_MID"
 sleep "$SETTLE"

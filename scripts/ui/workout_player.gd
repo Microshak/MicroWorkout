@@ -71,6 +71,13 @@ const TOAST_SAVED_PARTIAL := "Saved — %d of %d exercises."
 const TOAST_LOGGED_SETS := "Logged %d of %d sets."
 const PAUSED_NOTE := "Been away a while — resume when you're ready."
 
+## The footer hint that replaced the Previous/Next row (owner request, ADR-24).
+const SWIPE_HINT := "Swipe left or right to change exercise"
+const SWIPE_HINT_FINISH := "Swipe left to finish"
+## Gesture thresholds in design px: far enough to be deliberate, and strongly horizontal.
+const SWIPE_MIN_PX := 140.0
+const SWIPE_DOMINANCE := 1.25
+
 ## R7's chip geometry.
 const CHIP_SIZE := 88.0
 const CHIP_CHECK_SIZE := 44.0
@@ -119,8 +126,7 @@ static var _stream_cache: Dictionary = {}
 @onready var _timer_row: VBoxContainer = $SafeArea/Layout/TimerRow
 @onready var _timer_ring: Control = $SafeArea/Layout/TimerRow/TimerCenter/TimerRing
 @onready var _timer_label: Label = $SafeArea/Layout/TimerRow/TimerLabel
-@onready var _previous_button: Button = $SafeArea/Layout/NavRow/PreviousButton
-@onready var _next_button: Button = $SafeArea/Layout/NavRow/NextButton
+@onready var _swipe_hint: Label = $SafeArea/Layout/SwipeRow/SwipeHint
 @onready var _rest_sheet: PanelContainer = $RestSheet
 @onready var _pause_sheet: Control = $PauseSheet
 @onready var _pause_dim: ColorRect = $PauseSheet/PauseDim
@@ -150,6 +156,12 @@ var _run: SessionRun = null
 var _state: String = STATE_LOADING
 var _state_before_pause: String = STATE_ACTIVE
 var _paused_by_background: bool = false
+
+## Swipe tracking (ADR-24): where the current touch started, and whether this gesture already
+## navigated — one drag fires once, and its release is swallowed instead of clicking through.
+var _touch_origin: Vector2 = Vector2.ZERO
+var _touch_active: bool = false
+var _swipe_consumed: bool = false
 
 ## Active-clock bookkeeping (R9/R14): whole seconds are folded into `SessionRun.elapsed_sec` and the
 ## remainder waits here, so a 1.99 s tick never loses a second.
@@ -187,8 +199,6 @@ func _ready() -> void:
 		App.theme_changed.connect(_on_theme_changed)
 
 	_pause_button.pressed.connect(_on_pause_pressed)
-	_previous_button.pressed.connect(_on_previous_pressed)
-	_next_button.pressed.connect(_on_next_pressed)
 	_illustration_button.pressed.connect(_on_illustration_pressed)
 	_resume_button.pressed.connect(_on_resume_pressed)
 	_restart_button.pressed.connect(_on_restart_pressed)
@@ -335,8 +345,7 @@ func _apply_step() -> void:
 	_update_illustration(exercise_id)
 	_warm_next_frames()
 	_block_counter.text = _counter_text(step)
-	_next_button.text = _run.next_label()
-	_update_previous_button()
+	_swipe_hint.text = SWIPE_HINT_FINISH if _run.is_last_step() else SWIPE_HINT
 	_repaint_progress()
 
 	if kind == KIND_BLOCK:
@@ -354,10 +363,11 @@ func _apply_step() -> void:
 	print("[player] labels name=\"%s\" sets_reps=\"%s\" rest=\"%s\" cues=%d next=\"%s\"" % [
 		_name_label.text, _sets_reps_label.text,
 		_rest_label.text if _rest_label.visible else "", _visible_cues(),
-		_next_button.text])
+		_run.next_label()])
 	UiProbe.log_rects_settled(get_tree(), {
-		"player_next": _next_button,
-		"player_previous": _previous_button,
+		# The central illustration area is the swipe surface (ADR-24): the device flows swipe
+		# across it instead of tapping a Next button that no longer exists.
+		"player_swipe": _illustration_button,
 		"player_pause": _pause_button,
 		"player_illustration": _illustration_button,
 	})
@@ -442,13 +452,6 @@ func _count_kind(kind: String) -> int:
 		if String(step.get("kind", "")) == kind:
 			total += 1
 	return total
-
-
-## R8: dimmed and inert on step 0 — including via `ui_left` (see [method _input]).
-func _update_previous_button() -> void:
-	var enabled := _run.can_prev()
-	_previous_button.disabled = not enabled
-	_previous_button.modulate.a = 1.0 if enabled else 0.45
 
 
 # ===========================================================================
@@ -854,7 +857,8 @@ func _on_next_pressed() -> void:
 		_after_step_change()
 
 
-## R8: disabled on step 0 (the button is, and `ui_left` is too).
+## R8: on step 0 a right-swipe (or `ui_left`) does nothing at all — there is nothing before the
+## first warm-up, and looking back never costs a check (R3).
 func _on_previous_pressed() -> void:
 	if not _is_running_state():
 		return
@@ -1227,6 +1231,8 @@ func _input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		_on_back()
 		return
+	if _handle_swipe(event):
+		return
 	if not _is_running_state() or _run == null:
 		return
 	if event.is_action_pressed(&"ui_left"):
@@ -1235,6 +1241,54 @@ func _input(event: InputEvent) -> void:
 	elif event.is_action_pressed(&"ui_right"):
 		get_viewport().set_input_as_handled()
 		_on_next_pressed()
+
+
+## Swipe navigation — the owner's replacement for the Previous/Next row (ADR-24). Returns true
+## when the event has been consumed and must not reach the GUI.
+##
+## Why `_input` and not `_unhandled_input`: the drag often starts on a Button (the illustration,
+## the set chips), and Godot's GUI consumes the press before the unhandled phase — so unhandled
+## would never see a gesture that starts on one of the controls this screen is made of. The flip
+## side is that *every* event passes through here, which is why every branch guards explicitly.
+##
+## One gesture navigates once: the threshold-crossing drag is consumed, and the release that
+## follows is consumed too — otherwise the Button the finger started on would still register a
+## click when it lifts (a swipe across the illustration would also open the zoom). The release is
+## consumed *before* the state guard so the last-step swipe, which moves the session to
+## `COMPLETING`, cannot leak its release into whatever comes next.
+func _handle_swipe(event: InputEvent) -> bool:
+	if event is InputEventScreenTouch and not (event as InputEventScreenTouch).pressed:
+		_touch_active = false
+		if _swipe_consumed:
+			_swipe_consumed = false
+			get_viewport().set_input_as_handled()
+			return true
+		return false
+	if _run == null or (_state != STATE_ACTIVE and _state != STATE_REST):
+		return false
+	if event is InputEventScreenTouch:
+		var touch: InputEventScreenTouch = event
+		_touch_origin = touch.position
+		_touch_active = true
+		_swipe_consumed = false
+		return false
+	if event is InputEventScreenDrag and _touch_active:
+		if _swipe_consumed:
+			# The rest of the gesture keeps its events away from the GUI.
+			get_viewport().set_input_as_handled()
+			return true
+		var drag: InputEventScreenDrag = event
+		var offset := drag.position - _touch_origin
+		if absf(offset.x) >= SWIPE_MIN_PX \
+				and absf(offset.x) >= absf(offset.y) * SWIPE_DOMINANCE:
+			_swipe_consumed = true
+			get_viewport().set_input_as_handled()
+			if offset.x < 0.0:
+				_on_next_pressed()
+			else:
+				_on_previous_pressed()
+			return true
+	return false
 
 
 # ===========================================================================

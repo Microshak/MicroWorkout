@@ -81,6 +81,9 @@ const DEFAULT_SETTINGS := {
 
 var settings: Dictionary = DEFAULT_SETTINGS.duplicate(true)
 
+## PRD-12 R6 — scaled theme cache, keyed `"<mode>|<scale>"` (at most 2 modes × 5 steps).
+var _scaled_themes: Dictionary = {}
+
 var theme_mode: String = THEME_DARK
 var _layout_class: int = LayoutUtil.Class.NORMAL
 var _insets: Vector4 = Vector4.ZERO
@@ -102,7 +105,7 @@ func _boot() -> void:
 	# Runs after every autoload is in the tree, so reading Store is safe here (R20).
 	_adopt_stored_settings()
 	_apply_theme()
-	print("[theme] mode=%s applied" % theme_mode)
+	print("[theme] mode=%s applied (text_scale=%.2f)" % [theme_mode, text_scale()])
 	print("[ui] insets=(%d, %d, %d, %d) class=%d" % [
 		int(_insets.x), int(_insets.y), int(_insets.z), int(_insets.w), _layout_class])
 	# Data probe: one greppable line proving the store and the library are live.
@@ -134,12 +137,33 @@ func _adopt_stored_settings() -> void:
 
 # ------------------------------------------------------------------ theme
 
+## PRD-12 R6 — resolves the active theme at the active text scale; scaled copies are cached,
+## and scale 1.0 is the generated resource itself.
 func theme_resource() -> Theme:
 	var path: String = THEME_PATHS.get(theme_mode, THEME_PATHS[THEME_DARK])
 	if not ResourceLoader.exists(path):
 		push_warning("[theme] missing theme resource: %s" % path)
 		return null
-	return load(path) as Theme
+	var base := load(path) as Theme
+	if base == null:
+		return null
+	var scale := text_scale()
+	if is_equal_approx(scale, 1.0):
+		return base
+	var key := "%s|%.2f" % [theme_mode, scale]
+	if not _scaled_themes.has(key):
+		_scaled_themes[key] = ThemeScale.scaled(base, scale)
+	return _scaled_themes[key]
+
+
+## PRD-12 R6 — the active dynamic-type step. `Store` validates every write against
+## `StoreSchema.TEXT_SCALES`; this membership check guards a hand-edited file.
+func text_scale() -> float:
+	var raw := float(_mirror_get("ui.text_scale", 1.0))
+	for step in StoreSchema.TEXT_SCALES:
+		if is_equal_approx(float(step), raw):
+			return float(step)
+	return 1.0
 
 
 func _apply_theme() -> void:
@@ -272,6 +296,10 @@ func set_setting(path: String, value: Variant) -> bool:
 			theme_changed.emit(theme_mode)
 		"units":
 			units_changed.emit(units())
+		"ui.text_scale":
+			# Live, like the theme: the root theme is rebuilt and every screen re-lays out (R6).
+			_apply_theme()
+			print("[theme] text_scale=%.2f applied" % text_scale())
 		"ui.reduce_motion":
 			Nav.set_reduce_motion(bool(value))
 	settings_changed.emit(path)
