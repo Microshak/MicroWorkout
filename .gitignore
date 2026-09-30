@@ -1,3 +1,6 @@
+# Working notes (PRDs, session/resume logs, credentials doc) — local only
+/docs/
+
 # Godot
 .godot/
 *.translation
@@ -14,6 +17,15 @@ export_credentials.cfg
 build/keystore.properties
 *.keystore
 *.jks
+*.pem
+*.p12
+*.pfx
+*.key
+.env
+.env.*
+# tools/build_android.sh injects the keystore path/user/password into this file
+# for the duration of a build — keep it local so a stray `git add` can't leak it.
+export_presets.cfg
 
 # Python tooling
 __pycache__/
