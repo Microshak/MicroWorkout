@@ -6,8 +6,8 @@ extends RefCounted
 ## read them from here so PRD-13 (release) only has to change one file.
 
 const NAME := "MicroWorkout"
-const VERSION := "0.1.0"
-const VERSION_CODE := 1
+const VERSION := "0.1.1"
+const VERSION_CODE := 2
 const PACKAGE_ID := "com.microshak.microworkout"
 const PACKAGE_ID_DEBUG := "com.microshak.microworkout.debug"
 
