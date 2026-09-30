@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" path="res://scenes/components/glyph.tscn" id="2_glyph"]
 
 [node name="status_chip" type="PanelContainer"]
+mouse_filter = 1
 theme_type_variation = &"CardAlt"
 script = ExtResource("1_status_chip")
 

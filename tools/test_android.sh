@@ -402,16 +402,13 @@ player_walk() {
   wait_log "\[player\] step=0 " "player is on step 0" 20
   shot "player-step-0"
 
-  # AC12: back opens the pause sheet (it never exits the workout), back again resumes, and back
-  # while zoomed closes the zoom. Driven with real key events, not by calling the handler.
+  # AC12: back opens the pause sheet (it never exits the workout), back again resumes. Driven
+  # with real key events, not by calling the handler. The illustration opens nothing — its area
+  # is the swipe surface (ADR-31).
   adb shell input keyevent KEYCODE_BACK >/dev/null 2>&1 || true
   wait_log "\[player\] back -> ACTIVE" "back in ACTIVE opened the pause sheet (AC12)" 25
   adb shell input keyevent KEYCODE_BACK >/dev/null 2>&1 || true
   wait_log "\[player\] back -> PAUSED" "back in PAUSED resumed (AC12)" 25
-  tap player_illustration 2
-  wait_log "\[player\] zoom ex=" "tapping the illustration opened the zoom (R4)" 25
-  adb shell input keyevent KEYCODE_BACK >/dev/null 2>&1 || true
-  wait_log "\[player\] back -> ZOOMED" "back while zoomed closed the zoom (AC12)" 25
 
   # Warm-ups: swipe through each, waiting for the next step to be reported.
   step=0

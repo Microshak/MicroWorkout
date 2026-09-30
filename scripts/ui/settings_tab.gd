@@ -355,7 +355,7 @@ func _on_text_size_selected(index: int) -> void:
 func _refresh_text_size() -> void:
 	if _text_size_control == null:
 		return
-	var current := float(App.get_setting("ui.text_scale", 1.0))
+	var current := App.text_scale()
 	for i in StoreSchema.TEXT_SCALES.size():
 		if is_equal_approx(current, StoreSchema.TEXT_SCALES[i]):
 			_text_size_control.set_selected(i)

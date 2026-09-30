@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://scripts/ui/components/card.gd" id="1_card"]
 
 [node name="card" type="PanelContainer"]
+mouse_filter = 1
 theme_type_variation = &"Card"
 script = ExtResource("1_card")
 

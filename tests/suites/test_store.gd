@@ -73,7 +73,7 @@ func _test_first_run_and_paths() -> void:
 	assert_eq(store.file_path("settings"), dir + "settings.json", "file_path joins the root")
 	assert_eq(store.file_path("session_progress"), dir + "session_progress.json", "fourth doc")
 
-	assert_eq(store.settings().get("schema_version", 0), 2, "settings schema_version is 2")
+	assert_eq(store.settings().get("schema_version", 0), 3, "settings schema_version is 3")
 	assert_eq(store.settings().get("units", ""), "lb", "default units")
 	assert_eq(store.settings().get("theme", ""), "dark", "default theme")
 	assert_eq(store.settings().get("weekly_goal_days", 0), 4, "default weekly goal")
@@ -101,9 +101,9 @@ func _test_first_run_and_paths() -> void:
 	assert_true(FileAccess.file_exists(dir + "settings.json.bak") == false,
 		"a first write has no previous revision to back up")
 
-	begin("the on-disk document is the documented v2 shape")
+	begin("the on-disk document is the documented v3 shape")
 	var document := _read_json(dir, "settings.json")
-	assert_eq(document.get("schema_version", 0), 2, "on-disk schema_version")
+	assert_eq(document.get("schema_version", 0), 3, "on-disk schema_version")
 	assert_eq(document.get("units", ""), "lb", "on-disk units")
 	assert_true(document.has("attribution_seen"), "appendix §5.1 key present")
 	assert_true(document.has("rest_timer"), "nested rest_timer block present")
@@ -497,20 +497,21 @@ func _test_migration() -> void:
 	var probe := Probe.new()
 	var store := _open(dir, probe)
 
-	assert_eq(probe.count_of("migrated:settings:0:2:2"), 1,
-		"settings migrated 0 -> 2 in two steps")
+	assert_eq(probe.count_of("migrated:settings:0:3:3"), 1,
+		"settings migrated 0 -> 3 in three steps")
 	assert_eq(probe.count_of("migrated:plans:0:1:1"), 1, "plans migrated 0 -> 1")
 	assert_eq(probe.count_of("migrated:history:0:1:1"), 1, "history migrated 0 -> 1")
 
-	begin("the migrated settings document has every v2 key and keeps legacy values")
-	assert_eq(store.settings().get("schema_version", 0), 2, "version 2 after migration")
+	begin("the migrated settings document has every current key and keeps legacy values")
+	assert_eq(store.settings().get("schema_version", 0), 3, "version 3 after migration")
 	assert_eq(store.settings().get("units", ""), "kg", "a legacy value is preserved")
 	assert_true(store.settings().has("attribution_seen"), "v2 adds attribution_seen")
 	assert_true(store.settings().has("rest_timer"), "v2 adds the rest_timer block")
 	assert_eq(store.get_setting("rest_timer.default_seconds", 0), 90, "rest default applied")
 	assert_eq(store.get_setting("llm.model", ""), "deepseek-chat", "llm defaults filled in")
 	assert_eq(store.get_setting("llm.api_key", ""), "legacy-key", "a legacy key survives")
-	assert_eq(store.get_setting("ui.text_scale", 0.0), 1.0, "v2 adds ui.text_scale")
+	assert_eq(store.get_setting("ui.text_scale", 0.0), 1.15,
+		"v3 lifts the old M default to L")
 	assert_eq(store.get_setting("mystery_legacy_key", 0), 7, "an unknown key survives migration")
 
 	begin("the migrated plans document is wrapped and defaulted")
@@ -527,7 +528,7 @@ func _test_migration() -> void:
 
 	begin("the migrated documents are rewritten at the current version")
 	assert_true(store.flush(), "flush after migration")
-	assert_eq(_read_json(dir, "settings.json").get("schema_version", 0), 2, "settings v2 on disk")
+	assert_eq(_read_json(dir, "settings.json").get("schema_version", 0), 3, "settings v3 on disk")
 	assert_eq(_read_json(dir, "plans.json").get("schema_version", 0), 1, "plans v1 on disk")
 	assert_eq(_read_json(dir, "history.json").get("schema_version", 0), 1, "history v1 on disk")
 	assert_false(FileAccess.file_exists(dir + "settings.json.corrupt-20200101T000000Z.json"),
@@ -550,7 +551,7 @@ func _test_future_version() -> void:
 
 	assert_eq(probe.count_of("quarantined:settings:future_version"), 1,
 		"quarantined with reason=future_version")
-	assert_eq(store.settings().get("schema_version", 0), 2, "defaults are loaded instead")
+	assert_eq(store.settings().get("schema_version", 0), 3, "defaults are loaded instead")
 	assert_eq(store.settings().get("units", ""), "lb", "defaults, not the newer document")
 
 	begin("the newer document is kept verbatim for the newer app to recover")
@@ -563,7 +564,7 @@ func _test_future_version() -> void:
 
 	begin("a fresh valid document replaces the quarantined one")
 	var live := _read_json(dir, "settings.json")
-	assert_eq(live.get("schema_version", 0), 2, "a fresh v2 settings.json exists")
+	assert_eq(live.get("schema_version", 0), 3, "a fresh v3 settings.json exists")
 	assert_true(live.has("llm"), "the fresh document is complete")
 	_free(store)
 
@@ -621,8 +622,8 @@ func _test_corruption_recovery() -> void:
 		"both copies share one timestamp (R4.4)")
 	assert_true(FileAccess.file_exists(dir2 + "settings.json"),
 		"a fresh valid document replaces the quarantined one")
-	assert_eq(_read_json(dir2, "settings.json").get("schema_version", 0), 2,
-		"the replacement is a complete v2 document")
+	assert_eq(_read_json(dir2, "settings.json").get("schema_version", 0), 3,
+		"the replacement is a complete v3 document")
 
 	begin("truncated JSON, a top-level array and an empty file are all quarantined")
 	var cases: Array[Array] = [
@@ -640,7 +641,8 @@ func _test_corruption_recovery() -> void:
 		var case_store := _open(case_dir, case_probe)
 		assert_eq(case_probe.count_of("quarantined:settings:%s" % expected_reasons[i]), 1,
 			"%s is quarantined with reason=%s" % [label, expected_reasons[i]])
-		assert_eq(case_store.settings().get("schema_version", 0), 2, "%s falls back to defaults" % label)
+		assert_eq(case_store.settings().get("schema_version", 0), 3,
+			"%s falls back to defaults" % label)
 		assert_eq(case_store.quarantine_paths("settings").size(), 1, "%s left one copy" % label)
 		_free(case_store)
 
@@ -697,7 +699,7 @@ func _test_quarantine_retention() -> void:
 		store.load_all()
 		assert_le(float(store.quarantine_paths("settings").size()), 5.0,
 			"the cap holds after round %d" % i)
-	assert_eq(_read_json(dir, "settings.json").get("schema_version", 0), 2,
+	assert_eq(_read_json(dir, "settings.json").get("schema_version", 0), 3,
 		"a valid document is always left behind")
 	assert_le(float(store.quarantine_paths("settings").size()), 5.0,
 		"never more than MAX_QUARANTINES copies")

@@ -41,7 +41,7 @@ const THEME_PATHS := {
 ## used when the settings document is missing or corrupt. The key set mirrors appendix §5.1;
 ## `Migrations.Schema.default_settings()` is the canonical table and the source of these values.
 const DEFAULT_SETTINGS := {
-	"schema_version": 2,
+	"schema_version": 3,
 	"units": UNITS_LB,
 	"theme": THEME_DARK,
 	"weekly_goal_days": 4,
@@ -74,7 +74,7 @@ const DEFAULT_SETTINGS := {
 		"sound_enabled": true,
 		"haptics_enabled": true,
 		"haptics_unavailable_shown": false,
-		"text_scale": 1.0,
+		"text_scale": Migrations.Schema.DEFAULT_TEXT_SCALE,
 		"wizard_draft": {},
 	},
 }
@@ -159,11 +159,11 @@ func theme_resource() -> Theme:
 ## PRD-12 R6 — the active dynamic-type step. `Store` validates every write against
 ## `StoreSchema.TEXT_SCALES`; this membership check guards a hand-edited file.
 func text_scale() -> float:
-	var raw := float(_mirror_get("ui.text_scale", 1.0))
+	var raw := float(_mirror_get("ui.text_scale", Migrations.Schema.DEFAULT_TEXT_SCALE))
 	for step in StoreSchema.TEXT_SCALES:
 		if is_equal_approx(float(step), raw):
 			return float(step)
-	return 1.0
+	return Migrations.Schema.DEFAULT_TEXT_SCALE
 
 
 func _apply_theme() -> void:

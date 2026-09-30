@@ -6,7 +6,7 @@ extends RefCounted
 ## Two responsibilities that belong together, because a migration step is defined by the
 ## shape it produces:
 ##
-## 1. [b]Versions and steps.[/b] [constant SETTINGS_CURRENT] = 2, [constant PLANS_CURRENT]
+## 1. [b]Versions and steps.[/b] [constant SETTINGS_CURRENT] = 3, [constant PLANS_CURRENT]
 ##    = 1, [constant HISTORY_CURRENT] = 1, [constant SESSION_PROGRESS_CURRENT] = 1.
 ##    Version 0 means "a file with no `schema_version`" — the pre-schema app. A version
 ##    *above* current is never migrated downwards; the caller quarantines it with
@@ -26,7 +26,7 @@ extends RefCounted
 ## Everything here is static and pure; the only side effects are `push_warning` calls on
 ## genuinely invalid input.
 
-const SETTINGS_CURRENT := 2
+const SETTINGS_CURRENT := 3
 const PLANS_CURRENT := 1
 const HISTORY_CURRENT := 1
 const SESSION_PROGRESS_CURRENT := 1
@@ -120,6 +120,8 @@ static func _apply_step(kind: String, from_version: int, data: Dictionary) -> Di
 				return _settings_0_to_1(data)
 			if from_version == 1:
 				return _settings_1_to_2(data)
+			if from_version == 2:
+				return _settings_2_to_3(data)
 		"plans":
 			if from_version == 0:
 				return _plans_0_to_1(data)
@@ -146,6 +148,20 @@ static func _settings_0_to_1(data: Dictionary) -> Dictionary:
 static func _settings_1_to_2(data: Dictionary) -> Dictionary:
 	var out := Schema._deep_merge(Schema.default_settings(), data)
 	out["schema_version"] = 2
+	return out
+
+
+## 2 → 3: the shipped default text size moved from M (1.0) to L (1.15) — the owner's "the
+## default font should be large" (ADR-30). Exactly the *old default* follows the new one; a
+## file whose owner picked S, XL or XXL keeps its value, and a file that predates the key
+## picks the new default up from the merge above.
+static func _settings_2_to_3(data: Dictionary) -> Dictionary:
+	var out := Schema._deep_merge(Schema.default_settings(), data)
+	var ui: Dictionary = out.get("ui", {})
+	if is_equal_approx(float(ui.get("text_scale", 0.0)), 1.0):
+		ui["text_scale"] = Schema.DEFAULT_TEXT_SCALE
+	out["ui"] = ui
+	out["schema_version"] = 3
 	return out
 
 
@@ -252,6 +268,8 @@ class Schema extends RefCounted:
 	const DEFAULT_TIMEOUT_SEC := 45
 	const DEFAULT_REST_SECONDS := 90
 	const DEFAULT_WEEKLY_GOAL_DAYS := 4
+	## PRD-12 R6's five steps are `TEXT_SCALES`; L (1.15) is the shipped default (ADR-30).
+	const DEFAULT_TEXT_SCALE := 1.15
 	const DEFAULT_DAYS_PER_WEEK := 4
 	const DEFAULT_DURATION_MIN := 40
 
@@ -337,7 +355,7 @@ class Schema extends RefCounted:
 				"sound_enabled": true,
 				"haptics_enabled": true,
 				"haptics_unavailable_shown": false,
-				"text_scale": 1.0,
+				"text_scale": DEFAULT_TEXT_SCALE,
 				"wizard_draft": {},
 			},
 			"meta": {

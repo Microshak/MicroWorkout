@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/workout_player.gd" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/components/glyph.tscn" id="2_glyph"]
@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" path="res://scenes/components/secondary_button.tscn" id="5_secondary"]
 [ext_resource type="PackedScene" path="res://scenes/components/primary_button.tscn" id="6_primary"]
 [ext_resource type="PackedScene" path="res://scenes/components/rest_sheet.tscn" id="7_rest"]
-[ext_resource type="PackedScene" path="res://scenes/components/exercise_zoom.tscn" id="8_zoom"]
 
 [node name="WorkoutPlayer" type="Control"]
 layout_mode = 3
@@ -107,12 +106,11 @@ layout_mode = 2
 size_flags_vertical = 3
 ratio = 1.0
 
-[node name="IllustrationButton" type="Button" parent="SafeArea/Layout/IllustrationSlot"]
+[node name="IllustrationHost" type="Control" parent="SafeArea/Layout/IllustrationSlot"]
 layout_mode = 2
-focus_mode = 0
-flat = true
+mouse_filter = 2
 
-[node name="Illustration" parent="SafeArea/Layout/IllustrationSlot/IllustrationButton" instance=ExtResource("3_thumb")]
+[node name="Illustration" parent="SafeArea/Layout/IllustrationSlot/IllustrationHost" instance=ExtResource("3_thumb")]
 custom_minimum_size = Vector2(640, 640)
 layout_mode = 1
 anchors_preset = 15
@@ -316,10 +314,6 @@ ok_button_text = "Quit"
 dialog_text = "Your sets from this session will be lost."
 dialog_autowrap = true
 cancel_button_text = "Keep going"
-
-[node name="ExerciseZoom" parent="." instance=ExtResource("8_zoom")]
-visible = false
-layout_mode = 1
 
 [node name="AutoSaveTimer" type="Timer" parent="."]
 wait_time = 2.0

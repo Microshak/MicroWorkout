@@ -38,11 +38,11 @@ extends Control
 # Constants
 # ===========================================================================
 
-## R11's states. `REST` and `ZOOMED` are **overlays**: `SessionRun.state` stays `ACTIVE` while the
-## rest sheet or the zoom is up, and only `PAUSED`/`COMPLETING` move the model.
+## R11's states. `REST` is an **overlay**: `SessionRun.state` stays `ACTIVE` while the rest sheet
+## is up, and only `PAUSED`/`COMPLETING` move the model. The `ZOOMED` sub-state is gone — the
+## illustration is the swipe surface and a tap on it does nothing (ADR-31).
 const STATE_LOADING := "LOADING"
 const STATE_ACTIVE := "ACTIVE"
-const STATE_ZOOMED := "ZOOMED"
 const STATE_REST := "REST"
 const STATE_PAUSED := "PAUSED"
 const STATE_CONFIRM_QUIT := "CONFIRM_QUIT"
@@ -53,8 +53,7 @@ const STATE_EXITED := "EXITED"
 ## R11's transition table, verbatim. Anything not listed is rejected and logged.
 const TRANSITIONS: Dictionary = {
 	STATE_LOADING: [STATE_ACTIVE],
-	STATE_ACTIVE: [STATE_ZOOMED, STATE_REST, STATE_PAUSED, STATE_COMPLETING],
-	STATE_ZOOMED: [STATE_ACTIVE, STATE_PAUSED],
+	STATE_ACTIVE: [STATE_REST, STATE_PAUSED, STATE_COMPLETING],
 	STATE_REST: [STATE_ACTIVE, STATE_PAUSED],
 	STATE_PAUSED: [STATE_ACTIVE, STATE_REST, STATE_COMPLETING, STATE_CONFIRM_QUIT],
 	STATE_CONFIRM_QUIT: [STATE_PAUSED, STATE_EXITED],
@@ -108,8 +107,8 @@ static var _stream_cache: Dictionary = {}
 @onready var _session_title: Label = $SafeArea/Layout/TopBar/TopCenter/SessionTitleLabel
 @onready var _elapsed_label: Label = $SafeArea/Layout/TopBar/ElapsedLabel
 @onready var _progress: HBoxContainer = $SafeArea/Layout/SessionProgress
-@onready var _illustration_button: Button = $SafeArea/Layout/IllustrationSlot/IllustrationButton
-@onready var _illustration: Control = $SafeArea/Layout/IllustrationSlot/IllustrationButton/Illustration
+@onready var _illustration_host: Control = $SafeArea/Layout/IllustrationSlot/IllustrationHost
+@onready var _illustration: Control = $SafeArea/Layout/IllustrationSlot/IllustrationHost/Illustration
 @onready var _name_label: Label = $SafeArea/Layout/NameLabel
 @onready var _sets_reps_label: Label = $SafeArea/Layout/SetsRepsLabel
 @onready var _rest_label: Label = $SafeArea/Layout/RestLabel
@@ -137,7 +136,6 @@ static var _stream_cache: Dictionary = {}
 @onready var _end_button: Button = $PauseSheet/PauseCenter/PauseCard/PauseVBox/EndWorkoutButton
 @onready var _quit_button: Button = $PauseSheet/PauseCenter/PauseCard/PauseVBox/QuitButton
 @onready var _confirm_dialog: ConfirmationDialog = $ConfirmQuitDialog
-@onready var _zoom: Control = $ExerciseZoom
 @onready var _auto_save_timer: Timer = $AutoSaveTimer
 @onready var _sfx_player: AudioStreamPlayer = $SfxPlayer
 
@@ -199,7 +197,8 @@ func _ready() -> void:
 		App.theme_changed.connect(_on_theme_changed)
 
 	_pause_button.pressed.connect(_on_pause_pressed)
-	_illustration_button.pressed.connect(_on_illustration_pressed)
+	# The illustration host ignores the mouse (`mouse_filter = IGNORE` in the scene): the artwork
+	# is the swipe surface, a tap on it does nothing, and it can never eat the drag (ADR-31).
 	_resume_button.pressed.connect(_on_resume_pressed)
 	_restart_button.pressed.connect(_on_restart_pressed)
 	_end_button.pressed.connect(_on_end_pressed)
@@ -213,7 +212,6 @@ func _ready() -> void:
 	_rest_sheet.connect(&"finished", _on_rest_finished)
 	_rest_sheet.connect(&"time_added", _on_rest_time_added)
 
-	_zoom.connect(&"closed", _on_zoom_closed)
 	_illustration.connect(&"frame_changed", _on_frame_changed)
 
 	_auto_save_timer.wait_time = AUTOSAVE_SEC
@@ -365,11 +363,11 @@ func _apply_step() -> void:
 		_rest_label.text if _rest_label.visible else "", _visible_cues(),
 		_run.next_label()])
 	UiProbe.log_rects_settled(get_tree(), {
-		# The central illustration area is the swipe surface (ADR-24): the device flows swipe
-		# across it instead of tapping a Next button that no longer exists.
-		"player_swipe": _illustration_button,
+		# The central illustration area is the swipe surface (ADR-24/31): the device flows swipe
+		# across it, and neither a Next button nor a tap-zoom sits under the finger.
+		"player_swipe": _illustration_host,
 		"player_pause": _pause_button,
-		"player_illustration": _illustration_button,
+		"player_illustration": _illustration_host,
 	})
 
 
@@ -584,7 +582,7 @@ func _sync_chip_states(exercise_id: String) -> void:
 ## R7's table. The Button flips its own `toggle_mode` state before this runs, so the model is
 ## reconciled against the UI rather than blindly toggled — the two can never drift.
 func _on_set_toggled(pressed: bool, index: int) -> void:
-	if _state != STATE_ACTIVE && _state != STATE_REST && _state != STATE_ZOOMED:
+	if _state != STATE_ACTIVE && _state != STATE_REST:
 		_revert_chip(index, pressed)
 		return
 	var exercise_id := _run.current_exercise_id()
@@ -878,32 +876,7 @@ func _after_step_change() -> void:
 
 
 func _is_running_state() -> bool:
-	return _state == STATE_ACTIVE or _state == STATE_REST or _state == STATE_ZOOMED
-
-
-# ===========================================================================
-# Zoom (R4)
-# ===========================================================================
-
-func _on_illustration_pressed() -> void:
-	if _state != STATE_ACTIVE && _state != STATE_REST:
-		return
-	var step := _run.current_step()
-	var exercise_id := _run.current_exercise_id()
-	var meta := "%d × %s · %ds rest" % [
-		int(step.get("sets", 0)), String(step.get("reps", "")), int(step.get("rest_seconds", 0))]
-	if _run.step_kind() != KIND_BLOCK:
-		meta = "%ds" % int(step.get("duration_sec", 0))
-	if not _set_state(STATE_ZOOMED):
-		return
-	print("[player] zoom ex=%s meta=\"%s\"" % [exercise_id, meta])
-	_zoom.call(&"open", exercise_id, Library.name_of(exercise_id), meta,
-		Library.get_cues(exercise_id))
-
-
-func _on_zoom_closed() -> void:
-	if _state == STATE_ZOOMED:
-		_set_state(STATE_ACTIVE)
+	return _state == STATE_ACTIVE or _state == STATE_REST
 
 
 # ===========================================================================
@@ -919,12 +892,8 @@ func _on_pause_pressed() -> void:
 func _enter_pause(from_background: bool) -> void:
 	if not _is_running_state():
 		return
-	_state_before_pause = STATE_ACTIVE if _state == STATE_ZOOMED else _state
+	_state_before_pause = _state
 	_paused_by_background = from_background
-	if _state == STATE_ZOOMED:
-		# The zoom is an overlay over this screen; leaving it up under the pause sheet would strand
-		# it on resume, when the state machine is back to ACTIVE.
-		_zoom.call(&"close")
 	if not _set_state(STATE_PAUSED):
 		return
 
@@ -1201,10 +1170,6 @@ func _on_back() -> void:
 	if _run == null or _exit_started:
 		return
 	match _state:
-		STATE_ZOOMED:
-			print("[player] back -> ZOOMED")
-			_zoom.call(&"close")
-			_on_zoom_closed()
 		STATE_REST:
 			print("[player] back -> REST")
 			_cancel_rest(true)
@@ -1246,14 +1211,14 @@ func _input(event: InputEvent) -> void:
 ## Swipe navigation — the owner's replacement for the Previous/Next row (ADR-24). Returns true
 ## when the event has been consumed and must not reach the GUI.
 ##
-## Why `_input` and not `_unhandled_input`: the drag often starts on a Button (the illustration,
-## the set chips), and Godot's GUI consumes the press before the unhandled phase — so unhandled
-## would never see a gesture that starts on one of the controls this screen is made of. The flip
-## side is that *every* event passes through here, which is why every branch guards explicitly.
+## Why `_input` and not `_unhandled_input`: the drag often starts on a Button (a set chip), and
+## Godot's GUI consumes the press before the unhandled phase — so unhandled would never see a
+## gesture that starts on one of the controls this screen is made of. The flip side is that
+## *every* event passes through here, which is why every branch guards explicitly.
 ##
 ## One gesture navigates once: the threshold-crossing drag is consumed, and the release that
 ## follows is consumed too — otherwise the Button the finger started on would still register a
-## click when it lifts (a swipe across the illustration would also open the zoom). The release is
+## click when it lifts (a swipe that grazes a set chip must not also tick it). The release is
 ## consumed *before* the state guard so the last-step swipe, which moves the session to
 ## `COMPLETING`, cannot leak its release into whatever comes next.
 func _handle_swipe(event: InputEvent) -> bool:
