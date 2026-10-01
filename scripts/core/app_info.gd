@@ -3,11 +3,11 @@ extends RefCounted
 ## Single source of truth for app identity and version.
 ##
 ## Nothing in the codebase should hardcode the app name, version, or package id —
-## read them from here so PRD-13 (release) only has to change one file.
+## read them from here so a release only has to change one file.
 
 const NAME := "MicroWorkout"
-const VERSION := "0.1.2"
-const VERSION_CODE := 3
+const VERSION := "0.1.3"
+const VERSION_CODE := 4
 const PACKAGE_ID := "com.microshak.microworkout"
 const PACKAGE_ID_DEBUG := "com.microshak.microworkout.debug"
 
