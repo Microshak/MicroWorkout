@@ -2,7 +2,7 @@ class_name DesignTokens
 extends RefCounted
 ## Single source of truth for every design token.
 ##
-## Master plan §9 as corrected by docs/PRD-00-APPENDIX-INTERFACES.md §4 (the appendix wins).
+## Values follow the frozen interface appendix (the appendix wins over any earlier spec text).
 ## The theme resources in res://resources/themes/ are GENERATED from this file by
 ## scripts/dev/build_themes.gd — never hand-edit them. tests/suites/test_design_tokens.gd
 ## fails the suite if they drift.

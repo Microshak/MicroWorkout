@@ -51,6 +51,13 @@ const KIND_UPCOMING := "upcoming"
 const KIND_REST := "rest"
 const KIND_MISSED := "missed"
 
+## The caption printed under a week strip. One owner, because three screens (Home's strip, the
+## Plan tab's "This week" card and the Tracker's) put a sentence under the same seven pills and
+## they must not drift apart.
+const WEEK_CAPTION_DONE := "%d of %d done this week"
+const WEEK_CAPTION_FINISHED := "Plan finished — every session has four logged rounds. Time for a new one."
+const WEEK_CAPTION_NO_PLAN := "No active plan — your past days are still in the Tracker."
+
 ## R11/R12: shown by the next-up card instead of a weekday name when the next session can be
 ## done today.
 const TODAY_LABEL := "Today"
@@ -305,6 +312,20 @@ static func strip_kinds(strip: Array[Dictionary]) -> PackedStringArray:
 	for day in strip:
 		out.append(String(day.get("kind", "")))
 	return out
+
+
+## The line under a built strip. [param days_per_week] `0` reads as "no plan", which is what the
+## Tracker shows when history exists but the pointer was cleared.
+static func week_caption(state: String, strip: Array[Dictionary], days_per_week: int) -> String:
+	if state == PLAN_FINISHED:
+		return WEEK_CAPTION_FINISHED
+	if state == NO_PLAN or days_per_week <= 0:
+		return WEEK_CAPTION_NO_PLAN
+	var done := 0
+	for day in strip:
+		if String(day.get("kind", "")) == KIND_DONE:
+			done += 1
+	return WEEK_CAPTION_DONE % [done, days_per_week]
 
 
 # ------------------------------------------------------------------ greeting (R4)

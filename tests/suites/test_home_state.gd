@@ -37,6 +37,7 @@ func run() -> void:
 	_test_rest_state()
 	_test_plan_finished_state()
 	_test_week_strip()
+	_test_week_caption()
 	_test_next_up_wrap_around()
 	_test_derived_values_pass_through()
 	_test_robustness()
@@ -353,6 +354,30 @@ func _test_week_strip() -> void:
 	var month_strip: Array = month_end["week_strip"]
 	assert_eq(String(month_strip[0]["date"]), "2026-09-28", "Monday of that ISO week")
 	assert_eq(String(month_strip[6]["date"]), "2026-10-04", "Sunday of that ISO week")
+
+
+# ------------------------------------------------------------------ week caption
+
+## `week_caption()` is the one copy of "how is this week going" — Home's strip, the Plan tab's
+## "This week" card and the Tracker's card all print it, so it is tested once, here.
+func _test_week_caption() -> void:
+	begin("the caption counts the week's done pills against the plan's days")
+	var plan := _plan(4, "2026-09-14T06:00:00Z")
+	var state := _build(_plans(plan), [_entry(MONDAY, "s1")], _now(TUESDAY, 9))
+	var strip: Array[Dictionary] = []
+	for day in (state["week_strip"] as Array):
+		strip.append(day)
+	var resolved := HomeState.resolve_state(plan, [_entry(MONDAY, "s1")], TUESDAY, 4)
+	assert_eq(HomeState.week_caption(resolved, strip, 4), "1 of 4 done this week",
+		"one pill is done")
+
+	begin("no plan and a finished plan each get their own sentence, not a 0-of-N")
+	assert_eq(HomeState.week_caption(HomeState.NO_PLAN, strip, 4),
+		HomeState.WEEK_CAPTION_NO_PLAN, "no plan")
+	assert_eq(HomeState.week_caption(HomeState.TRAINING, strip, 0),
+		HomeState.WEEK_CAPTION_NO_PLAN, "zero days reads as no plan")
+	assert_eq(HomeState.week_caption(HomeState.PLAN_FINISHED, strip, 4),
+		HomeState.WEEK_CAPTION_FINISHED, "finished")
 
 
 # ------------------------------------------------------------------ R9/R11 next-up

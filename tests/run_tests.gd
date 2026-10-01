@@ -42,6 +42,7 @@ const SUITES: PackedStringArray = [
 	"res://tests/suites/test_progression.gd",
 	"res://tests/suites/test_month_grid.gd",
 	"res://tests/suites/test_area_balance.gd",
+	"res://tests/suites/test_plan_screen.gd",
 	"res://tests/suites/test_tracker_screen.gd",
 	"res://tests/suites/test_motion.gd",
 	"res://tests/suites/test_feedback.gd",

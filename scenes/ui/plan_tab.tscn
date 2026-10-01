@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/plan_tab.gd" id="1_tab"]
 [ext_resource type="PackedScene" path="res://scenes/components/section_header.tscn" id="2_header"]
 [ext_resource type="PackedScene" path="res://scenes/components/empty_state.tscn" id="3_empty"]
+[ext_resource type="PackedScene" path="res://scenes/components/week_strip.tscn" id="4_strip"]
+[ext_resource type="PackedScene" path="res://scenes/components/primary_button.tscn" id="5_primary"]
+[ext_resource type="PackedScene" path="res://scenes/components/secondary_button.tscn" id="6_secondary"]
 
 [node name="PlanTab" type="Control"]
 layout_mode = 3
@@ -13,31 +16,117 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_tab")
 
-[node name="Scroll" type="ScrollContainer" parent="."]
+[node name="Gutter" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-horizontal_scroll_mode = 0
-
-[node name="Gutter" type="MarginContainer" parent="Scroll"]
-layout_mode = 2
-size_flags_horizontal = 3
 theme_override_constants/margin_left = 24
 theme_override_constants/margin_top = 24
 theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 24
 
-[node name="Page" type="VBoxContainer" parent="Scroll/Gutter"]
+[node name="Layout" type="VBoxContainer" parent="Gutter"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="SectionHeader" parent="Gutter/Layout" instance=ExtResource("2_header")]
+layout_mode = 2
+
+[node name="EmptyState" parent="Gutter/Layout" instance=ExtResource("3_empty")]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Scroll" type="ScrollContainer" parent="Gutter/Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Column" type="VBoxContainer" parent="Gutter/Layout/Scroll"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 32
 
-[node name="SectionHeader" parent="Scroll/Gutter/Page" instance=ExtResource("2_header")]
+[node name="PlanCard" type="PanelContainer" parent="Gutter/Layout/Scroll/Column"]
+layout_mode = 2
+theme_type_variation = &"Card"
+
+[node name="CardBody" type="VBoxContainer" parent="Gutter/Layout/Scroll/Column/PlanCard"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="NameLabel" type="Label" parent="Gutter/Layout/Scroll/Column/PlanCard/CardBody"]
+layout_mode = 2
+theme_type_variation = &"H3"
+
+[node name="MetaLabel" type="Label" parent="Gutter/Layout/Scroll/Column/PlanCard/CardBody"]
+layout_mode = 2
+theme_type_variation = &"Caption"
+
+[node name="SplitLabel" type="Label" parent="Gutter/Layout/Scroll/Column/PlanCard/CardBody"]
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="AreasLabel" type="Label" parent="Gutter/Layout/Scroll/Column/PlanCard/CardBody"]
+layout_mode = 2
+theme_type_variation = &"Caption"
+autowrap_mode = 3
+
+[node name="Actions" type="HBoxContainer" parent="Gutter/Layout/Scroll/Column/PlanCard/CardBody"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="NewPlanButton" parent="Gutter/Layout/Scroll/Column/PlanCard/CardBody/Actions" instance=ExtResource("5_primary")]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "New plan"
+
+[node name="RemovePlanButton" parent="Gutter/Layout/Scroll/Column/PlanCard/CardBody/Actions" instance=ExtResource("6_secondary")]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Remove plan"
+
+[node name="WeekCard" type="PanelContainer" parent="Gutter/Layout/Scroll/Column"]
+layout_mode = 2
+theme_type_variation = &"Card"
+
+[node name="CardBody" type="VBoxContainer" parent="Gutter/Layout/Scroll/Column/WeekCard"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="WeekTitle" type="Label" parent="Gutter/Layout/Scroll/Column/WeekCard/CardBody"]
+layout_mode = 2
+theme_type_variation = &"H3"
+text = "This week"
+
+[node name="WeekStrip" parent="Gutter/Layout/Scroll/Column/WeekCard/CardBody" instance=ExtResource("4_strip")]
 layout_mode = 2
 
-[node name="EmptyState" parent="Scroll/Gutter/Page" instance=ExtResource("3_empty")]
+[node name="WeekCaption" type="Label" parent="Gutter/Layout/Scroll/Column/WeekCard/CardBody"]
 layout_mode = 2
-size_flags_vertical = 3
+theme_type_variation = &"Caption"
+
+[node name="SessionsCard" type="PanelContainer" parent="Gutter/Layout/Scroll/Column"]
+layout_mode = 2
+theme_type_variation = &"Card"
+
+[node name="CardBody" type="VBoxContainer" parent="Gutter/Layout/Scroll/Column/SessionsCard"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="SessionsTitle" type="Label" parent="Gutter/Layout/Scroll/Column/SessionsCard/CardBody"]
+layout_mode = 2
+theme_type_variation = &"H3"
+text = "Your week"
+
+[node name="DayList" type="VBoxContainer" parent="Gutter/Layout/Scroll/Column/SessionsCard/CardBody"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="RemoveDialog" type="ConfirmationDialog" parent="."]
+title = "Remove plan?"
+dialog_text = "This clears the active plan so you can start a new one. Your workout history stays."
+ok_button_text = "Remove plan"
+cancel_button_text = "Keep it"

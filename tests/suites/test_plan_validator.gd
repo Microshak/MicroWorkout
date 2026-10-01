@@ -658,12 +658,13 @@ func _test_identity() -> void:
 		"derived from days + split")
 	assert_true(_has_warning(result_unnamed, "W_NAME_MISMATCH"), "W_NAME_MISMATCH recorded")
 
-	begin("a missing split_name falls back to the canonical §6.3 name")
+	begin("a missing split_name falls back to the canonical body-part name")
 	var no_split := _plan()
 	no_split.erase("split_name")
 	var result_split := _validate(no_split)
-	assert_eq(String((result_split["plan"] as Dictionary)["split_name"]), "Upper / Lower",
-		"days 4 -> Upper / Lower")
+	assert_eq(String((result_split["plan"] as Dictionary)["split_name"]),
+		"Chest & Back ×2 / Legs & Arms / Shoulders & Core",
+		"days 4 -> the canonical 4-day split")
 
 	begin("id and created_at default to the generator's own pattern when the caller omits them")
 	var bare_input: Dictionary = SAMPLE_INPUT.duplicate()
@@ -784,14 +785,18 @@ func _test_estimate_helpers() -> void:
 
 
 func _test_split_names() -> void:
-	begin("canonical_split_name() follows appendix §6.3")
+	begin("canonical_split_name() follows the body-part split table")
 	assert_eq(PlanValidator.canonical_split_name(1, 4), "Full Body", "1 day")
 	assert_eq(PlanValidator.canonical_split_name(2, 4), "Full Body A / B", "2 days")
-	assert_eq(PlanValidator.canonical_split_name(3, 4), "Push / Pull / Legs", "3 days, 4 areas")
+	assert_eq(PlanValidator.canonical_split_name(3, 4),
+		"Chest & Back / Legs & Arms / Shoulders & Core", "3 days, 4 areas")
 	assert_eq(PlanValidator.canonical_split_name(3, 3), "Full Body ×3", "3 days, 3 areas")
-	assert_eq(PlanValidator.canonical_split_name(4, 4), "Upper / Lower", "4 days")
-	assert_eq(PlanValidator.canonical_split_name(5, 4), "Push / Pull / Legs + Upper / Lower", "5 days")
-	assert_eq(PlanValidator.canonical_split_name(6, 4), "Push / Pull / Legs ×2", "6 days")
+	assert_eq(PlanValidator.canonical_split_name(4, 4),
+		"Chest & Back ×2 / Legs & Arms / Shoulders & Core", "4 days")
+	assert_eq(PlanValidator.canonical_split_name(5, 4),
+		"Chest & Back ×2 / Legs & Arms ×2 / Shoulders & Core", "5 days")
+	assert_eq(PlanValidator.canonical_split_name(6, 4),
+		"Chest & Back ×2 / Legs & Arms ×2 / Shoulders & Core ×2", "6 days")
 	assert_eq(PlanValidator.canonical_split_name(7, 4), "Full Body", "out of range degrades")
 
 

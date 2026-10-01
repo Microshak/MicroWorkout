@@ -54,9 +54,12 @@ OUTPUT CONTRACT — follow exactly:
 - Write "split_name" as the split you actually used.
 
 PROGRAMMING RULES:
-- Use the split for the given number of days: 1 = Full Body; 2 = Full Body A/B; 3 = Push/Pull/Legs
-  (Full Body x3 if AREAS has 3 or fewer entries); 4 = Upper/Lower/Upper/Lower; 5 = Push/Pull/Legs/Upper/Lower;
-  6 = Push/Pull/Legs x2.
+- Split the week by body part so no area is trained on two consecutive training days.
+  By DAYS_PER_WEEK: 1 = Full Body; 2 = Full Body A/B; 3 = Chest & Back / Legs & Arms / Shoulders & Core;
+  4 = Chest & Back, Legs & Arms, Shoulders & Core, Chest & Back;
+  5 = Chest & Back, Legs & Arms, Shoulders & Core, Chest & Back, Legs & Arms;
+  6 = that three-day cycle twice. Never put the same area in two sessions that sit next to each other.
+  If AREAS has 3 or fewer entries, use Full Body for every session instead.
 - Sets, reps and rest by GOAL: strength = 4-5 sets, 3-6 reps, 150-180 s rest;
   hypertrophy = 3-4 sets, 8-12 reps, 75-90 s rest; general_fitness = 2-3 sets, 8-15 reps, 60-75 s rest;
   conditioning = 2-3 sets, 12-20 reps, 30-45 s rest, circuit-style.
@@ -90,7 +93,7 @@ ALLOWED EXERCISES (id | name | areas | equipment | type | kind | default sets x 
 
 PLAN SCHEMA (return this object, keys exactly as written):
 {
-  "name": "<short plan name, e.g. '4-Day Upper/Lower'>",
+  "name": "<short plan name, e.g. '4-Day Chest & Back / Legs & Arms'>",
   "split_name": "<the split you used>",
   "goal": "<GOAL>",
   "days_per_week": <DAYS_PER_WEEK>,

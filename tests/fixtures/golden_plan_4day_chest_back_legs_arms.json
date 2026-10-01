@@ -5,12 +5,11 @@
       "back",
       "shoulders",
       "arms",
-      "legs",
       "core"
     ],
     "created_at": "2026-09-15T12:00:00Z",
-    "days_per_week": 5,
-    "duration_min": 45,
+    "days_per_week": 4,
+    "duration_min": 40,
     "equipment": [
       "barbell",
       "machine",
@@ -20,7 +19,7 @@
     ],
     "goal": "hypertrophy",
     "id": "plan-1757941200",
-    "name": "5-Day Push / Pull / Legs + Upper / Lower",
+    "name": "4-Day Chest & Back ×2 / Legs & Arms / Shoulders & Core",
     "notes": "",
     "provider": "",
     "sessions": [
@@ -33,11 +32,63 @@
             "sets": 4
           },
           {
-            "exercise_id": "feet-elevated-pike-push-up",
+            "exercise_id": "assisted-pull-up",
             "reps": "8-12",
             "rest_seconds": 90,
-            "sets": 4
+            "sets": 3
           },
+          {
+            "exercise_id": "machine-row",
+            "reps": "8-12",
+            "rest_seconds": 90,
+            "sets": 3
+          },
+          {
+            "exercise_id": "incline-dumbbell-press",
+            "reps": "8-10",
+            "rest_seconds": 90,
+            "sets": 4
+          }
+        ],
+        "cooldown": [
+          {
+            "duration_sec": 60,
+            "exercise_id": "cross-body-shoulder-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "seated-forward-fold-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "torso-twist-stretch"
+          }
+        ],
+        "est_minutes": 37,
+        "focus": [
+          "chest",
+          "back"
+        ],
+        "id": "s1",
+        "index": 0,
+        "title": "Chest & Back A",
+        "warmup": [
+          {
+            "duration_sec": 60,
+            "exercise_id": "arm-circles"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "cat-cow-stretch"
+          },
+          {
+            "duration_sec": 60,
+            "exercise_id": "childs-pose"
+          }
+        ]
+      },
+      {
+        "blocks": [
           {
             "exercise_id": "hammer-curl",
             "reps": "10-12",
@@ -45,87 +96,27 @@
             "sets": 3
           },
           {
-            "exercise_id": "half-burpee",
-            "reps": "8-10",
-            "rest_seconds": 90,
-            "sets": 4
-          }
-        ],
-        "cooldown": [
-          {
-            "duration_sec": 60,
-            "exercise_id": "cross-body-shoulder-stretch"
-          },
-          {
-            "duration_sec": 60,
-            "exercise_id": "torso-twist-stretch"
-          },
-          {
-            "duration_sec": 60,
-            "exercise_id": "butterfly-stretch"
-          }
-        ],
-        "est_minutes": 39,
-        "focus": [
-          "chest",
-          "shoulders",
-          "arms",
-          "core"
-        ],
-        "id": "s1",
-        "index": 0,
-        "title": "Push",
-        "warmup": [
-          {
-            "duration_sec": 60,
-            "exercise_id": "arm-circles"
-          },
-          {
-            "duration_sec": 60,
-            "exercise_id": "cat-cow-stretch"
-          },
-          {
-            "duration_sec": 60,
-            "exercise_id": "childs-pose"
-          }
-        ]
-      },
-      {
-        "blocks": [
-          {
-            "exercise_id": "dumbbell-shrug",
+            "exercise_id": "overhead-tricep-extension",
             "reps": "10-12",
             "rest_seconds": 75,
             "sets": 3
           },
           {
-            "exercise_id": "rack-pull",
+            "exercise_id": "incline-dumbbell-curl",
             "reps": "10-12",
             "rest_seconds": 75,
             "sets": 3
           },
           {
-            "exercise_id": "assisted-chin-up",
-            "reps": "8-12",
-            "rest_seconds": 90,
-            "sets": 3
-          },
-          {
-            "exercise_id": "half-kneeling-pallof-press",
-            "reps": "8-12",
-            "rest_seconds": 75,
-            "sets": 2
-          },
-          {
-            "exercise_id": "prone-t-raise",
+            "exercise_id": "reverse-curl",
             "reps": "10-12",
             "rest_seconds": 75,
             "sets": 3
           },
           {
-            "exercise_id": "assisted-dip",
-            "reps": "8-12",
-            "rest_seconds": 90,
+            "exercise_id": "plate-front-raise",
+            "reps": "10-12",
+            "rest_seconds": 75,
             "sets": 3
           }
         ],
@@ -143,15 +134,17 @@
             "exercise_id": "worlds-greatest-stretch"
           }
         ],
-        "est_minutes": 42,
+        "est_minutes": 37,
         "focus": [
-          "back",
           "arms",
+          "chest",
+          "back",
+          "shoulders",
           "core"
         ],
         "id": "s2",
         "index": 1,
-        "title": "Pull",
+        "title": "Legs & Arms",
         "warmup": [
           {
             "duration_sec": 60,
@@ -169,18 +162,6 @@
       },
       {
         "blocks": [
-          {
-            "exercise_id": "high-knees",
-            "reps": "45s",
-            "rest_seconds": 90,
-            "sets": 3
-          },
-          {
-            "exercise_id": "jump-rope",
-            "reps": "45s",
-            "rest_seconds": 90,
-            "sets": 3
-          },
           {
             "exercise_id": "hanging-leg-raise",
             "reps": "10-12",
@@ -188,34 +169,52 @@
             "sets": 3
           },
           {
-            "exercise_id": "clamshell",
+            "exercise_id": "plate-front-raise",
             "reps": "10-12",
             "rest_seconds": 75,
             "sets": 3
+          },
+          {
+            "exercise_id": "captains-chair-knee-raise",
+            "reps": "10-12",
+            "rest_seconds": 75,
+            "sets": 3
+          },
+          {
+            "exercise_id": "cable-front-raise",
+            "reps": "8-12",
+            "rest_seconds": 75,
+            "sets": 2
+          },
+          {
+            "exercise_id": "rear-delt-fly",
+            "reps": "8-10",
+            "rest_seconds": 90,
+            "sets": 4
           }
         ],
         "cooldown": [
           {
             "duration_sec": 60,
-            "exercise_id": "kneeling-hip-flexor-stretch"
+            "exercise_id": "torso-twist-stretch"
           },
           {
             "duration_sec": 60,
-            "exercise_id": "leg-swings-stretch"
+            "exercise_id": "arm-circles"
           },
           {
             "duration_sec": 60,
-            "exercise_id": "seated-forward-fold-stretch"
+            "exercise_id": "hamstring-stretch"
           }
         ],
-        "est_minutes": 42,
+        "est_minutes": 37,
         "focus": [
-          "legs",
+          "shoulders",
           "core"
         ],
         "id": "s3",
         "index": 2,
-        "title": "Legs",
+        "title": "Shoulders & Core",
         "warmup": [
           {
             "duration_sec": 60,
@@ -227,12 +226,18 @@
           },
           {
             "duration_sec": 60,
-            "exercise_id": "hamstring-stretch"
+            "exercise_id": "cross-body-shoulder-stretch"
           }
         ]
       },
       {
         "blocks": [
+          {
+            "exercise_id": "trap-bar-deadlift",
+            "reps": "8-10",
+            "rest_seconds": 90,
+            "sets": 3
+          },
           {
             "exercise_id": "pec-deck",
             "reps": "8-10",
@@ -240,26 +245,20 @@
             "sets": 4
           },
           {
-            "exercise_id": "arnold-press",
-            "reps": "8-10",
-            "rest_seconds": 90,
-            "sets": 4
-          },
-          {
-            "exercise_id": "trap-bar-deadlift",
-            "reps": "8-10",
-            "rest_seconds": 90,
-            "sets": 4
-          },
-          {
-            "exercise_id": "rope-hammer-curl",
+            "exercise_id": "prone-t-raise",
             "reps": "10-12",
             "rest_seconds": 75,
             "sets": 2
           },
           {
-            "exercise_id": "cable-fly",
-            "reps": "8-12",
+            "exercise_id": "v-up",
+            "reps": "10-12",
+            "rest_seconds": 75,
+            "sets": 3
+          },
+          {
+            "exercise_id": "dumbbell-curtsy-lunge",
+            "reps": "8-10",
             "rest_seconds": 90,
             "sets": 2
           }
@@ -278,7 +277,7 @@
             "exercise_id": "arm-circles"
           }
         ],
-        "est_minutes": 41,
+        "est_minutes": 36,
         "focus": [
           "chest",
           "back",
@@ -288,7 +287,7 @@
         ],
         "id": "s4",
         "index": 3,
-        "title": "Upper",
+        "title": "Chest & Back B",
         "warmup": [
           {
             "duration_sec": 60,
@@ -303,122 +302,54 @@
             "exercise_id": "seated-forward-fold-stretch"
           }
         ]
-      },
-      {
-        "blocks": [
-          {
-            "exercise_id": "bulgarian-split-squat",
-            "reps": "8-10",
-            "rest_seconds": 90,
-            "sets": 4
-          },
-          {
-            "exercise_id": "inchworm",
-            "reps": "10-12",
-            "rest_seconds": 75,
-            "sets": 3
-          },
-          {
-            "exercise_id": "seal-jack",
-            "reps": "45s",
-            "rest_seconds": 90,
-            "sets": 2
-          },
-          {
-            "exercise_id": "toe-touch",
-            "reps": "10-12",
-            "rest_seconds": 75,
-            "sets": 3
-          }
-        ],
-        "cooldown": [
-          {
-            "duration_sec": 60,
-            "exercise_id": "leg-swings-stretch"
-          },
-          {
-            "duration_sec": 60,
-            "exercise_id": "seated-forward-fold-stretch"
-          },
-          {
-            "duration_sec": 60,
-            "exercise_id": "standing-quad-stretch"
-          }
-        ],
-        "est_minutes": 35,
-        "focus": [
-          "legs",
-          "core",
-          "chest",
-          "back",
-          "shoulders",
-          "arms"
-        ],
-        "id": "s5",
-        "index": 4,
-        "title": "Lower",
-        "warmup": [
-          {
-            "duration_sec": 60,
-            "exercise_id": "cross-body-shoulder-stretch"
-          },
-          {
-            "duration_sec": 60,
-            "exercise_id": "hamstring-stretch"
-          },
-          {
-            "duration_sec": 60,
-            "exercise_id": "kneeling-hip-flexor-stretch"
-          }
-        ]
       }
     ],
     "source": "builtin",
-    "split_name": "Push / Pull / Legs + Upper / Lower"
+    "split_name": "Chest & Back ×2 / Legs & Arms / Shoulders & Core"
   },
-  "expected_plan_sha256": "18a70fff43bacd774e85743ec14a0c10cde3d1fa65fbf956770691e644ba0918",
+  "expected_plan_sha256": "de7733653bf97f1e3fac545311505aee40c4af2a4c1ea55dd2f14aa20f9b5bfd",
   "expected_volume": {
     "arms": {
       "cap": 22,
-      "coverage": 4,
-      "direct": 11,
+      "coverage": 2,
+      "direct": 12,
       "effective": 22,
-      "target": 13
+      "target": 10
     },
     "back": {
       "cap": 22,
       "coverage": 3,
-      "direct": 13,
-      "effective": 14.5,
-      "target": 13
+      "direct": 11,
+      "effective": 13,
+      "target": 10
     },
     "chest": {
       "cap": 22,
       "coverage": 3,
       "direct": 12,
-      "effective": 17,
-      "target": 13
+      "effective": 16,
+      "target": 10
     },
     "core": {
       "cap": 22,
-      "coverage": 5,
-      "direct": 15,
-      "effective": 22,
-      "target": 13
+      "coverage": 3,
+      "direct": 9,
+      "effective": 10,
+      "target": 10
     },
     "legs": {
       "cap": 22,
-      "coverage": 2,
-      "direct": 13,
-      "effective": 22,
-      "target": 13
+      "coverage": 0,
+      "direct": 2,
+      "effective": 5,
+      "target": 10
     },
     "shoulders": {
       "cap": 22,
       "coverage": 3,
-      "direct": 8,
-      "effective": 21.5,
-      "target": 13
+      "direct": 12,
+      "effective": 22,
+      "target": 10
     }
   },
   "input": {
@@ -427,12 +358,11 @@
       "back",
       "shoulders",
       "arms",
-      "legs",
       "core"
     ],
     "created_at": "2026-09-15T12:00:00Z",
-    "days_per_week": 5,
-    "duration_min": 45,
+    "days_per_week": 4,
+    "duration_min": 40,
     "equipment": [
       "barbell",
       "machine",
@@ -444,7 +374,7 @@
     "id": "plan-1757941200",
     "notes": ""
   },
-  "scenario": "5day_ppl_ul",
+  "scenario": "4day_chest_back_legs_arms",
   "schema_version": 1,
   "seed": 20260915
 }

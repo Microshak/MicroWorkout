@@ -880,19 +880,20 @@ static func type_name(value: Variant) -> String:
 
 # ------------------------------------------------------------------ canonical names
 
-## R5's canonical split names (appendix §6.3). The generator resolves the same names from its own
-## pool table; this copy exists only so a reply that omits `split_name` still gets a correct one
-## without the validator depending on the generator's session planning.
+## R5's canonical split names. The generator resolves the same names from its own pool table;
+## this copy exists only so a reply that omits `split_name` still gets a correct one without the
+## validator depending on the generator's session planning.
 static func canonical_split_name(days: int, area_count: int) -> String:
 	match days:
 		2:
 			return "Full Body A / B"
 		3:
-			return "Full Body ×3" if area_count <= 3 else "Push / Pull / Legs"
+			return "Full Body ×3" if area_count <= 3 \
+				else "Chest & Back / Legs & Arms / Shoulders & Core"
 		4:
-			return "Upper / Lower"
+			return "Chest & Back ×2 / Legs & Arms / Shoulders & Core"
 		5:
-			return "Push / Pull / Legs + Upper / Lower"
+			return "Chest & Back ×2 / Legs & Arms ×2 / Shoulders & Core"
 		6:
-			return "Push / Pull / Legs ×2"
+			return "Chest & Back ×2 / Legs & Arms ×2 / Shoulders & Core ×2"
 	return "Full Body"

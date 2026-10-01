@@ -25,9 +25,9 @@ const PATTERN_TABLE := "res://tests/fixtures/pattern_table.json"
 ## R16 — the five committed golden scenarios, in file order.
 const SCENARIOS: Array = [
 	["2day_full_body", "general_fitness", 2, 30, ["chest", "back", "legs", "core"], FULL_GYM, ""],
-	["4day_upper_lower", "hypertrophy", 4, 40,
+	["4day_chest_back_legs_arms", "hypertrophy", 4, 40,
 		["chest", "back", "shoulders", "arms", "core"], FULL_GYM, ""],
-	["5day_ppl_ul", "hypertrophy", 5, 45,
+	["5day_chest_back_legs_arms_x2", "hypertrophy", 5, 45,
 		["chest", "back", "shoulders", "arms", "legs", "core"], FULL_GYM, ""],
 	["strength_goal", "strength", 3, 60, ["chest", "back", "legs", "core"], FULL_GYM, ""],
 	["conditioning_goal", "conditioning", 4, 30, ["cardio", "legs", "core", "arms"],
@@ -413,12 +413,16 @@ func _test_split_selection() -> void:
 	var expectations: Array = [
 		[1, "Full Body", ["Full Body A"]],
 		[2, "Full Body A / B", ["Full Body A", "Full Body B"]],
-		[3, "Push / Pull / Legs", ["Push", "Pull", "Legs"]],
-		[4, "Upper / Lower", ["Upper A", "Lower A", "Upper B", "Lower B"]],
-		[5, "Push / Pull / Legs + Upper / Lower",
-			["Push", "Pull", "Legs", "Upper", "Lower"]],
-		[6, "Push / Pull / Legs ×2",
-			["Push A", "Pull A", "Legs A", "Push B", "Pull B", "Legs B"]],
+		[3, "Chest & Back / Legs & Arms / Shoulders & Core",
+			["Chest & Back", "Legs & Arms", "Shoulders & Core"]],
+		[4, "Chest & Back ×2 / Legs & Arms / Shoulders & Core",
+			["Chest & Back A", "Legs & Arms", "Shoulders & Core", "Chest & Back B"]],
+		[5, "Chest & Back ×2 / Legs & Arms ×2 / Shoulders & Core",
+			["Chest & Back A", "Legs & Arms A", "Shoulders & Core",
+				"Chest & Back B", "Legs & Arms B"]],
+		[6, "Chest & Back ×2 / Legs & Arms ×2 / Shoulders & Core ×2",
+			["Chest & Back A", "Legs & Arms A", "Shoulders & Core A",
+				"Chest & Back B", "Legs & Arms B", "Shoulders & Core B"]],
 	]
 	for row in expectations:
 		var days := int(row[0])
@@ -434,6 +438,30 @@ func _test_split_selection() -> void:
 		assert_eq(titles, row[2], "days=%d session titles" % days)
 		assert_eq((plan.get("sessions", []) as Array).size(), days, "days=%d session count" % days)
 
+	begin("no area is trained on two consecutive sessions (owner request)")
+	for days in [3, 4, 5, 6]:
+		var plan := _build({
+			"goal": "hypertrophy", "days_per_week": days, "duration_min": 40,
+			"areas": ["chest", "back", "shoulders", "arms", "core", "legs", "cardio"],
+			"equipment": FULL_GYM, "notes": "",
+			"id": GOLDEN_ID, "created_at": GOLDEN_CREATED_AT,
+		}, GOLDEN_SEED)
+		var sessions: Array = plan.get("sessions", [])
+		var clean := true
+		for index in range(sessions.size() - 1):
+			var left := PackedStringArray()
+			var right := PackedStringArray()
+			for area in (sessions[index] as Dictionary).get("focus", []):
+				if String(area) != "cardio":
+					left.append(String(area))
+			for area in (sessions[index + 1] as Dictionary).get("focus", []):
+				if String(area) != "cardio":
+					right.append(String(area))
+			for area in left:
+				if right.has(area):
+					clean = false
+		assert_true(clean, "days=%d: consecutive sessions share no area" % days)
+
 	begin("the 3-day conditional is evaluated on the selected-area count")
 	var three_areas := _build({"goal": "hypertrophy", "days_per_week": 3, "duration_min": 40,
 		"areas": ["chest", "back", "legs"], "equipment": FULL_GYM, "notes": "",
@@ -443,8 +471,9 @@ func _test_split_selection() -> void:
 	var four_areas := _build({"goal": "hypertrophy", "days_per_week": 3, "duration_min": 40,
 		"areas": ["chest", "back", "legs", "core"], "equipment": FULL_GYM, "notes": "",
 		"id": GOLDEN_ID, "created_at": GOLDEN_CREATED_AT}, GOLDEN_SEED)
-	assert_eq(four_areas.get("split_name", ""), "Push / Pull / Legs",
-		"4 areas => Push / Pull / Legs")
+	assert_eq(four_areas.get("split_name", ""),
+		"Chest & Back / Legs & Arms / Shoulders & Core",
+		"4 areas => the three body-part days")
 
 	begin("focus is the pool ∩ the user's areas, cardio always last")
 	var plan := _build({"goal": "hypertrophy", "days_per_week": 4, "duration_min": 40,

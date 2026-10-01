@@ -80,13 +80,16 @@ const DURATION_SECONDS: Dictionary = {
 	"strength": 60, "hypertrophy": 45, "general_fitness": 45, "conditioning": 30,
 }
 
-# --- R6 split pools --------------------------------------------------------
-const FULL_BODY_POOL: PackedStringArray = ["legs", "chest", "back", "shoulders", "core"]
-const PUSH_POOL: PackedStringArray = ["chest", "shoulders", "arms", "core"]
-const PULL_POOL: PackedStringArray = ["back", "arms", "core"]
-const LEGS_POOL: PackedStringArray = ["legs", "core"]
-const UPPER_A_POOL: PackedStringArray = ["chest", "back", "shoulders", "arms", "core"]
-const UPPER_B_POOL: PackedStringArray = ["back", "chest", "shoulders", "arms", "core"]
+# --- split pools (body-part pairing) ---------------------------------------
+## Every training day owns distinct muscle groups so no area lands on two consecutive sessions
+## — the owner's "we're not working the same muscles every day". Chest pairs with back (the
+## antagonist pairing every classic split uses), legs pair with arms, shoulders pair with core.
+## `cardio` is the one exception: when selected it is appended to every session (it is
+## conditioning, not a muscle group).
+const FULL_BODY_POOL: PackedStringArray = ["legs", "chest", "back", "shoulders", "arms", "core"]
+const CHEST_BACK_POOL: PackedStringArray = ["chest", "back"]
+const LEGS_ARMS_POOL: PackedStringArray = ["legs", "arms"]
+const SHOULDERS_CORE_POOL: PackedStringArray = ["shoulders", "core"]
 const CARDIO_AREA: String = "cardio"
 
 ## R7 — which pool can host an otherwise uncovered selected area.
@@ -262,7 +265,7 @@ static func build_plan(input: Dictionary, rng_seed: int, catalog: Dictionary = {
 			WEEKLY_MIN_SETS, WEEKLY_MAX_SETS)
 		floors[area] = floor_base
 
-	var split := _select_split(days, area_count)
+	var split := _select_split(days)
 	var resolved := _resolve_focus(split, areas)
 	var focuses: Array = resolved["focuses"]
 	for focus in focuses:
@@ -617,10 +620,14 @@ static func _candidate_count(area: String, catalog: Dictionary,
 
 
 # ===========================================================================
-# R6/R7 — split selection and focus resolution
+# Split selection and focus resolution
 # ===========================================================================
 
-static func _select_split(days: int, area_count: int) -> Dictionary:
+## The body-part split table. Every day's pool is disjoint from its neighbours': 3 days cycle
+## Chest & Back → Legs & Arms → Shoulders & Core; 4–6 days repeat that cycle from the start so
+## the extra days land on new muscles and the plan never trains an area on consecutive training
+## days (the weekly pattern never places a training day right after another cycle boundary).
+static func _select_split(days: int) -> Dictionary:
 	var titles: Array = []
 	var pools: Array = []
 	var name := ""
@@ -630,27 +637,25 @@ static func _select_split(days: int, area_count: int) -> Dictionary:
 			titles = ["Full Body A", "Full Body B"]
 			pools = [FULL_BODY_POOL, FULL_BODY_POOL]
 		3:
-			# The conditional is evaluated literally on the selected-area count.
-			if area_count <= 3:
-				name = "Full Body ×3"
-				titles = ["Full Body A", "Full Body B", "Full Body C"]
-				pools = [FULL_BODY_POOL, FULL_BODY_POOL, FULL_BODY_POOL]
-			else:
-				name = "Push / Pull / Legs"
-				titles = ["Push", "Pull", "Legs"]
-				pools = [PUSH_POOL, PULL_POOL, LEGS_POOL]
+			name = "Chest & Back / Legs & Arms / Shoulders & Core"
+			titles = ["Chest & Back", "Legs & Arms", "Shoulders & Core"]
+			pools = [CHEST_BACK_POOL, LEGS_ARMS_POOL, SHOULDERS_CORE_POOL]
 		4:
-			name = "Upper / Lower"
-			titles = ["Upper A", "Lower A", "Upper B", "Lower B"]
-			pools = [UPPER_A_POOL, LEGS_POOL, UPPER_B_POOL, LEGS_POOL]
+			name = "Chest & Back ×2 / Legs & Arms / Shoulders & Core"
+			titles = ["Chest & Back A", "Legs & Arms", "Shoulders & Core", "Chest & Back B"]
+			pools = [CHEST_BACK_POOL, LEGS_ARMS_POOL, SHOULDERS_CORE_POOL, CHEST_BACK_POOL]
 		5:
-			name = "Push / Pull / Legs + Upper / Lower"
-			titles = ["Push", "Pull", "Legs", "Upper", "Lower"]
-			pools = [PUSH_POOL, PULL_POOL, LEGS_POOL, UPPER_A_POOL, LEGS_POOL]
+			name = "Chest & Back ×2 / Legs & Arms ×2 / Shoulders & Core"
+			titles = ["Chest & Back A", "Legs & Arms A", "Shoulders & Core",
+				"Chest & Back B", "Legs & Arms B"]
+			pools = [CHEST_BACK_POOL, LEGS_ARMS_POOL, SHOULDERS_CORE_POOL, CHEST_BACK_POOL,
+				LEGS_ARMS_POOL]
 		6:
-			name = "Push / Pull / Legs ×2"
-			titles = ["Push A", "Pull A", "Legs A", "Push B", "Pull B", "Legs B"]
-			pools = [PUSH_POOL, PULL_POOL, LEGS_POOL, PUSH_POOL, PULL_POOL, LEGS_POOL]
+			name = "Chest & Back ×2 / Legs & Arms ×2 / Shoulders & Core ×2"
+			titles = ["Chest & Back A", "Legs & Arms A", "Shoulders & Core A",
+				"Chest & Back B", "Legs & Arms B", "Shoulders & Core B"]
+			pools = [CHEST_BACK_POOL, LEGS_ARMS_POOL, SHOULDERS_CORE_POOL, CHEST_BACK_POOL,
+				LEGS_ARMS_POOL, SHOULDERS_CORE_POOL]
 		_:
 			name = "Full Body"
 			titles = ["Full Body A"]

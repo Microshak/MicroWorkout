@@ -45,6 +45,9 @@ const EMPTY_3_TITLE := "No active plan"
 const EMPTY_3_BODY := "Your past workouts are still here. Generate a new plan to start a fresh week."
 const EMPTY_3_ACTION := "New plan"
 const NO_PLAN_BANNER := "No active plan — missed days can't be shown."
+## R6's strip caption comes from `HomeState.week_caption()` — the same words the Plan tab puts
+## under the same pills, so the two screens cannot describe one week differently.
+const WEEK_TITLE := "This week"
 const AREA_SUBTITLE := "Completed sessions, last 12 weeks"
 const RECENT_EMPTY := "No completed sessions yet."
 const UNATTRIBUTED_TEXT := "%d older sessions could not be attributed to an area."
@@ -63,6 +66,10 @@ const BAR_SCENE := preload("res://scenes/components/area_bar.tscn")
 @onready var _best_tile: Control = $Gutter/Layout/Scroll/Column/StatsRow/BestTile
 @onready var _progress_over: Button = $Gutter/Layout/Scroll/Column/ProgressOver
 @onready var _risk_chip: Button = $Gutter/Layout/Scroll/Column/RiskChip
+@onready var _week_card: PanelContainer = $Gutter/Layout/Scroll/Column/WeekCard
+@onready var _week_title: Label = $Gutter/Layout/Scroll/Column/WeekCard/CardBody/WeekTitle
+@onready var _week_strip: Control = $Gutter/Layout/Scroll/Column/WeekCard/CardBody/WeekStrip
+@onready var _week_caption: Label = $Gutter/Layout/Scroll/Column/WeekCard/CardBody/WeekCaption
 @onready var _calendar_card: PanelContainer = $Gutter/Layout/Scroll/Column/CalendarCard
 @onready var _grid: GridContainer = $Gutter/Layout/Scroll/Column/CalendarCard/CardBody/CalendarGrid
 @onready var _weekday_header: GridContainer = $Gutter/Layout/Scroll/Column/CalendarCard/CardBody/WeekdayHeader
@@ -82,6 +89,9 @@ var _cells: Array[Control] = []
 var _cell_by_date: Dictionary = {}
 var _rows: Array[Button] = []
 var _bars: Array[Control] = []
+
+var _week_kinds := PackedStringArray()
+var _week_state: String = ""
 
 var _year: int = 0
 var _month: int = 0
@@ -168,6 +178,7 @@ func _connect_signals() -> void:
 	_streak_tile.gui_input.connect(_on_stat_input)
 	_best_tile.gui_input.connect(_on_stat_input)
 	_empty_state.connect(&"action_pressed", _on_empty_action)
+	_week_strip.connect(&"pressed", _on_week_day_pressed)
 
 
 func _apply_static_copy() -> void:
@@ -210,6 +221,7 @@ func _refresh() -> void:
 	_render_ring(completed, target, fraction, entries, week_id)
 	_render_streak(streak, longest, entries)
 	_render_overload(completed, target)
+	_render_week(plan, entries)
 	_refresh_calendar(plan, entries)
 	_render_areas(plan, entries, plans_doc)
 	_render_recent(entries)
@@ -221,6 +233,8 @@ func _refresh() -> void:
 		"streak": streak,
 		"best": longest,
 		"month": "%04d-%02d" % [_year, _month],
+		"week_state": _week_state,
+		"week_kinds": Array(_week_kinds),
 		"neglected": Array(_neglected_this_refresh),
 	}
 	print("[tracker] week=%s completed=%d goal=%d streak=%d longest=%d neglected=[%s]" % [
@@ -250,6 +264,7 @@ func _render_empty_state(plan: Dictionary, entries: Array[Dictionary]) -> void:
 	_month_row.visible = not show_only_empty
 	_ring_tile.visible = not show_only_empty
 	_streak_tile.get_parent().visible = not show_only_empty
+	_week_card.visible = not show_only_empty
 	_calendar_card.visible = not show_only_empty
 	_area_card.visible = not show_only_empty
 	_recent_card.visible = not show_only_empty
@@ -282,6 +297,17 @@ func _render_streak(streak: int, longest: int, entries: Array[Dictionary]) -> vo
 	_risk_chip.add_theme_color_override(&"font_disabled_color",
 		DesignTokens.accent_text(mode, "warning"))
 
+## The same seven pills Home and the Plan tab show, from the same builder, plus the shared
+## caption (done-this-week against the active plan's days). A pool update — no nodes are added.
+func _render_week(plan: Dictionary, entries: Array[Dictionary]) -> void:
+	var days := PlanSchedule.days_per_week_of(plan)
+	var state := HomeState.resolve_state(plan, entries, _today, days)
+	var strip := HomeState.build_week_strip(state, plan, entries, _today, days)
+	_week_strip.call(&"set_week", strip)
+	_week_title.text = WEEK_TITLE
+	_week_caption.text = HomeState.week_caption(state, strip, days)
+	_week_kinds = HomeState.strip_kinds(strip)
+	_week_state = state
 
 ## R4's overload affordance: the label keeps counting past the goal while the arc caps at 100 %.
 func _render_overload(completed: int, target: int) -> void:
@@ -451,6 +477,15 @@ func _on_row_pressed(entry_id: String) -> void:
 		"date": String(entry.get("date", "")),
 		"entry_id": entry_id,
 	})
+
+
+## A week-strip pill: a logged day opens its detail (same destination as a done calendar cell),
+## anything else just acknowledges the tap — the Tracker is a record, not a launcher.
+func _on_week_day_pressed(date: String) -> void:
+	if _has_completed_on(Store.all_entries(), date):
+		_open_day(date)
+		return
+	Feedback.tap()
 
 
 # ------------------------------------------------------------------ stats tap (R5)

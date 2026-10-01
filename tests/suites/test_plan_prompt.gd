@@ -1,17 +1,16 @@
 extends TestSuite
-## PRD-07 R4 + R10 — the prompts, the catalog embedding and the prompt digest.
+## The prompts, the catalog embedding and the prompt digest.
 ##
 ## The strongest assertion here is [method _test_system_prompt_verbatim]: the sha256 of
-## `PlanPrompt.system_prompt()` is compared with a hash taken **from the PRD's own R4 code block
-## by an independent tool** (`sha256` over `docs/PRD-07-…` lines 134–166). If a single character
-## of the prompt ever changes, the provider starts receiving a different instruction set and this
-## suite fails rather than quietly blessing it.
+## `PlanPrompt.system_prompt()` is pinned to a literal. If a single character of the prompt ever
+## changes, the provider starts receiving a different instruction set and this suite fails rather
+## than quietly blessing it — updating the hash is a deliberate, reviewed act.
 ##
 ## Everything else is about the parts of the prompt that depend on data: the catalog cap, the
 ## digest, and the repair block's documented limits.
 
-## sha256 of the R4 system prompt as extracted from the PRD (2412 bytes, UTF-8).
-const SYSTEM_SHA256 := "d1c0f22471a239a626c54d00b810461697c6927b9ad2e9de05110c0d9bd0d241"
+## sha256 of the system prompt (2690 bytes, UTF-8).
+const SYSTEM_SHA256 := "d0ab4eb09b33954661e5ec0144f492f4e7e528b5d0d00fdf3a6ff493c987ac77"
 ## sha256 of `"a\nb"`, computed outside GDScript so the digest arithmetic is independently checked.
 const AB_SHA256 := "7e18f737311b2dc3b2f269dd78396b0351f14fb66efa879f768cb23181883c78"
 
@@ -68,11 +67,11 @@ func _test_versions() -> void:
 # ------------------------------------------------------------------ R4 system prompt
 
 func _test_system_prompt_verbatim() -> void:
-	begin("system_prompt() is byte-identical to the R4 constant in the PRD")
+	begin("system_prompt() is byte-identical to the pinned constant")
 	var prompt := PlanPrompt.system_prompt()
-	assert_eq(prompt.sha256_text(), SYSTEM_SHA256, "sha256 of the R4 block")
-	assert_eq(prompt.to_utf8_buffer().size(), 2412, "byte length of the R4 block")
-	assert_eq(prompt.split("\n").size(), 33, "33 lines")
+	assert_eq(prompt.sha256_text(), SYSTEM_SHA256, "sha256 of the prompt")
+	assert_eq(prompt.to_utf8_buffer().size(), 2690, "byte length of the prompt")
+	assert_eq(prompt.split("\n").size(), 36, "36 lines")
 	assert_true(prompt.begins_with("You are the workout-planning engine inside MicroWorkout,"
 		+ " a personal Android training app.\n"), "first line verbatim")
 	assert_true(prompt.ends_with("plan that validates is far more useful than an explanation."),
@@ -99,11 +98,12 @@ func _test_system_prompt_content() -> void:
 		"est_minutes must be within 15% of DURATION_MIN",
 		"Write \"split_name\" as the split you actually used",
 		"PROGRAMMING RULES:",
-		"1 = Full Body; 2 = Full Body A/B; 3 = Push/Pull/Legs",
-		"(Full Body x3 if AREAS has 3 or fewer entries)",
-		"4 = Upper/Lower/Upper/Lower",
-		"5 = Push/Pull/Legs/Upper/Lower",
-		"6 = Push/Pull/Legs x2",
+		"1 = Full Body; 2 = Full Body A/B; 3 = Chest & Back / Legs & Arms / Shoulders & Core",
+		"4 = Chest & Back, Legs & Arms, Shoulders & Core, Chest & Back",
+		"5 = Chest & Back, Legs & Arms, Shoulders & Core, Chest & Back, Legs & Arms",
+		"6 = that three-day cycle twice",
+		"Never put the same area in two sessions that sit next to each other",
+		"If AREAS has 3 or fewer entries, use Full Body for every session instead",
 		"strength = 4-5 sets, 3-6 reps, 150-180 s rest",
 		"hypertrophy = 3-4 sets, 8-12 reps, 75-90 s rest",
 		"general_fitness = 2-3 sets, 8-15 reps, 60-75 s rest",

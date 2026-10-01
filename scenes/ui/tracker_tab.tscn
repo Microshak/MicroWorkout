@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/tracker_tab.gd" id="1_tab"]
 [ext_resource type="PackedScene" path="res://scenes/components/section_header.tscn" id="2_header"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" path="res://scenes/components/stat_tile.tscn" id="6_stat"]
 [ext_resource type="PackedScene" path="res://scenes/components/chip_toggle.tscn" id="7_chip"]
 [ext_resource type="PackedScene" path="res://scenes/components/glyph.tscn" id="9_glyph"]
+[ext_resource type="PackedScene" path="res://scenes/components/week_strip.tscn" id="10_strip"]
 
 [node name="TrackerTab" type="Control"]
 layout_mode = 3
@@ -107,6 +108,26 @@ visible = false
 layout_mode = 2
 disabled = true
 text = "Streak at risk"
+
+[node name="WeekCard" type="PanelContainer" parent="Gutter/Layout/Scroll/Column"]
+layout_mode = 2
+theme_type_variation = &"Card"
+
+[node name="CardBody" type="VBoxContainer" parent="Gutter/Layout/Scroll/Column/WeekCard"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="WeekTitle" type="Label" parent="Gutter/Layout/Scroll/Column/WeekCard/CardBody"]
+layout_mode = 2
+theme_type_variation = &"H3"
+text = "This week"
+
+[node name="WeekStrip" parent="Gutter/Layout/Scroll/Column/WeekCard/CardBody" instance=ExtResource("10_strip")]
+layout_mode = 2
+
+[node name="WeekCaption" type="Label" parent="Gutter/Layout/Scroll/Column/WeekCard/CardBody"]
+layout_mode = 2
+theme_type_variation = &"Caption"
 
 [node name="CalendarCard" type="PanelContainer" parent="Gutter/Layout/Scroll/Column"]
 layout_mode = 2
