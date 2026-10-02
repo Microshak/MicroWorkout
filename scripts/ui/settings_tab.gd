@@ -37,6 +37,7 @@ const THEME_VALUES: PackedStringArray = ["dark", "light"]
 ## the actual values come from `StoreSchema.TEXT_SCALES`, the list `Store` validates against.
 const TEXT_SIZE_OPTIONS: PackedStringArray = ["S", "M", "L", "XL", "XXL"]
 
+@onready var _scroll: ScrollContainer = $Scroll
 @onready var _sections: VBoxContainer = $Scroll/Gutter/Sections
 
 var _units_control: SegmentedControl = null
@@ -108,10 +109,26 @@ func _ready() -> void:
 
 ## Nav calls this when the tab becomes visible; the shell's touch-target check only ever sees
 ## the *visible* tab, so this is where this screen's controls are really measured (R6).
-func on_route_entered(_args: Dictionary) -> void:
+func on_route_entered(args: Dictionary) -> void:
 	_refresh_state()
 	_report_touch_targets.call_deferred()
 	_publish_probe_rects.call_deferred()
+	# The wizard's no-key dialog arrives with `{"focus": "ai"}` (owner request, 2026-10-02):
+	# scroll the AI provider card into view instead of landing at the top of the page.
+	if PlanModel.as_text(args.get("focus"), "") == "ai":
+		_focus_ai_section.call_deferred()
+
+
+## Scrolls the AI provider card to the top of the viewport. Deferred one frame by the caller so
+## it runs after the tab has become visible and the container has laid out — a scroll set on a
+## hidden control is silently lost.
+func _focus_ai_section() -> void:
+	await get_tree().process_frame
+	var card := _sections.get_node_or_null(^"AIProvider") as Control
+	if card == null:
+		return
+	_scroll.scroll_vertical = int(card.position.y)
+	print("[settings] focus=ai scroll=%d" % _scroll.scroll_vertical)
 
 
 func on_route_exited() -> void:

@@ -175,3 +175,11 @@ title = "Start over?"
 dialog_text = "Every answer goes back to the default."
 ok_button_text = "Start over"
 cancel_button_text = "Keep my answers"
+
+[node name="NoAiDialog" type="ConfirmationDialog" parent="."]
+title = "No AI set up yet"
+size = Vector2i(640, 260)
+ok_button_text = "Add API key"
+dialog_text = "Your API key isn't saved on this phone. Add it and AI writes your plan — or build one on this device right now."
+dialog_autowrap = true
+cancel_button_text = "Not now"

@@ -64,6 +64,16 @@ const NO_KEY_NOTE := "No API key saved. The built-in generator will make your pl
 ## PRD-07 has no copy for, because it means the app is broken rather than unconfigured.
 const BUILTIN_FAILED_TOAST := "Couldn't build a plan on this device just now."
 
+## Owner request (2026-10-02): pressing Generate with nothing saved must offer the door to the
+## API fields instead of silently building offline. `Add API key` switches to Settings → AI
+## provider; `Build on-device` is the explicit offline path; `Not now` just closes the dialog.
+const NO_AI_TITLE := "No AI set up yet"
+const NO_AI_BODY := "Your API key isn't saved on this phone. Add it and AI writes your plan — " \
+	+ "or build one on this device right now."
+const NO_AI_ADD := "Add API key"
+const NO_AI_OFFLINE := "Build on-device"
+const NO_AI_CANCEL := "Not now"
+
 ## The seven day segments, in order (R5: "1"…"6") and R6's five duration segments.
 const DAY_LABELS: PackedStringArray = ["1", "2", "3", "4", "5", "6"]
 const DURATION_LABELS: PackedStringArray = ["20 min", "30 min", "40 min", "50 min", "60 min"]
@@ -98,6 +108,7 @@ const GeneratingOverlayScript := preload("res://scripts/ui/generating_overlay.gd
 @onready var _gen_timer: Timer = $GenTimer
 @onready var _discard_dialog: ConfirmationDialog = $DiscardDialog
 @onready var _start_over_dialog: ConfirmationDialog = $StartOverDialog
+@onready var _no_ai_dialog: ConfirmationDialog = $NoAiDialog
 
 var _state: WizardState = WizardState.new()
 var _step: int = WizardState.STEP_NOTES
@@ -137,6 +148,7 @@ func _ready() -> void:
 	_build_review_step()
 	_wire_footer()
 	_wire_dialogs()
+	_wire_no_ai_dialog()
 
 	_gen_timer.timeout.connect(_on_generation_tick)
 	_gen_timer.stop()
@@ -508,6 +520,49 @@ func _focus_dialog_cancel(dialog: ConfirmationDialog) -> void:
 		cancel.grab_focus()
 
 
+## The no-AI dialog's own wiring (owner request, 2026-10-02). Unlike the two discard dialogs
+## this one is not destructive: OK is the primary route to the API fields and keeps focus, and
+## `Build on-device` is a third button that runs the unchanged offline path.
+func _wire_no_ai_dialog() -> void:
+	_no_ai_dialog.title = NO_AI_TITLE
+	_no_ai_dialog.dialog_text = NO_AI_BODY
+	_no_ai_dialog.ok_button_text = NO_AI_ADD
+	_no_ai_dialog.cancel_button_text = NO_AI_CANCEL
+	var ok := _no_ai_dialog.get_ok_button()
+	if ok != null:
+		ok.theme_type_variation = &"PrimaryButton"
+		ok.custom_minimum_size = Vector2(0, 88)
+		ok.grab_focus()
+	var cancel := _no_ai_dialog.get_cancel_button()
+	if cancel != null:
+		cancel.theme_type_variation = &"GhostButton"
+		cancel.custom_minimum_size = Vector2(0, 88)
+	var offline := _no_ai_dialog.add_button(NO_AI_OFFLINE, false)
+	if offline != null:
+		offline.theme_type_variation = &"SecondaryButton"
+		offline.custom_minimum_size = Vector2(0, 88)
+		offline.pressed.connect(_on_no_ai_offline_pressed)
+	_no_ai_dialog.confirmed.connect(_on_no_ai_add_pressed)
+
+
+## `Add API key`: the Settings tab's AI provider card is the one place keys are entered. The
+## tab receives `{"focus": "ai"}`, which scrolls the fields into view instead of landing at
+## the top of the page. The log line deliberately avoids the word the redaction gate watches
+## for — a log is never the place to prove a credential exists (R14).
+func _on_no_ai_add_pressed() -> void:
+	print("[wizard] no-ai -> settings focus=ai")
+	Nav.push(Routes.SETTINGS, {"focus": "ai"})
+
+
+## `Build on-device`: exactly the path Generate used to take silently — the offline promise is
+## kept, it is just an explicit choice now. The custom button does not auto-hide the dialog, so
+## it is hidden here before the (idempotent) generation starts.
+func _on_no_ai_offline_pressed() -> void:
+	print("[wizard] no-ai build on-device")
+	_no_ai_dialog.hide()
+	_run_generation()
+
+
 ## One tap per segment, sized to R5/R6's 96 px and to the touch floor.
 func _size_segments(control: SegmentedControl) -> void:
 	for i in control.option_count():
@@ -784,7 +839,9 @@ func _on_next_pressed() -> void:
 	if _busy:
 		return
 	if _step == WizardState.STEP_REVIEW:
-		await _generate()
+		# `_generate()` is now synchronous — it either opens the no-AI dialog or starts
+		# `_run_generation()`, whose awaits continue on their own.
+		_generate()
 		return
 	if not _state.is_step_valid(_step):
 		return
@@ -836,7 +893,8 @@ func _on_start_over_confirmed() -> void:
 
 func _dialogs_open() -> bool:
 	return (_discard_dialog != null and _discard_dialog.visible) \
-		or (_start_over_dialog != null and _start_over_dialog.visible)
+			or (_start_over_dialog != null and _start_over_dialog.visible) \
+			or (_no_ai_dialog != null and _no_ai_dialog.visible)
 
 
 func _close_dialogs() -> void:
@@ -844,8 +902,8 @@ func _close_dialogs() -> void:
 		_discard_dialog.hide()
 	if _start_over_dialog != null and _start_over_dialog.visible:
 		_start_over_dialog.hide()
-
-
+	if _no_ai_dialog != null and _no_ai_dialog.visible:
+		_no_ai_dialog.hide()
 # ===========================================================================
 # R9 — the draft
 # ===========================================================================
@@ -890,6 +948,22 @@ func _generate() -> void:
 		Feedback.toast(BUSY_TOAST)
 		return
 
+	# Owner request (2026-10-02): with nothing saved, Generate silently built an offline plan;
+	# the owner asked to be taken to the API fields instead. The dialog keeps the offline path
+	# one tap away, so a phone without a key can still build its week.
+	if not LLM.is_configured():
+		print("[wizard] no-ai dialog opened")
+		_no_ai_dialog.popup_centered()
+		return
+	_run_generation()
+
+
+## The generation await — the old `_generate()` body, unchanged. Reached when a provider is
+## configured, or when the owner chose `Build on-device` in the no-AI dialog. The guard makes a
+## double-tap on either path a no-op instead of a second concurrent generation.
+func _run_generation() -> void:
+	if _busy or LLM.is_generating:
+		return
 	# R9/R13: the wizard owns the seed. The first generation takes the clock; a regeneration
 	# takes `seed + 1` (the preview's job), so identical inputs plus a seed stay reproducible.
 	_state.seed = int(Time.get_unix_time_from_system())
@@ -957,7 +1031,8 @@ func _begin_generation() -> void:
 	_overlay.set_sub_text(_phase_sub(0))
 	# PRD-12 R8's no-key row: the wizard still generates (the built-in generator needs nothing),
 	# and the owner is told what is about to happen instead of wondering why it is instant.
-	if String(App.get_setting("llm.api_key", "")).is_empty():
+	# Reached only via the dialog's `Build on-device` (a configured provider gets no note).
+	if not LLM.is_configured():
 		_overlay.set_sub_text(NO_KEY_NOTE)
 	_gen_timer.start()
 	if root == null:

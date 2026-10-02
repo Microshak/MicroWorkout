@@ -350,7 +350,13 @@ func _test_and_continue() -> void:
 	if result.is_empty():
 		return
 	if bool(result.get("ok", false)):
-		var _marked := App.set_setting("llm.configured", true)
+		# Owner bug report 2026-10-02 ("it should be saved if they put it in"): this page hides
+		# the block's own Save row, so a verified key had no path into settings.json — the test
+		# passed and the key evaporated, and the next Generate fell back to the built-in
+		# generator. A verified config now goes through the block's one save path, which
+		# validates, writes every editable `llm.*` key and flushes.
+		if not _provider_block.save():
+			return
 		_go_to(PAGE_DONE, 1)
 
 
