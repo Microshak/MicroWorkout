@@ -5,8 +5,10 @@ extends Button
 ##
 ## * **The look comes from the theme's `ChipToggle` variation**, not from bespoke drawing:
 ##   the chip inherits the theme's radii, padding, type size, press feedback and focus ring.
-##   Only the two states R4 pins exactly (selected = `surface_alt` fill with a 2 px `primary`
-##   border, unselected = `surface_alt` fill with a 2 px `outline` border) are overridden, and
+## * **The selected chip is `primary`-outlined** (owner palette pick, 2026-10-02 — the
+##   reference's selection language, shared with the wizard's goal cards): selected = `surface_alt`
+##   fill with a 2 px `primary` border and a check glyph; unselected = `surface_alt` fill with a
+##   2 px `outline` border. Only those two states are overridden, and
 ##   they are built from `DesignTokens` tokens — never a literal colour, and never through the
 ##   colour-override theme API the appendix §4.3 rule 8 forbids. This is the same
 ##   `add_theme_stylebox_override` pattern PRD-06's onboarding progress dots already ship.

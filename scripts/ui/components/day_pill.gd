@@ -19,8 +19,9 @@ const KIND_REST := "rest"
 const KIND_MISSED := "missed"
 
 ## R6: chip radius, 22 % fill for a completed day, and the 88 px touch floor for the pill the
-## strip's tap target sits in.
-const RADIUS := 12
+## strip's tap target sits in. The radius follows the chip token (16 since the 2026-10-02
+## readability pass, so the strip matches the other rounded surfaces).
+const RADIUS := 16
 const DONE_ALPHA := 0.22
 const MIN_HEIGHT := 88.0
 

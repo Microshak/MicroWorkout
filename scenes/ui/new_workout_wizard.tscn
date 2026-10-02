@@ -75,7 +75,7 @@ alignment = 1
 
 [node name="TitleLabel" type="Label" parent="SafeArea/Layout/Header/HeaderCenter"]
 layout_mode = 2
-theme_type_variation = &"H3"
+theme_type_variation = &"H2"
 text = "What matters to you?"
 horizontal_alignment = 1
 autowrap_mode = 3

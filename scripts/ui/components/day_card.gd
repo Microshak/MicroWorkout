@@ -70,7 +70,10 @@ func set_day(session: Dictionary, kind: StringName = &"upcoming",
 
 	var focus := focus_label()
 	if focus != null:
-		focus.text = _focus_text()
+		# A separator, so `Day 1 · Monday` and `Chest · Back` do not read as one run-on
+		# sentence (owner readability pass, 2026-10-02).
+		var focus_text := _focus_text()
+		focus.text = "· %s" % focus_text if not focus_text.is_empty() else ""
 
 	var meta := meta_label()
 	if meta != null:
@@ -81,8 +84,9 @@ func set_day(session: Dictionary, kind: StringName = &"upcoming",
 	var header := header_button()
 	if header != null:
 		var header_name: String = number.text if number != null else "Session"
-		if focus != null and not focus.text.is_empty():
-			header_name = "%s, %s" % [header_name, focus.text]
+		var raw_focus := _focus_text()
+		if not raw_focus.is_empty():
+			header_name = "%s, %s" % [header_name, raw_focus]
 		A11y.label(header, header_name, "Show exercises")
 
 	_build_rows()

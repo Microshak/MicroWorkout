@@ -10,23 +10,30 @@ extends RefCounted
 ## Every value here is static and pure: no scene-tree access, no autoloads, so the whole
 ## design system is unit-testable headless.
 
-## Dark palette — the default theme (owner decision D9).
+## Dark palette — the default theme (owner decision D9, re-tuned 2026-10-02 to the reference
+## the owner picked: near-black neutrals, a mint-green accent, lime as the second accent and a
+## grass green for completed states — see ADR-44).
 const DARK := {
-	"bg": "#0F1116",
-	"surface": "#171A21",
-	"surface_alt": "#1F232C",
-	"outline": "#2C313C",
-	"outline_strong": "#616B7A",
-	"primary": "#FF6B35",
-	"primary_dim": "#C94F22",
-	"secondary": "#31C6F7",
-	"success": "#35D08A",
+	"bg": "#0C0D10",
+	"surface": "#16181D",
+	"surface_alt": "#1E2127",
+	"outline": "#2A2E35",
+	"outline_strong": "#5E6673",
+	"primary": "#3DDC8F",
+	"primary_dim": "#27A96A",
+	"secondary": "#D3EE52",
+	"success": "#2BC46B",
 	"warning": "#FFB020",
 	"danger": "#FF5C5C",
 	"text": "#F4F6FA",
 	"text_muted": "#9AA5B6",
 	"text_disabled": "#5C6675",
 	"on_accent": "#12151C",
+	# Primary actions are the comp's white pill with dark text; the green accent is reserved for
+	# selection borders, checks and progress, so no large surface is ever a solid accent fill
+	# (owner direction, 2026-10-02). Light mode inverts to an ink pill with white text.
+	"button": "#F4F6FA",
+	"button_text": "#12151C",
 }
 
 ## Light palette — only the keys that differ; accents are identical in both modes.
@@ -38,10 +45,12 @@ const LIGHT_OVERRIDES := {
 	"outline_strong": "#7E8A9C",
 	"text": "#12151C",
 	"text_muted": "#5A6472",
+	"button": "#12151C",
+	"button_text": "#F4F6FA",
 	# A raw accent used as light-theme TEXT fails WCAG AA (1.83:1–3.03:1), so light mode
 	# gets dedicated darker text/icon colours. Fills still use the accents themselves.
-	"primary_text_light": "#C2410C",
-	"secondary_text_light": "#0B6E8F",
+	"primary_text_light": "#0B7A4B",
+	"secondary_text_light": "#5F7000",
 	"success_text_light": "#0F7A4F",
 	"warning_text_light": "#8A5A00",
 	"danger_text_light": "#C62828",
@@ -61,7 +70,7 @@ const TYPE := {
 const SPACE := {"xs": 4, "sm": 8, "md": 12, "lg": 16, "xl": 24, "xxl": 32, "xxxl": 48}
 
 const RADIUS := {
-	"chip": 12, "card": 18, "sheet": 28, "button": 48, "bar": 9, "calendar_cell": 16,
+	"chip": 16, "card": 24, "sheet": 28, "button": 48, "bar": 9, "calendar_cell": 16,
 }
 
 const TOUCH_MIN := 88
@@ -177,4 +186,5 @@ static func contrast_pairs() -> Array:
 		["text", "bg"], ["text", "surface"], ["text", "surface_alt"],
 		["text_muted", "bg"], ["text_muted", "surface"], ["text_muted", "surface_alt"],
 		["on_accent", "primary"], ["on_accent", "secondary"], ["on_accent", "success"],
+		["button_text", "button"],
 	]

@@ -6,8 +6,8 @@ extends RefCounted
 ## read them from here so a release only has to change one file.
 
 const NAME := "MicroWorkout"
-const VERSION := "0.1.5"
-const VERSION_CODE := 6
+const VERSION := "0.1.6"
+const VERSION_CODE := 7
 const PACKAGE_ID := "com.microshak.microworkout"
 const PACKAGE_ID_DEBUG := "com.microshak.microworkout.debug"
 

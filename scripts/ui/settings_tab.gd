@@ -37,6 +37,9 @@ const THEME_VALUES: PackedStringArray = ["dark", "light"]
 ## the actual values come from `StoreSchema.TEXT_SCALES`, the list `Store` validates against.
 const TEXT_SIZE_OPTIONS: PackedStringArray = ["S", "M", "L", "XL", "XXL"]
 
+## The unit under the big weekly-goal number (owner readability pass, 2026-10-02).
+const GOAL_UNIT_CAPTION := "days a week"
+
 @onready var _scroll: ScrollContainer = $Scroll
 @onready var _sections: VBoxContainer = $Scroll/Gutter/Sections
 
@@ -45,6 +48,7 @@ var _units_example: Label = null
 var _theme_control: SegmentedControl = null
 var _text_size_control: SegmentedControl = null
 var _goal_value: Label = null
+var _goal_unit: Label = null
 var _goal_hint: Label = null
 var _goal_decrease: Button = null
 var _goal_increase: Button = null
@@ -79,6 +83,7 @@ var _test_generating: bool = false
 
 
 func _ready() -> void:
+	_add_page_header("Settings", "Make it yours.")
 	_build_units()
 	_build_theme()
 	_build_weekly_goal()
@@ -231,12 +236,20 @@ func _build_weekly_goal() -> void:
 	_goal_decrease.pressed.connect(_on_goal_step.bind(-1))
 	_goal_value = _body_label(stepper, "")
 	_goal_value.name = "GoalValue"
-	_goal_value.theme_type_variation = &"H2"
-	_goal_value.custom_minimum_size.x = 96.0
+	# Owner bug report 2026-10-02: the old `"2 days/week"` label sat in a 96 px minimum-width
+	# column and wrapped into a vertical strip ("2 / day / s/ / we / ek"). The row now mirrors
+	# the reference's big number + small unit: the number alone, then `days a week` on its own
+	# muted line underneath.
+	_goal_value.theme_type_variation = &"H1"
+	_goal_value.autowrap_mode = TextServer.AUTOWRAP_OFF
 	_goal_value.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	_goal_value.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_goal_increase = _button(stepper, "IncreaseButton", "+", &"SecondaryButton")
 	_goal_increase.pressed.connect(_on_goal_step.bind(1))
+
+	_goal_unit = _caption(items, GOAL_UNIT_CAPTION)
+	_goal_unit.name = "GoalUnit"
+	_goal_unit.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 
 	_goal_ring = RING_SCENE.instantiate()
 	_goal_ring.name = "RingPreview"
@@ -262,7 +275,7 @@ func _refresh_goal() -> void:
 	var effective := Store.weekly_goal_days_effective() if is_instance_valid(Store) else _goal
 	var locked := _plan_owns_goal()
 	if _goal_value != null:
-		_goal_value.text = "%d days/week" % (effective if locked else _goal)
+		_goal_value.text = str(effective if locked else _goal)
 	if _goal_decrease != null:
 		_goal_decrease.disabled = locked or _goal <= GOAL_MIN
 	if _goal_increase != null:
@@ -785,6 +798,26 @@ func _card_title(parent: Node, text: String) -> Label:
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	parent.add_child(label)
 	return label
+
+
+## The reference-style page head (owner request, 2026-10-02): one big title and a muted line
+## above the first card, so the tab reads as a designed page instead of a stack of boxes.
+func _add_page_header(title: String, subtitle: String) -> void:
+	var box := VBoxContainer.new()
+	box.name = "PageHeader"
+	box.add_theme_constant_override(&"separation", int(DesignTokens.SPACE["xs"]))
+	var title_label := Label.new()
+	title_label.name = "PageTitle"
+	title_label.theme_type_variation = &"H1"
+	title_label.text = title
+	box.add_child(title_label)
+	var subtitle_label := Label.new()
+	subtitle_label.name = "PageSubtitle"
+	subtitle_label.theme_type_variation = &"MutedLabel"
+	subtitle_label.text = subtitle
+	box.add_child(subtitle_label)
+	_sections.add_child(box)
+	_sections.move_child(box, 0)
 
 
 func _body_label(parent: Node, text: String) -> Label:

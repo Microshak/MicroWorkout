@@ -327,10 +327,10 @@ func _check_tokens(theme: Theme, mode: String) -> void:
 	var primary: StyleBox = theme.get_stylebox(&"normal", &"PrimaryButton")
 	assert_true(primary is StyleBoxFlat, "PrimaryButton/normal is a StyleBoxFlat")
 	if primary is StyleBoxFlat:
-		assert_eq((primary as StyleBoxFlat).bg_color, Tokens.color(mode, "primary"),
-			"PrimaryButton normal bg")
-	assert_eq(theme.get_color(&"font_color", &"PrimaryButton"), Tokens.on_accent(mode),
-		"PrimaryButton font_color is on_accent")
+		assert_eq((primary as StyleBoxFlat).bg_color, Tokens.color(mode, "button"),
+			"PrimaryButton normal bg is the button token (white pill / ink pill)")
+	assert_eq(theme.get_color(&"font_color", &"PrimaryButton"), Tokens.color(mode, "button_text"),
+		"PrimaryButton font_color is button_text")
 	assert_eq(theme.get_color(&"font_color", &"NavTabLabelActive"),
 		Tokens.accent_text(mode, "primary"),
 		"NavTabLabelActive font_color is the accent-as-text colour")
@@ -379,21 +379,21 @@ func _colour_rows() -> Array:
 		["MutedLabel", "font_color", "text_muted"],
 		["NavTabLabel", "font_color", "text_muted"],
 		["NavTabLabelActive", "font_color", "accent:primary"],
-		["PrimaryButton", "font_color", "on_accent"],
-		["PrimaryButton", "font_pressed_color", "on_accent"],
-		["PrimaryButton", "font_hover_color", "on_accent"],
-		["PrimaryButton", "font_hover_pressed_color", "on_accent"],
-		["PrimaryButton", "font_disabled_color", "text_disabled"],
-		["SecondaryButton", "font_color", "text"],
-		["SecondaryButton", "font_pressed_color", "text"],
-		["SecondaryButton", "font_disabled_color", "text_disabled"],
-		["GhostButton", "font_color", "text_muted"],
-		["DangerButton", "font_color", "accent:danger"],
-		["DangerButton", "font_pressed_color", "accent:danger"],
-		["DangerButton", "font_disabled_color", "text_disabled"],
-		["ChipToggle", "font_color", "text_muted"],
-		["ChipToggle", "font_pressed_color", "on_accent"],
-		["ChipToggle", "font_hover_pressed_color", "on_accent"],
+			["PrimaryButton", "font_color", "button_text"],
+			["PrimaryButton", "font_pressed_color", "button_text"],
+			["PrimaryButton", "font_hover_color", "button_text"],
+			["PrimaryButton", "font_hover_pressed_color", "button_text"],
+			["PrimaryButton", "font_disabled_color", "text_disabled"],
+			["SecondaryButton", "font_color", "text"],
+			["SecondaryButton", "font_pressed_color", "text"],
+			["SecondaryButton", "font_disabled_color", "text_disabled"],
+			["GhostButton", "font_color", "text_muted"],
+			["DangerButton", "font_color", "accent:danger"],
+			["DangerButton", "font_pressed_color", "accent:danger"],
+			["DangerButton", "font_disabled_color", "text_disabled"],
+			["ChipToggle", "font_color", "text_muted"],
+			["ChipToggle", "font_pressed_color", "button_text"],
+			["ChipToggle", "font_hover_pressed_color", "button_text"],
 		["ChipToggle", "font_disabled_color", "text_disabled"],
 		["Input", "font_color", "text"],
 		["Input", "font_placeholder_color", "text_disabled"],
@@ -500,12 +500,13 @@ func _r4_rows() -> Array:
 	var rch := _radius4(r_chip)
 
 	return [
-		# PrimaryButton — accent fill. R4 lists `primary_dim` for `pressed`; PRD-00 appendix
-		# §4.3 rule 3 forbids that fill ("never a button press fill") and the appendix wins, so
-		# the pressed fill stays `primary` and press feedback is the component's press_scale.
-		["PrimaryButton", "normal", "primary", _bw(0), "", rb, btn, true],
-		["PrimaryButton", "hover", "primary_lightened", _bw(0), "", rb, btn, true],
-		["PrimaryButton", "pressed", "primary", _bw(0), "", rb, btn, true],
+		# PrimaryButton — the button token (white pill on dark, ink pill on light). R4 lists
+		# `primary_dim` for `pressed`; PRD-00 appendix §4.3 rule 3 forbids that fill ("never a
+		# button press fill") and the appendix wins, so the pressed fill stays `button` and
+		# press feedback is the component's press_scale.
+		["PrimaryButton", "normal", "button", _bw(0), "", rb, btn, true],
+		["PrimaryButton", "hover", "button", _bw(0), "", rb, btn, true],
+		["PrimaryButton", "pressed", "button", _bw(0), "", rb, btn, true],
 		["PrimaryButton", "disabled", "surface_alt", _bw(0), "", rb, btn, true],
 		["PrimaryButton", "focus", "transparent", _bw(4), "secondary", rb, btn, false],
 		# SecondaryButton.
@@ -521,8 +522,8 @@ func _r4_rows() -> Array:
 		# ChipToggle.
 		["ChipToggle", "normal", "surface_alt", _bw(2), "outline", rch, chip, true],
 		["ChipToggle", "hover", "surface_alt", _bw(2), "secondary", rch, chip, true],
-		["ChipToggle", "pressed", "primary", _bw(2), "primary", rch, chip, true],
-		["ChipToggle", "hover_pressed", "primary_lightened", _bw(2), "primary", rch, chip, true],
+		["ChipToggle", "pressed", "button", _bw(2), "button", rch, chip, true],
+		["ChipToggle", "hover_pressed", "button", _bw(2), "button", rch, chip, true],
 		["ChipToggle", "disabled", "surface_alt", _bw(2), "outline", rch, chip, true],
 		["ChipToggle", "focus", "transparent", _bw(4), "secondary", rch, chip, false],
 		# Panels. A sheet is rounded on its top corners only.

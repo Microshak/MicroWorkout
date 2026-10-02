@@ -32,7 +32,7 @@ except ImportError:  # pragma: no cover
     sys.exit(2)
 
 TAB_COUNT = 4
-DEFAULT_ACCENT = "FF6B35"      # DesignTokens primary
+DEFAULT_ACCENT = "3DDC8F"      # DesignTokens primary (2026-10-02 palette)
 DEFAULT_MUTED = "9AA5B6"       # DesignTokens text_muted
 TOLERANCE = 26
 

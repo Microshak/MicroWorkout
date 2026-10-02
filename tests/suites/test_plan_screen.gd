@@ -111,7 +111,9 @@ func _test_current_plan() -> void:
 	var weekdays := PlanSchedule.weekdays_for(4)
 	assert_eq((first.call(&"number_label") as Label).text,
 		"Day 1 · %s" % PlanSchedule.weekday_name(int(weekdays[0])), "day number and weekday")
-	assert_eq((first.call(&"focus_label") as Label).text, "Chest · Back", "the focus line")
+	# The focus line carries a leading separator so `Day 1 · Monday` and `Chest · Back` read as
+	# two groups, not one run-on sentence (owner readability pass, 2026-10-02).
+	assert_eq((first.call(&"focus_label") as Label).text, "· Chest · Back", "the focus line")
 	assert_eq((first.call(&"meta_label") as Label).text, "2 exercises · 40 min",
 		"blocks and minutes")
 

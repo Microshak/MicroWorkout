@@ -34,8 +34,8 @@ const OVERLAY_FADE_MS := 180
 const OVERLAY_MIN_MS := 600
 const DISABLED_ALPHA := 0.45
 const NOTES_MIN_HEIGHT := 240.0
-const SEGMENT_HEIGHT := 96.0
-const GOAL_CARD_HEIGHT := 132.0
+const SEGMENT_HEIGHT := 112.0
+const GOAL_CARD_HEIGHT := 150.0
 const REVIEW_ROW_HEIGHT := 88.0
 const RADIO_SIZE := 44.0
 
@@ -398,6 +398,21 @@ func _build_goal_card(key: String, index: int) -> Button:
 	radio.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	row.add_child(radio)
 
+	# The reference's selected mark (owner request, 2026-10-02): the choice badge turns
+	# `success` green and carries a check, so selection is never colour-only.
+	var check: Control = GLYPH_SCENE.instantiate()
+	check.name = "Check"
+	check.set(&"kind", &"check")
+	check.custom_minimum_size = Vector2(30, 30)
+	check.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	check.set_anchors_preset(Control.PRESET_CENTER)
+	check.offset_left = -15.0
+	check.offset_top = -15.0
+	check.offset_right = 15.0
+	check.offset_bottom = 15.0
+	check.visible = false
+	radio.add_child(check)
+
 	var texts := VBoxContainer.new()
 	texts.name = "Texts"
 	texts.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -722,12 +737,20 @@ func _refresh_review() -> void:
 
 func _refresh_goal_card(card: Button, selected: bool) -> void:
 	card.set_pressed_no_signal(selected)
+	var mode := App.theme_mode
 	var radio := card.get_node_or_null(^"Row/Radio") as Panel
 	if radio != null:
 		radio.add_theme_stylebox_override(&"panel", _radio_style(selected))
-	# R7's card look: `surface` fill with a 2 px `outline` border, and 2 px `primary` once
-	# chosen — the same `add_theme_stylebox_override` route the area chips use, because the
-	# theme's variation set is frozen and colour overrides are banned.
+	var check := card.get_node_or_null(^"Row/Radio/Check") as Control
+	if check != null:
+		check.visible = selected
+		if selected:
+			# The one colour permitted on an accent fill (appendix §4) — which is also how
+			# the reference draws the check inside its green circle.
+			check.add_theme_color_override(&"color", DesignTokens.color(mode, "on_accent"))
+	# R7's card look: `surface` fill with a 2 px `outline` border, and 2 px `primary` + a 10 %
+	# tint once chosen — the reference's selection language, which the area chips share so the
+	# two choice steps cannot drift apart.
 	card.add_theme_stylebox_override(&"normal", _card_style("outline", false))
 	card.add_theme_stylebox_override(&"disabled", _card_style("outline", false))
 	card.add_theme_stylebox_override(&"hover", _card_style("outline_strong", false))
@@ -772,6 +795,8 @@ func _radio_style(selected: bool) -> StyleBoxFlat:
 	var box := StyleBoxFlat.new()
 	box.set_corner_radius_all(int(RADIO_SIZE * 0.5))
 	if selected:
+		# Reference-style: a solid `primary` circle holding the check (the check's own colour
+		# is set by `_refresh_goal_card`).
 		box.bg_color = DesignTokens.color(mode, "primary")
 		box.border_color = DesignTokens.color(mode, "primary")
 	else:

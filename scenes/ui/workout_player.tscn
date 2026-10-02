@@ -255,7 +255,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.0588235, 0.0666667, 0.0862745, 0.9)
+color = Color(0.047059, 0.050980, 0.062745, 0.9)
 
 [node name="PauseCenter" type="CenterContainer" parent="PauseSheet"]
 layout_mode = 1

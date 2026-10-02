@@ -229,7 +229,9 @@ func _apply_buttons(t: Theme, mode: String) -> void:
 	var surface_alt := Tokens.color(mode, "surface_alt")
 	var outline := Tokens.color(mode, "outline")
 	var primary := Tokens.color(mode, "primary")
-	var primary_hover := primary.lightened(0.08)
+	# The primary action fill (comp's white pill in dark mode, ink pill in light mode).
+	var button := Tokens.color(mode, "button")
+	var button_text := Tokens.color(mode, "button_text")
 	var secondary := Tokens.color(mode, "secondary")
 	var danger := Tokens.color(mode, "danger")
 	# ...but text drawn ON an accent must use the light-mode text token, which is
@@ -238,7 +240,6 @@ func _apply_buttons(t: Theme, mode: String) -> void:
 	var text := Tokens.color(mode, "text")
 	var text_muted := Tokens.color(mode, "text_muted")
 	var text_disabled := Tokens.color(mode, "text_disabled")
-	var on_accent := Tokens.on_accent(mode)
 
 	var r_button := _rad("button")
 	var r_chip := _rad("chip")
@@ -247,25 +248,25 @@ func _apply_buttons(t: Theme, mode: String) -> void:
 	var pad_button := Vector4(pad_x, pad_y, pad_x, pad_y)
 	var pad_chip := Vector4(_sp("xl"), _sp("lg"), _sp("xl"), _sp("lg"))
 
-	# --- PrimaryButton: accent fill, on_accent label (appendix §4.3 rule 1) -----------------
+	# --- PrimaryButton: the button token (white pill on dark, ink pill on light) ------------
 	_s(t, &"PrimaryButton", &"normal",
-		_sb(primary, 0, TRANSPARENT, _radius(r_button), pad_button))
+		_sb(button, 0, TRANSPARENT, _radius(r_button), pad_button))
 	_s(t, &"PrimaryButton", &"hover",
-		_sb(primary_hover, 0, TRANSPARENT, _radius(r_button), pad_button))
+		_sb(button, 0, TRANSPARENT, _radius(r_button), pad_button))
 	# R4 writes `primary_dim` here; PRD-00 appendix §4.3 rule 3 ("a primary button never swaps
 	# its fill to primary_dim … press feedback is press_scale 0.97 + an 8 % black scrim") wins,
-	# so the fill stays `primary` and the press feedback stays a component concern (R7).
+	# so the fill stays `button` and the press feedback stays a component concern (R7).
 	_s(t, &"PrimaryButton", &"pressed",
-		_sb(primary, 0, TRANSPARENT, _radius(r_button), pad_button))
+		_sb(button, 0, TRANSPARENT, _radius(r_button), pad_button))
 	_s(t, &"PrimaryButton", &"disabled",
 		_sb(surface_alt, 0, TRANSPARENT, _radius(r_button), pad_button))
 	_s(t, &"PrimaryButton", &"focus",
 		_sb(TRANSPARENT, 4, secondary, _radius(r_button), pad_button, false))
-	_c(t, &"PrimaryButton", &"font_color", on_accent)
-	_c(t, &"PrimaryButton", &"font_pressed_color", on_accent)
+	_c(t, &"PrimaryButton", &"font_color", button_text)
+	_c(t, &"PrimaryButton", &"font_pressed_color", button_text)
 	_c(t, &"PrimaryButton", &"font_disabled_color", text_disabled)
-	_c(t, &"PrimaryButton", &"font_hover_color", on_accent)
-	_c(t, &"PrimaryButton", &"font_hover_pressed_color", on_accent)
+	_c(t, &"PrimaryButton", &"font_hover_color", button_text)
+	_c(t, &"PrimaryButton", &"font_hover_pressed_color", button_text)
 	_f(t, &"PrimaryButton", &"font_size", _ts("button"))
 	_k(t, &"PrimaryButton", &"h_separation", _sp("md"))
 	_k(t, &"PrimaryButton", &"outline_size", 0)
@@ -334,18 +335,19 @@ func _apply_buttons(t: Theme, mode: String) -> void:
 		_sb(surface_alt, 2, outline, _radius(r_chip), pad_chip))
 	_s(t, &"ChipToggle", &"hover",
 		_sb(surface_alt, 2, secondary, _radius(r_chip), pad_chip))
+	# Selected = the button token (comp's white `kg` pill): a neutral pill, not an accent fill.
 	_s(t, &"ChipToggle", &"pressed",
-		_sb(primary, 2, primary, _radius(r_chip), pad_chip))
+		_sb(button, 2, button, _radius(r_chip), pad_chip))
 	_s(t, &"ChipToggle", &"hover_pressed",
-		_sb(primary_hover, 2, primary, _radius(r_chip), pad_chip))
+		_sb(button, 2, button, _radius(r_chip), pad_chip))
 	_s(t, &"ChipToggle", &"disabled",
 		_sb(surface_alt, 2, outline, _radius(r_chip), pad_chip))
 	_s(t, &"ChipToggle", &"focus",
 		_sb(TRANSPARENT, 4, secondary, _radius(r_chip), pad_chip, false))
 	_c(t, &"ChipToggle", &"font_color", text_muted)
-	_c(t, &"ChipToggle", &"font_pressed_color", on_accent)
+	_c(t, &"ChipToggle", &"font_pressed_color", button_text)
 	_c(t, &"ChipToggle", &"font_hover_color", text_muted)
-	_c(t, &"ChipToggle", &"font_hover_pressed_color", on_accent)
+	_c(t, &"ChipToggle", &"font_hover_pressed_color", button_text)
 	_c(t, &"ChipToggle", &"font_disabled_color", text_disabled)
 	_f(t, &"ChipToggle", &"font_size", _ts("body_small"))
 
