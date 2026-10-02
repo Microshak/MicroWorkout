@@ -66,12 +66,12 @@ const TOAST_SESSION_GONE := "That session is gone — pick one from your plan."
 const TOAST_STALE_PROGRESS := "That workout isn't in this plan any more — starting fresh."
 const TOAST_DISCARDED := "Session discarded."
 const TOAST_SAVED_PARTIAL := "Saved — %d of %d exercises."
-const TOAST_LOGGED_SETS := "Logged %d of %d sets."
 const PAUSED_NOTE := "Been away a while — resume when you're ready."
 
-## The footer hint that replaced the Previous/Next row (owner request, ADR-24).
+## The footer hint above the action button (owner request, ADR-24/41). The button is the
+## labelled way through; the swipe stays the shortcut. On the last step the hint hides and the
+## button says "I'm finished".
 const SWIPE_HINT := "Swipe left or right to change exercise"
-const SWIPE_HINT_FINISH := "Swipe left to finish"
 ## Gesture thresholds in design px: far enough to be deliberate, and strongly horizontal.
 const SWIPE_MIN_PX := 140.0
 const SWIPE_DOMINANCE := 1.25
@@ -122,6 +122,7 @@ const GLYPH_SCENE := preload("res://scenes/components/glyph.tscn")
 @onready var _timer_ring: Control = $SafeArea/Layout/TimerRow/TimerCenter/TimerRing
 @onready var _timer_label: Label = $SafeArea/Layout/TimerRow/TimerLabel
 @onready var _swipe_hint: Label = $SafeArea/Layout/SwipeRow/SwipeHint
+@onready var _action_button: Button = $SafeArea/Layout/ActionButton
 @onready var _rest_sheet: PanelContainer = $RestSheet
 @onready var _pause_sheet: Control = $PauseSheet
 @onready var _pause_dim: ColorRect = $PauseSheet/PauseDim
@@ -194,6 +195,9 @@ func _ready() -> void:
 	_pause_button.pressed.connect(_on_pause_pressed)
 	# The illustration host ignores the mouse (`mouse_filter = IGNORE` in the scene): the artwork
 	# is the swipe surface, a tap on it does nothing, and it can never eat the drag (ADR-31).
+	# The bottom action button is the labelled way through: R8's label matrix, and on the last
+	# step the button the owner asked for by name — "I'm finished" (ADR-41).
+	_action_button.pressed.connect(_on_next_pressed)
 	_resume_button.pressed.connect(_on_resume_pressed)
 	_restart_button.pressed.connect(_on_restart_pressed)
 	_end_button.pressed.connect(_on_end_pressed)
@@ -338,7 +342,9 @@ func _apply_step() -> void:
 	_update_illustration(exercise_id)
 	_warm_next_frames()
 	_block_counter.text = _counter_text(step)
-	_swipe_hint.text = SWIPE_HINT_FINISH if _run.is_last_step() else SWIPE_HINT
+	_swipe_hint.visible = not _run.is_last_step()
+	_action_button.text = _run.next_label()
+	A11y.label(_action_button, _action_button.text)
 	_repaint_progress()
 
 	if kind == KIND_BLOCK:
@@ -363,6 +369,8 @@ func _apply_step() -> void:
 		"player_swipe": _illustration_host,
 		"player_pause": _pause_button,
 		"player_illustration": _illustration_host,
+		# The bottom action button (ADR-41) — the labelled "Next"/"I'm finished" way through.
+		"player_action": _action_button,
 	})
 
 
@@ -474,14 +482,18 @@ func _build_progress_segments() -> void:
 
 ## R6: `current` beats `done`, and a block turns `success` the moment every set is checked —
 ## independent of where the cursor is, so the owner watches their work accumulate behind them.
+## A mobility step the owner has moved past is `outline_strong` rather than `outline`, so the
+## warm-up and cool-down slots read as done too (owner feedback, ADR-41).
 func _repaint_progress() -> void:
 	for index in _segments.size():
 		var panel: Control = _segments[index]
 		var step: Dictionary = _run.steps[index]
+		var kind := String(step.get("kind", ""))
 		var token := "outline"
-		if String(step.get("kind", "")) == KIND_BLOCK \
-				and _run.block_done(String(step.get("exercise_id", ""))):
+		if kind == KIND_BLOCK and _run.block_done(String(step.get("exercise_id", ""))):
 			token = "success"
+		elif index < _run.step_index:
+			token = "outline_strong"
 		if index == _run.step_index:
 			token = "primary"
 		panel.add_theme_stylebox_override(&"panel", _segment_style(token))
@@ -832,21 +844,45 @@ func _update_timed_label() -> void:
 # Navigation (R8)
 # ===========================================================================
 
-## R8: `Next` never blocks progress — enabled on every step, even with unchecked sets. The partial
-## block toast is the only comment it ever makes, and zero checked sets says nothing at all.
+## Owner request (2026-10-01): moving on means "I did this". The forward swipe and the action
+## button first check every remaining set of the current block in one go, so a session can be
+## walked without tapping a chip per set and still ends fully completed. Returns the number of
+## sets this call flipped; `0` for a timed step or an already-done block (so the caller can skip
+## its cue). The pause sheet's `Restart exercise` is the explicit way back to unchecked sets.
+func _complete_current_block() -> int:
+	if _run == null or _run.step_kind() != KIND_BLOCK:
+		return 0
+	var exercise_id := _run.current_exercise_id()
+	var flipped := _run.complete_block(exercise_id)
+	if flipped <= 0:
+		return 0
+	var sets := _run.block_sets(exercise_id)
+	_sync_chip_states(exercise_id)
+	_update_set_counter(exercise_id, sets)
+	_update_block_done_chip(exercise_id)
+	_repaint_progress()
+	_save_progress(false)
+	print("[player] block complete ex=%s sets=%d/%d flipped=%d" % [
+		exercise_id, sets, sets, flipped])
+	return flipped
+
+
+## R8: `Next` never blocks progress. The forward move first completes the current block (ADR-41)
+## and is available on every step; the pause sheet's `End workout` remains the honest way to stop
+## early with a partial entry.
 func _on_next_pressed() -> void:
 	if not _is_running_state():
 		return
 	_cancel_rest(false)
+	# ADR-41: the forward move is the completion gesture. A block that still has unchecked sets
+	# is marked done here (with the block-done cue), so swiping through the session ends it full.
+	var flipped := _complete_current_block()
+	if flipped > 0:
+		_sfx(&"block_done")
+		Input.vibrate_handheld(60)
 	if _run.is_last_step():
 		_complete(false)
 		return
-	if _run.step_kind() == KIND_BLOCK:
-		var exercise_id := _run.current_exercise_id()
-		var sets := _run.block_sets(exercise_id)
-		var checked := _run.sets_checked(exercise_id)
-		if checked > 0 and checked < sets:
-			Feedback.toast(TOAST_LOGGED_SETS % [checked, sets], &"info")
 	if _run.next():
 		_after_step_change()
 
@@ -1012,9 +1048,9 @@ func _on_quit_confirmed() -> void:
 # Completion (R11, R12)
 # ===========================================================================
 
-## Commits the history entry and routes. `partial_requested` is `End workout`; `I'm done for the day`
-## with unchecked sets becomes partial on its own, because `exercises_completed == exercises_total`
-## is what decides the celebration (R8/R12).
+## Commits the history entry and routes. `partial_requested` is `End workout`; a walk that was
+## only partly completed becomes partial on its own, because `exercises_completed ==
+## exercises_total` is what decides the celebration (R8/R12).
 func _complete(partial_requested: bool) -> void:
 	if _exit_started:
 		return

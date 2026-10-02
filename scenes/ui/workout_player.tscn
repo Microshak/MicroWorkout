@@ -113,7 +113,7 @@ layout_mode = 2
 mouse_filter = 2
 
 [node name="Illustration" parent="SafeArea/Layout/IllustrationSlot/IllustrationHost" instance=ExtResource("3_thumb")]
-custom_minimum_size = Vector2(640, 640)
+custom_minimum_size = Vector2(360, 360)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -227,6 +227,13 @@ theme_type_variation = &"Caption"
 text = "Swipe left or right to change exercise"
 horizontal_alignment = 1
 autowrap_mode = 3
+
+[node name="ActionButton" parent="SafeArea/Layout" instance=ExtResource("6_primary")]
+custom_minimum_size = Vector2(0, 104)
+layout_mode = 2
+text = "Next"
+accessibility_name = "Next"
+tooltip_text = "Next"
 
 [node name="RestSheet" parent="." instance=ExtResource("7_rest")]
 visible = false

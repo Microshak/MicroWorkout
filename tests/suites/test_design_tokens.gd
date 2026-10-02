@@ -310,7 +310,10 @@ func _sorted_names(names: PackedStringArray) -> PackedStringArray:
 func _check_tokens(theme: Theme, mode: String) -> void:
 	begin("%s root default_font_size is TYPE.body" % mode)
 	assert_eq(theme.default_font_size, int(Tokens.TYPE["body"]), "root default_font_size")
-	assert_eq(theme.default_font_size, 22, "R3 pins the root default_font_size to 22")
+	# The one owner-approved scale change (2026-10-01 readability pass): 22 -> 28. Every
+	# other row on this page still compares the theme against the tokens, so this stays a
+	# belt-and-braces pin, not the source of truth.
+	assert_eq(theme.default_font_size, 28, "R3 pins the root default_font_size to 28")
 
 	begin("%s item count matches the R3 table" % mode)
 	assert_eq(_item_count(theme), EXPECTED_ITEMS, "R3 item count")

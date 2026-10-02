@@ -23,7 +23,7 @@ script = ExtResource("1_rest_sheet")
 [node name="RestVBox" type="VBoxContainer" parent="."]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 12
 
 [node name="RestTitleLabel" type="Label" parent="RestVBox"]
 layout_mode = 2
@@ -49,18 +49,19 @@ show_percentage = false
 [node name="RestButtons" type="HBoxContainer" parent="RestVBox"]
 layout_mode = 2
 mouse_filter = 1
-theme_override_constants/separation = 8
+theme_override_constants/separation = 12
+
+[node name="SkipRestButton" type="Button" parent="RestVBox/RestButtons"]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+theme_type_variation = &"PrimaryButton"
+text = "Skip rest"
 
 [node name="AddTimeButton" type="Button" parent="RestVBox/RestButtons"]
-custom_minimum_size = Vector2(0, 88)
+custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"GhostButton"
 text = "+15s"
-
-[node name="SkipRestButton" type="Button" parent="RestVBox/RestButtons"]
-custom_minimum_size = Vector2(0, 88)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"SecondaryButton"
-text = "Skip rest"

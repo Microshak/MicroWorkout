@@ -15,6 +15,8 @@ theme_override_constants/separation = 12
 custom_minimum_size = Vector2(0, 88)
 layout_mode = 2
 theme_type_variation = &"GhostButton"
+accessibility_name = "Session"
+tooltip_text = "Show exercises"
 
 [node name="Row" type="HBoxContainer" parent="Body/DayHeader"]
 layout_mode = 1

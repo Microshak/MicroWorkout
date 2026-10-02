@@ -12,6 +12,7 @@
 # (`tools/tap_ui.sh` reads the `[ui] rect` lines the app logs in debug builds):
 #   player-full    seed a plan, start from Home, tick every set of every block, finish, celebrate
 #   player-skip    the same walk, but the celebration is tapped at ~200 ms (AC13's second half)
+#   player-swipe   walk it swipe-only: each swipe completes the block, the last button finishes it
 #   player-resume  check two sets, kill the process, relaunch, resume from Home (AC10)
 #   player-quit    quit without saving and prove history is untouched (AC9)
 set -euo pipefail
@@ -455,15 +456,19 @@ player_walk() {
     fail "no \"Start sets\" label in the walk (AC4)"
   fi
 
-  # Cool-downs: the last swipe is "I'm done for the day".
+  # Cool-downs: swipe through all but the last; the last step's labelled action button says
+  # "I'm finished" (ADR-41) and is tapped to end the session.
   index=0
   while (( index < cooldowns )); do
-    swipe player_swipe left 2
-    index=$((index + 1))
-    step=$((step + 1))
-    if (( index < cooldowns )); then
+    if (( index == cooldowns - 1 )); then
+      wait_log "next=\"I'm finished\"" "the last step's button says \"I'm finished\" (ADR-41)" 5 || true
+      tap player_action 3
+    else
+      swipe player_swipe left 2
+      step=$((step + 1))
       wait_log "\[player\] step=${step} " "advanced to cool-down $index" 25
     fi
+    index=$((index + 1))
   done
 
   if [[ "$mode" == "skip" ]]; then
@@ -548,6 +553,48 @@ flow_player_partial() {
 flow_player_full() { player_walk noskip; }
 flow_player_skip() { player_walk skip; }
 
+## ADR-41: swiping past an exercise marks it complete — no set chip is ever tapped. The flow
+## proves the auto-completion lands in the model (`block complete … flipped=<n>`) for every
+## block, that the last step's button reads "I'm finished", and that tapping it writes a full
+## history entry with the celebration.
+flow_player_swipe() {
+  local warm blocks cooldowns sets step flipped total=0
+  read -r warm blocks cooldowns <<<"$(fixture_shape)"
+  sets="$(fixture_sets)"
+  for flipped in $sets; do total=$((total + flipped)); done
+  home_entry_tap
+  wait_log "\[player\] start plan=" "player started from Home" 30
+
+  step=0
+  while (( step < warm )); do
+    swipe player_swipe left 2
+    step=$((step + 1))
+    wait_log "\[player\] step=${step} " "advanced past warm-up $step" 25
+  done
+
+  for flipped in $sets; do
+    swipe player_swipe left 2
+    wait_log "\[player\] block complete ex=[a-z0-9-]+ sets=${flipped}/${flipped} flipped=" \
+      "swipe marked a ${flipped}-set block complete (ADR-41)" 25
+    step=$((step + 1))
+    wait_log "\[player\] step=${step} " "advanced to step $step after the completing swipe" 25
+  done
+
+  while (( step < warm + blocks + cooldowns - 1 )); do
+    swipe player_swipe left 2
+    step=$((step + 1))
+    wait_log "\[player\] step=${step} " "advanced to step $step" 25
+  done
+
+  wait_log "next=\"I'm finished\"" "the last step's button says \"I'm finished\" (ADR-41)" 10
+  tap player_action 3
+  wait_log "\[player\] complete entry=h-" "a full swipe walk + the button wrote history (ADR-41)" 30
+  wait_log "\[complete\] celebration start" "the walked session celebrated" 25
+  require_log "\[player\] complete entry=h-.* sets=${total}/${total}" "every set counted (${total}/${total})"
+  tap complete_done 3
+  wait_log "\[home\] state=DONE_TODAY" "Home shows DONE_TODAY afterwards" 25
+}
+
 ## AC10: check two sets, kill the process mid-session, relaunch, resume.
 flow_player_resume() {
   local warm step
@@ -616,6 +663,7 @@ run_flow() {
     player-full)   flow_player_full ;;
     player-partial) flow_player_partial ;;
     player-skip)   flow_player_skip ;;
+    player-swipe)  flow_player_swipe ;;
     player-resume) flow_player_resume ;;
     player-quit)   flow_player_quit ;;
     *) fail "unknown flow '$1'"; return 1 ;;

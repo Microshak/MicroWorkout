@@ -76,6 +76,15 @@ func set_day(session: Dictionary, kind: StringName = &"upcoming",
 	if meta != null:
 		meta.text = "%d exercises · %d min" % [_blocks().size(), est_minutes()]
 
+	# R5: the header is the card's one interactive control, so it carries the name —
+	# "Day 2 · Chest + Back, show exercises" — instead of the scene fallback "Session".
+	var header := header_button()
+	if header != null:
+		var header_name: String = number.text if number != null else "Session"
+		if focus != null and not focus.text.is_empty():
+			header_name = "%s, %s" % [header_name, focus.text]
+		A11y.label(header, header_name, "Show exercises")
+
 	_build_rows()
 	set_expanded(false)
 

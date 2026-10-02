@@ -26,12 +26,12 @@ func run() -> void:
 
 	begin("every font size scales by 1.5 (the XXL step)")
 	var big := ThemeScale.scaled(base, 1.5)
-	assert_eq(big.default_font_size, 33, "root default 22 -> 33")
-	assert_eq(big.get_font_size(&"font_size", &"Caption"), 24, "caption 16 -> 24")
-	assert_eq(big.get_font_size(&"font_size", &"BodySmall"), 29, "body_small 19 -> 29")
-	assert_eq(big.get_font_size(&"font_size", &"BodyLabel"), 33, "body 22 -> 33")
-	assert_eq(big.get_font_size(&"font_size", &"PrimaryButton"), 36, "button 24 -> 36")
-	assert_eq(big.get_font_size(&"font_size", &"DisplayLabel"), 96, "display 64 -> 96")
+	assert_eq(big.default_font_size, 42, "root default 28 -> 42")
+	assert_eq(big.get_font_size(&"font_size", &"Caption"), 30, "caption 20 -> 30")
+	assert_eq(big.get_font_size(&"font_size", &"BodySmall"), 36, "body_small 24 -> 36")
+	assert_eq(big.get_font_size(&"font_size", &"BodyLabel"), 42, "body 28 -> 42")
+	assert_eq(big.get_font_size(&"font_size", &"PrimaryButton"), 45, "button 30 -> 45")
+	assert_eq(big.get_font_size(&"font_size", &"DisplayLabel"), 120, "display 80 -> 120")
 	var lists_match := true
 	for type_name in base.get_type_list():
 		if base.get_font_size_list(type_name) != big.get_font_size_list(type_name):
@@ -60,13 +60,13 @@ func run() -> void:
 		assert_eq(big_normal.border_width_left, base_normal.border_width_left, "border width")
 
 	begin("the shared resource is never mutated")
-	assert_eq(base.default_font_size, 22, "base default stays 22")
-	assert_eq(base.get_font_size(&"font_size", &"Caption"), 16, "base caption stays 16")
+	assert_eq(base.default_font_size, 28, "base default stays 28")
+	assert_eq(base.get_font_size(&"font_size", &"Caption"), 20, "base caption stays 20")
 
 	begin("the S step rounds and never reaches zero")
 	var small := ThemeScale.scaled(base, 0.85)
-	assert_eq(small.get_font_size(&"font_size", &"Caption"), 14, "caption 16 * 0.85 -> 14")
-	assert_eq(small.default_font_size, 19, "root 22 * 0.85 -> 19")
+	assert_eq(small.get_font_size(&"font_size", &"Caption"), 17, "caption 20 * 0.85 -> 17")
+	assert_eq(small.default_font_size, 24, "root 28 * 0.85 -> 24")
 	var tiny := Theme.new()
 	tiny.default_font_size = 1
 	tiny.set_font_size(&"font_size", &"Caption", 1)

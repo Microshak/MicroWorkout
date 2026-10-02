@@ -17,7 +17,8 @@ const FIXTURE := "res://tests/fixtures/sessions/upper_a.json"
 const L_NEXT := "Next"
 const L_START_SETS := "Start sets"
 const L_COOL_DOWN := "Cool down"
-const L_DONE := "I'm done for the day"
+## Owner wording (2026-10-01): the last action is a button that literally says it.
+const L_DONE := "I'm finished"
 
 
 func _init() -> void:
@@ -37,6 +38,7 @@ func run() -> void:
 	_test_step_order_labels(plan, session)
 	_test_prev_rules(plan, session)
 	_test_set_check_off(plan, session)
+	_test_complete_block(plan, session)
 	_test_nineteen_of_twenty()
 	_test_round_trip(plan, session)
 	_test_edge_cases()
@@ -118,7 +120,7 @@ func _test_step_order_labels(plan: Dictionary, session: Dictionary) -> void:
 	assert_true(run.is_last_step())
 	assert_false(run.next(), "next() refuses past the last step")
 
-	begin("R8 'I'm done for the day' also ends a session with no cool-down")
+	begin("R8 'I'm finished' also ends a session with no cool-down")
 	var no_cooldown := {
 		"id": "sx", "title": "No cool-down",
 		"warmup": [{"exercise_id": "arm-circles", "duration_sec": 60}],
@@ -244,6 +246,39 @@ func _test_set_check_off(plan: Dictionary, session: Dictionary) -> void:
 	assert_eq(run.sets_completed(), 7)
 	assert_eq(run.restart_block("barbell-row"), 0, "already clear")
 	assert_eq(run.restart_block("nope"), 0, "unknown block")
+
+
+# ------------------------------------------------------------------ owner swipe-completes-a-block
+
+## Owner request (2026-10-01): swiping past an exercise marks it done, so `complete_block()` is
+## the one call the player makes when the owner moves forward. It checks every remaining set,
+## reports only the sets this call flipped, and can never un-check a manual tap.
+func _test_complete_block(plan: Dictionary, session: Dictionary) -> void:
+	begin("complete_block() checks every remaining set and returns the newly flipped count")
+	var run := SessionRun.build(plan, session)
+	assert_eq(run.complete_block("incline-bench-press"), 4, "a fresh block flips all four sets")
+	assert_true(run.block_done("incline-bench-press"))
+	assert_eq(run.sets_checked("incline-bench-press"), 4)
+	assert_eq(run.complete_block("incline-bench-press"), 0, "an already-done block is a no-op")
+
+	begin("complete_block() keeps the sets an owner already checked by hand")
+	assert_eq(run.complete_block("barbell-row"), 4)
+	assert_eq(run.sets_checked("barbell-row"), 4)
+	assert_eq(run.complete_block("barbell-row"), 0)
+	assert_eq(run.complete_block("no-such-exercise"), 0, "unknown block flips nothing")
+
+	begin("complete_block() is the path to a full session")
+	assert_false(run.fully_completed(), "two of three blocks")
+	assert_eq(run.complete_block("seated-dumbbell-press"), 3)
+	assert_true(run.fully_completed(), "all three blocks, 11 of 11 sets")
+	assert_eq(run.sets_completed(), 11)
+
+	begin("hand-checked sets survive navigation but complete_block() never un-checks")
+	var run2 := SessionRun.build(plan, session)
+	assert_true(run2.set_toggle("incline-bench-press", 1), "manual check")
+	assert_eq(run2.complete_block("incline-bench-press"), 3, "the other three flip")
+	assert_eq(run2.sets_checked("incline-bench-press"), 4)
+	assert_eq(run2.complete_block("incline-bench-press"), 0, "nothing left to flip")
 
 
 # ------------------------------------------------------------------ AC1's 19-of-20 case

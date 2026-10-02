@@ -41,7 +41,8 @@ const COMPLETING := "COMPLETING"
 const LABEL_NEXT := "Next"
 const LABEL_START_SETS := "Start sets"
 const LABEL_COOL_DOWN := "Cool down"
-const LABEL_DONE := "I'm done for the day"
+## Owner wording (2026-10-01): the last action is a button that literally says it.
+const LABEL_DONE := "I'm finished"
 
 ## R13: a rest timer never resumes across a process kill (appendix §5.4), so this key is always
 ## written as `0`. It exists in the shape only so the document matches the frozen schema.
@@ -292,6 +293,23 @@ func block_done(exercise_id: String) -> bool:
 	if sets.is_empty():
 		return false
 	return sets_checked(exercise_id) == sets.size()
+
+
+## Owner request (2026-10-01): moving on means "I did this". Checks every remaining set of
+## [param exercise_id] in one call and returns how many this call flipped — `0` for an unknown
+## block or one that was already complete, so a caller can skip its cue on a no-op. The player
+## calls this when the owner swipes forward or taps the action button, which is what lets a
+## session finish without tapping each set chip. Never un-checks: a manual tap stays king.
+func complete_block(exercise_id: String) -> int:
+	var sets := _states_for(exercise_id)
+	if sets.is_empty():
+		return 0
+	var newly := 0
+	for index in sets.size():
+		if not bool(sets[index]):
+			sets[index] = true
+			newly += 1
+	return newly
 
 
 ## Σ checked sets across every block — R11's `sets_completed` and R12's `Sets` summary.

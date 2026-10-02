@@ -1,0 +1,10 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <title>MicroWorkout — splash mark</title>
+  <!-- The mark alone on transparency: the macOS/Android boot splash paints it over the ink
+       bg colour, and the boot screen draws the same PNG above its wordmark. -->
+  <g transform="translate(256 256) scale(2.0) translate(-128 -137)">
+    <path d="M66 196 L66 78 L128 173 L190 78 L190 196"
+          stroke="#FF6B35" stroke-width="38" stroke-linejoin="round" stroke-linecap="butt" fill="none"/>
+    <path d="M121 79 L121 99 L139 89 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="8" stroke-linejoin="round"/>
+  </g>
+</svg>

@@ -89,6 +89,75 @@ PY
   trap 'if [[ -f "$BUILD_DIR/export_presets.cfg.orig" ]]; then mv -f "$BUILD_DIR/export_presets.cfg.orig" "$PRESETS"; fi' EXIT
 }
 
+## Owner request (2026-10-01): the real M-play mark becomes the launcher icon. The preset
+## ships without icons on a fresh clone (ADR-28), so the paths are written here — in place,
+## for BOTH presets, before the release keystore patch copies the file. Idempotent: a run
+## that finds the paths already set writes nothing.
+patch_launcher_icons() {
+  python3 - "$PRESETS" <<'PY'
+import sys
+path = sys.argv[1]
+icons = {
+    "launcher_icons/main_192x192": "res://assets/branding/android/main_192.png",
+    "launcher_icons/adaptive_foreground_432x432":
+        "res://assets/branding/android/adaptive_foreground_432.png",
+    "launcher_icons/adaptive_background_432x432":
+        "res://assets/branding/android/adaptive_background_432.png",
+    "launcher_icons/adaptive_monochrome_432x432":
+        "res://assets/branding/android/adaptive_monochrome_432.png",
+}
+with open(path) as fh:
+    lines = fh.readlines()
+changed = False
+for index, line in enumerate(lines):
+    for key, value in icons.items():
+        if line.startswith(key + "="):
+            replacement = f'{key}="{value}"\n'
+            if replacement != line:
+                lines[index] = replacement
+                changed = True
+if changed:
+    with open(path, "w") as fh:
+        fh.writelines(lines)
+    print("[build] launcher icons wired into export_presets.cfg")
+PY
+}
+
+patch_launcher_icons
+
+## Owner-facing version fields have ONE source of truth in git — `scripts/core/app_info.gd`,
+## which Settings prints — and this writes it into every export preset before exporting, so the
+## APK and the in-app version can never disagree (bumping used to be a three-file edit; a stale
+## preset made a rebuilt APK look like an old release on the phone).
+patch_version() {
+  python3 - "$PRESETS" "$ROOT/scripts/core/app_info.gd" <<'PY'
+import re, sys
+presets, app_info = sys.argv[1:3]
+text = open(app_info).read()
+version = re.search(r'VERSION\s*:=\s*"([^"]+)"', text).group(1)
+code = re.search(r'VERSION_CODE\s*:=\s*(\d+)', text).group(1)
+with open(presets) as fh:
+    lines = fh.readlines()
+changed = False
+for index, line in enumerate(lines):
+    if line.startswith("version/code="):
+        replacement = f"version/code={code}\n"
+    elif line.startswith("version/name="):
+        replacement = f'version/name="{version}"\n'
+    else:
+        continue
+    if replacement != line:
+        lines[index] = replacement
+        changed = True
+if changed:
+    with open(presets, "w") as fh:
+        fh.writelines(lines)
+    print(f"[build] export presets version -> {version} ({code})")
+PY
+}
+
+patch_version
+
 if [[ "$MODE" == "release" ]]; then
   ensure_release_keystore
   patch_release_keystore

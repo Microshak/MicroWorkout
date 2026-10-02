@@ -81,8 +81,10 @@ func _ready() -> void:
 	_skip_button.pressed.connect(_on_skip_pressed)
 	_sync()
 	# Nothing here hard-codes a colour — the sheet, the labels and the two buttons take their whole
-	# look from the theme's `Sheet` / `Caption` / `DisplayLabel` / `GhostButton` / `SecondaryButton`
+	# look from the theme's `Sheet` / `Caption` / `DisplayLabel` / `PrimaryButton` / `GhostButton`
 	# variations — but a live dark↔light swap still has to re-render the state-derived text and bar.
+	# Owner feedback (ADR-41): `Skip rest` is the primary action and `+15s` the quiet one, because
+	# the sheet was reported as "a timer I can't get past" when the way out looked secondary.
 	if is_instance_valid(App) and not App.theme_changed.is_connected(_on_theme_changed):
 		App.theme_changed.connect(_on_theme_changed)
 

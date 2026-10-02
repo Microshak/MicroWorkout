@@ -1,0 +1,9 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <title>MicroWorkout — play unit (app icon master for the launcher renders)</title>
+  <!-- Same geometry as res://icon.svg (the shipping project icon); kept here so the Android
+       layers and splash can be regenerated in one place (see README.md in this directory). -->
+  <rect width="256" height="256" rx="56" fill="#0F1116"/>
+  <path d="M66 196 L66 78 L128 173 L190 78 L190 196"
+        stroke="#FF6B35" stroke-width="38" stroke-linejoin="round" stroke-linecap="butt" fill="none"/>
+  <path d="M121 79 L121 99 L139 89 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="8" stroke-linejoin="round"/>
+</svg>

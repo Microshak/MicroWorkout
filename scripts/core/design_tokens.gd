@@ -48,16 +48,20 @@ const LIGHT_OVERRIDES := {
 }
 
 ## Type scale, px at the 1080-wide design resolution.
+##
+## Owner feedback (2026-10-01): the first scale read as "super tiny" on the phone —
+## 22 px body on a 1080-wide screen is ~2 % of the width where the reference designs run
+## 4–4.5 %. Everything moved up roughly 25–30 %, the smallest sizes most of all.
 const TYPE := {
-	"display": 64, "h1": 44, "h2": 34, "h3": 26,
-	"body": 22, "body_small": 19, "caption": 16, "button": 24,
+	"display": 80, "h1": 56, "h2": 44, "h3": 34,
+	"body": 28, "body_small": 24, "caption": 20, "button": 30,
 }
 
 ## Spacing scale. No ad-hoc pixel numbers anywhere in the UI.
 const SPACE := {"xs": 4, "sm": 8, "md": 12, "lg": 16, "xl": 24, "xxl": 32, "xxxl": 48}
 
 const RADIUS := {
-	"chip": 12, "card": 18, "sheet": 28, "button": 28, "bar": 9, "calendar_cell": 16,
+	"chip": 12, "card": 18, "sheet": 28, "button": 48, "bar": 9, "calendar_cell": 16,
 }
 
 const TOUCH_MIN := 88

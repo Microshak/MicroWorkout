@@ -82,11 +82,15 @@ theme_override_constants/separation = 16
 layout_mode = 2
 size_flags_horizontal = 3
 text = "New plan"
+accessibility_name = "New plan"
+tooltip_text = "New plan"
 
 [node name="RemovePlanButton" parent="Gutter/Layout/Scroll/Column/PlanCard/CardBody/Actions" instance=ExtResource("6_secondary")]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Remove plan"
+accessibility_name = "Remove plan"
+tooltip_text = "Remove plan"
 
 [node name="WeekCard" type="PanelContainer" parent="Gutter/Layout/Scroll/Column"]
 layout_mode = 2
